@@ -1,0 +1,11 @@
+#gVCF2tFasta v0.2 (20170908) Jordi Leno-Colorado
+
+Usage: ./gVCF2tFasta -v input.vcf -r reference.fa -o outputname -c chromosome(s)
+
+Flags:
+      -v [Input VCF file]
+      -r [Reference Fasta file]
+      -o [Output compressed tFasta filename (without extension)]
+      -c [Chromosome(s) to convert, if there are more than one chromosome, they have to be separated by comma]
+   OPTIONAL PARAMETERS:
+      -h [help and exit]

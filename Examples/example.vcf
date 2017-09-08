@@ -1,0 +1,201 @@
+##fileformat=VCFv4.2
+##FILTER=<ID=PASS,Description="All filters passed">
+##samtoolsVersion=1.2+htslib-1.2.1
+##samtoolsCommand=samtools mpileup -q 20 -Q 20 -t DP -ugf /scratch/025-CNAG_PIG1/assembly10.2/Sus_Scrofa.v10.2-01.genome.fa /scratch/025-CNAG_PIG1/bamfiles/DU23M04_Duroc.realigned.bam
+##reference=file:///scratch/025-CNAG_PIG1/assembly10.2/Sus_Scrofa.v10.2-01.genome.fa
+##contig=<ID=1,length=315321322>
+##contig=<ID=2,length=162569375>
+##contig=<ID=3,length=144787322>
+##contig=<ID=4,length=143465943>
+##contig=<ID=5,length=111506441>
+##contig=<ID=6,length=157765593>
+##contig=<ID=7,length=134764511>
+##contig=<ID=8,length=148491826>
+##contig=<ID=9,length=153670197>
+##contig=<ID=10,length=79102373>
+##contig=<ID=11,length=87690581>
+##contig=<ID=12,length=63588571>
+##contig=<ID=13,length=218635234>
+##contig=<ID=14,length=153851969>
+##contig=<ID=15,length=157681621>
+##contig=<ID=16,length=86898991>
+##contig=<ID=17,length=69701581>
+##contig=<ID=18,length=61220071>
+##contig=<ID=X,length=144288218>
+##contig=<ID=Y,length=1637716>
+##contig=<ID=MT,length=16613>
+##ALT=<ID=X,Description="Represents allele(s) other than observed.">
+##INFO=<ID=INDEL,Number=0,Type=Flag,Description="Indicates that the variant is an INDEL.">
+##INFO=<ID=IDV,Number=1,Type=Integer,Description="Maximum number of reads supporting an indel">
+##INFO=<ID=IMF,Number=1,Type=Float,Description="Maximum fraction of reads supporting an indel">
+##INFO=<ID=DP,Number=1,Type=Integer,Description="Raw read depth">
+##INFO=<ID=VDB,Number=1,Type=Float,Description="Variant Distance Bias for filtering splice-site artefacts in RNA-seq data (bigger is better)",Version="3">
+##INFO=<ID=RPB,Number=1,Type=Float,Description="Mann-Whitney U test of Read Position Bias (bigger is better)">
+##INFO=<ID=MQB,Number=1,Type=Float,Description="Mann-Whitney U test of Mapping Quality Bias (bigger is better)">
+##INFO=<ID=BQB,Number=1,Type=Float,Description="Mann-Whitney U test of Base Quality Bias (bigger is better)">
+##INFO=<ID=MQSB,Number=1,Type=Float,Description="Mann-Whitney U test of Mapping Quality vs Strand Bias (bigger is better)">
+##INFO=<ID=SGB,Number=1,Type=Float,Description="Segregation based metric.">
+##INFO=<ID=MQ0F,Number=1,Type=Float,Description="Fraction of MQ0 reads (smaller is better)">
+##FORMAT=<ID=PL,Number=G,Type=Integer,Description="List of Phred-scaled genotype likelihoods">
+##FORMAT=<ID=DP,Number=1,Type=Integer,Description="Number of high-quality bases">
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+##INFO=<ID=ICB,Number=1,Type=Float,Description="Inbreeding Coefficient Binomial test (bigger is better)">
+##INFO=<ID=HOB,Number=1,Type=Float,Description="Bias in the number of HOMs number (smaller is better)">
+##INFO=<ID=AC,Number=A,Type=Integer,Description="Allele count in genotypes for each ALT allele, in the same order as listed">
+##INFO=<ID=AN,Number=1,Type=Integer,Description="Total number of alleles in called genotypes">
+##INFO=<ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+##INFO=<ID=MQ,Number=1,Type=Integer,Description="Average mapping quality">
+##INFO=<ID=END,Number=1,Type=Integer,Description="End position of the variant described in this record">
+##bcftools_callVersion=1.2+htslib-1.2.1
+##bcftools_callCommand=call -g 5 -vmO v
+##FILTER=<ID=LOWQUAL,Description="Set if true: %QUAL<10 || %MAX(DP)<5 || %MAX(DP)>16">
+##FILTER=<ID=SnpGap,Description="SNP within 3 bp of an indel">
+##bcftools_filterVersion=1.2+htslib-1.2.1
+##bcftools_filterCommand=filter -O v -g3 -s LOWQUAL '-e%QUAL<10 || %MAX(DP)<5 || %MAX(DP)>16'
+##bcftools_viewVersion=1.2+htslib-1.2.1
+##bcftools_viewCommand=view -f PASS -O z
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	DU23M04_Duroc
+1	6260	.	A	.	.	PASS	END=6276	GT	0/0
+1	6536	.	C	.	.	PASS	END=6541	GT	0/0
+1	6543	.	G	.	.	PASS	END=6543	GT	0/0
+1	6545	.	G	.	.	PASS	END=6545	GT	0/0
+1	6547	.	C	.	.	PASS	END=6555	GT	0/0
+1	6557	.	T	.	.	PASS	END=6560	GT	0/0
+1	6562	.	A	.	.	PASS	END=6563	GT	0/0
+1	6565	.	G	.	.	PASS	END=6565	GT	0/0
+1	8344	.	T	.	.	PASS	END=8348	GT	0/0
+1	8379	.	A	.	.	PASS	END=8383	GT	0/0
+1	8385	.	A	.	.	PASS	END=8390	GT	0/0
+1	8399	.	C	.	.	PASS	END=8409	GT	0/0
+1	8411	.	T	.	.	PASS	END=8411	GT	0/0
+1	8414	.	G	.	.	PASS	END=8417	GT	0/0
+1	8419	.	T	.	.	PASS	END=8420	GT	0/0
+1	8422	.	T	.	.	PASS	END=8436	GT	0/0
+1	8438	.	C	.	.	PASS	END=8440	GT	0/0
+1	8442	.	C	.	.	PASS	END=8443	GT	0/0
+1	9119	.	A	.	.	PASS	END=9179	GT	0/0
+1	9181	.	T	.	.	PASS	END=9188	GT	0/0
+1	9312	.	A	.	.	PASS	END=9313	GT	0/0
+1	9316	.	T	.	.	PASS	END=9318	GT	0/0
+1	9320	.	G	.	.	PASS	END=9403	GT	0/0
+1	9408	.	G	.	.	PASS	END=9408	GT	0/0
+1	9411	.	G	.	.	PASS	END=9417	GT	0/0
+1	9419	.	G	.	.	PASS	END=9419	GT	0/0
+1	9489	.	G	.	.	PASS	END=9489	GT	0/0
+1	9494	.	G	.	.	PASS	END=9494	GT	0/0
+1	9505	.	G	.	.	PASS	END=9535	GT	0/0
+1	9633	.	A	.	.	PASS	END=9642	GT	0/0
+1	9786	.	G	.	.	PASS	END=9800	GT	0/0
+1	9887	.	T	.	.	PASS	END=10032	GT	0/0
+1	10035	.	G	.	.	PASS	END=10071	GT	0/0
+1	10072	.	T	A	71	PASS	DP=8;VDB=0.19611;SGB=-0.616816;RPB=0.166667;MQB=0.833333;MQSB=0.750668;BQB=0.916667;MQ0F=0;ICB=1;HOB=0.5;AC=1;AN=2;DP4=2,0,1,5;MQ=27	GT:PL:DP	0/1:105,0,26:8
+1	10073	.	G	.	.	PASS	END=10104	GT	0/0
+1	11128	.	G	.	.	PASS	END=11138	GT	0/0
+1	11141	.	A	.	.	PASS	END=11141	GT	0/0
+1	11195	.	C	.	.	PASS	END=11195	GT	0/0
+1	11197	.	G	.	.	PASS	END=11197	GT	0/0
+1	11224	.	C	.	.	PASS	END=11227	GT	0/0
+1	11398	.	C	.	.	PASS	END=11398	GT	0/0
+1	11400	.	T	.	.	PASS	END=11403	GT	0/0
+1	11405	.	A	.	.	PASS	END=11405	GT	0/0
+1	11407	.	C	.	.	PASS	END=11414	GT	0/0
+1	11416	.	C	.	.	PASS	END=11540	GT	0/0
+1	22345	.	C	.	.	PASS	END=22365	GT	0/0
+1	22366	.	G	T	51	PASS	DP=6;VDB=0.374631;SGB=-0.590765;MQ0F=0;AC=2;AN=2;DP4=0,0,5,0;MQ=22	GT:PL:DP	1/1:78,15,0:5
+1	22367	.	G	.	.	PASS	END=22375	GT	0/0
+1	22377	.	C	G	42.7497	PASS	DP=5;VDB=0.0395055;SGB=-0.556411;MQ0F=0;AC=2;AN=2;DP4=0,0,4,0;MQ=23	GT:PL:DP	1/1:70,12,0:4
+1	22380	.	C	T	11.4786	PASS	DP=5;VDB=0.11189;SGB=-0.511536;RPB=1;MQB=1;BQB=1;MQ0F=0;ICB=1;HOB=0.5;AC=1;AN=2;DP4=1,0,3,0;MQ=23	GT:PL:DP	0/1:44,0,13:4
+1	22895	.	A	.	.	PASS	END=22898	GT	0/0
+1	22900	.	G	.	.	PASS	END=22904	GT	0/0
+1	22905	.	A	T	16.8782	PASS	DP=5;VDB=0.0452455;SGB=-0.556411;RPB=1;MQB=1;BQB=1;MQ0F=0;ICB=1;HOB=0.5;AC=1;AN=2;DP4=1,0,4,0;MQ=25	GT:PL:DP	0/1:50,0,22:5
+1	22906	.	T	.	.	PASS	END=22931	GT	0/0
+1	22932	.	C	A	16.2028	PASS	DP=9;VDB=0.0516381;SGB=-0.556411;RPB=0.0812164;MQB=0.162433;BQB=0.243649;MQ0F=0;ICB=1;HOB=0.5;AC=1;AN=2;DP4=5,0,4,0;MQ=27	GT:PL:DP	0/1:49,0,93:9
+1	22933	.	G	.	.	PASS	END=22967	GT	0/0
+1	22969	.	C	.	.	PASS	END=22992	GT	0/0
+1	22993	.	T	G	39.9538	PASS	DP=6;VDB=0.0483573;SGB=-0.556411;RPB=1;MQB=0.375;MQSB=1;BQB=0.25;MQ0F=0;ICB=1;HOB=0.5;AC=1;AN=2;DP4=1,1,4,0;MQ=31	GT:PL:DP	0/1:73,0,42:6
+1	22994	.	T	.	.	PASS	END=22999	GT	0/0
+1	23003	.	G	.	.	PASS	END=23006	GT	0/0
+1	23198	.	G	.	.	PASS	END=23199	GT	0/0
+1	23201	.	A	.	.	PASS	END=23203	GT	0/0
+1	23205	.	C	.	.	PASS	END=23264	GT	0/0
+1	23388	.	C	.	.	PASS	END=23424	GT	0/0
+1	23429	.	A	.	.	PASS	END=23448	GT	0/0
+1	28569	.	G	.	.	PASS	END=28612	GT	0/0
+1	28614	.	G	.	.	PASS	END=28614	GT	0/0
+1	28616	.	T	.	.	PASS	END=28616	GT	0/0
+1	28618	.	A	.	.	PASS	END=28633	GT	0/0
+1	28635	.	A	.	.	PASS	END=28645	GT	0/0
+1	28653	.	C	.	.	PASS	END=28666	GT	0/0
+1	28668	.	G	.	.	PASS	END=28668	GT	0/0
+1	28865	.	G	.	.	PASS	END=28910	GT	0/0
+1	28911	.	T	A	13.0231	PASS	DP=14;VDB=0.0896691;SGB=-0.556411;RPB=0.913931;MQB=0.0183156;MQSB=0.967216;BQB=0.913931;MQ0F=0;ICB=1;HOB=0.5;AC=1;AN=2;DP4=6,4,2,2;MQ=32	GT:PL:DP	0/1:47,0,201:14
+1	28912	.	G	.	.	PASS	END=28914	GT	0/0
+1	28920	.	G	.	.	PASS	END=28920	GT	0/0
+1	28931	.	G	.	.	PASS	END=28931	GT	0/0
+1	28938	.	G	.	.	PASS	END=28964	GT	0/0
+1	28965	.	G	A	17.8682	PASS	DP=9;VDB=0.235052;SGB=-0.556411;RPB=0.487298;MQB=0.0812164;MQSB=0.809011;BQB=0.487298;MQ0F=0;ICB=1;HOB=0.5;AC=1;AN=2;DP4=1,4,2,2;MQ=30	GT:PL:DP	0/1:51,0,124:9
+1	28966	.	T	.	.	PASS	END=28986	GT	0/0
+1	28988	.	G	.	.	PASS	END=28995	GT	0/0
+1	29122	.	A	.	.	PASS	END=29243	GT	0/0
+1	29260	.	A	.	.	PASS	END=29263	GT	0/0
+1	29265	.	T	.	.	PASS	END=29278	GT	0/0
+1	29280	.	G	.	.	PASS	END=29281	GT	0/0
+1	29889	.	G	.	.	PASS	END=29892	GT	0/0
+1	29894	.	C	.	.	PASS	END=29894	GT	0/0
+1	29896	.	A	.	.	PASS	END=29900	GT	0/0
+1	29904	.	C	.	.	PASS	END=29904	GT	0/0
+1	29906	.	G	.	.	PASS	END=29916	GT	0/0
+1	29918	.	G	.	.	PASS	END=29922	GT	0/0
+1	29924	.	T	.	.	PASS	END=29951	GT	0/0
+1	32292	.	T	.	.	PASS	END=32294	GT	0/0
+1	32303	.	T	.	.	PASS	END=32320	GT	0/0
+1	32321	.	G	.	.	PASS	END=32334	GT	0/0
+1	37184	.	A	.	.	PASS	END=37186	GT	0/0
+1	37188	.	T	.	.	PASS	END=37191	GT	0/0
+1	37208	.	C	.	.	PASS	END=37212	GT	0/0
+1	37229	.	C	.	.	PASS	END=37231	GT	0/0
+1	43253	.	G	.	.	PASS	END=43292	GT	0/0
+1	43293	.	A	T	18.8903	PASS	DP=12;VDB=0.161792;SGB=-0.590765;RPB=0.13642;MQB=0.0974428;BQB=0.935451;MQ0F=0;ICB=1;HOB=0.5;AC=1;AN=2;DP4=7,0,5,0;MQ=29	GT:PL:DP	0/1:52,0,120:12
+1	43294	.	C	.	.	PASS	END=43311	GT	0/0
+1	43312	.	G	A	19.0704	PASS	DP=11;VDB=0.640281;SGB=-0.590765;RPB=0.356607;MQB=0.148586;BQB=0.297172;MQ0F=0;ICB=1;HOB=0.5;AC=1;AN=2;DP4=6,0,5,0;MQ=28	GT:PL:DP	0/1:52,0,110:11
+1	43313	.	T	.	.	PASS	END=43368	GT	0/0
+1	43370	.	G	.	.	PASS	END=43370	GT	0/0
+1	43372	.	G	.	.	PASS	END=43377	GT	0/0
+1	43514	.	A	.	.	PASS	END=43514	GT	0/0
+1	43517	.	C	.	.	PASS	END=43541	GT	0/0
+1	43618	.	C	.	.	PASS	END=43645	GT	0/0
+1	43647	.	C	.	.	PASS	END=43651	GT	0/0
+1	43653	.	C	.	.	PASS	END=43657	GT	0/0
+1	43828	.	A	.	.	PASS	END=43833	GT	0/0
+1	43834	.	A	G	31.1217	PASS	DP=6;VDB=0.459448;SGB=-0.556411;RPB=1;MQB=0;BQB=0.875;MQ0F=0;ICB=1;HOB=0.5;AC=1;AN=2;DP4=0,2,0,4;MQ=27	GT:PL:DP	0/1:64,0,39:6
+1	43835	.	G	.	.	PASS	END=43848	GT	0/0
+1	43850	.	G	.	.	PASS	END=43900	GT	0/0
+1	44789	.	G	.	.	PASS	END=44791	GT	0/0
+1	44793	.	G	.	.	PASS	END=44794	GT	0/0
+1	44796	.	C	.	.	PASS	END=44805	GT	0/0
+1	44807	.	G	.	.	PASS	END=44811	GT	0/0
+1	44812	.	T	C	72	PASS	DP=6;VDB=0.0263438;SGB=-0.590765;RPB=1;MQB=1;MQSB=0.25;BQB=1;MQ0F=0;AC=2;AN=2;DP4=1,0,1,4;MQ=28	GT:PL:DP	1/1:101,0,3:6
+1	44813	.	G	.	.	PASS	END=44818	GT	0/0
+1	44822	.	A	.	.	PASS	END=44827	GT	0/0
+1	44828	.	G	T	108	PASS	DP=6;VDB=0.015032;SGB=-0.616816;MQSB=0.25;MQ0F=0;AC=2;AN=2;DP4=0,0,2,4;MQ=28	GT:PL:DP	1/1:135,18,0:6
+1	44829	.	G	.	.	PASS	END=44838	GT	0/0
+1	44840	.	C	.	.	PASS	END=44841	GT	0/0
+1	44843	.	C	.	.	PASS	END=44844	GT	0/0
+1	44846	.	T	.	.	PASS	END=44851	GT	0/0
+1	44853	.	C	.	.	PASS	END=44856	GT	0/0
+1	44858	.	C	.	.	PASS	END=44859	GT	0/0
+1	44861	.	G	.	.	PASS	END=44868	GT	0/0
+1	50671	.	G	.	.	PASS	END=50677	GT	0/0
+1	50678	.	C	T	11.3877	PASS	DP=5;VDB=0.82;SGB=-0.453602;RPB=0;MQB=0.166667;BQB=0;MQ0F=0;ICB=1;HOB=0.5;AC=1;AN=2;DP4=3,0,2,0;MQ=34	GT:PL:DP	0/1:44,0,80:5
+1	50679	.	G	.	.	PASS	END=50681	GT	0/0
+1	51216	.	G	.	.	PASS	END=51235	GT	0/0
+1	62105	.	C	.	.	PASS	END=62106	GT	0/0
+1	62108	.	T	.	.	PASS	END=62109	GT	0/0
+1	62133	.	G	.	.	PASS	END=62133	GT	0/0
+1	62135	.	T	.	.	PASS	END=62137	GT	0/0
+1	62139	.	G	.	.	PASS	END=62141	GT	0/0
+1	62143	.	T	.	.	PASS	END=62156	GT	0/0
+1	62158	.	G	.	.	PASS	END=62167	GT	0/0
+1	62169	.	T	.	.	PASS	END=62172	GT	0/0
+1	62178	.	G	.	.	PASS	END=62189	GT	0/0
+3	10	.	C	A	.	PASS	.;	GT	0/1
