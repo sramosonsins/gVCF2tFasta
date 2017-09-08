@@ -26,29 +26,34 @@ echo Example 1. Convert the chromosome 1 from a VCF file to a compressed tFasta 
 echo --------------------------------------------------------------------------------
 echo
 echo ../bin/gVCF2tFasta -v example.vcf -r ref.fa -o example -c 1
+../bin/gVCF2tFasta -v example.vcf -r ref.fa -o example -c 1
 echo
 echo ---------------------------------------------------------------------------------------
 echo Example 2. Convert the chromosomes 1 and 3 from a VCF file to a compressed tFasta file
 echo ---------------------------------------------------------------------------------------
 echo
 echo ../bin/gVCF2tFasta -v example.vcf -r ref.fa -o example -c 1,3
+../bin/gVCF2tFasta -v example.vcf -r ref.fa -o example -c 1,3
 echo
 echo -------------------------------------------------------------------------------------------
 echo Example 3. Convert the chromosome 1 from a compressed VCF file to a compressed tFasta file
 echo -------------------------------------------------------------------------------------------
 echo
 echo ../bin/gVCF2tFasta -v example.vcf.gz -r ref.fa -o example -c 1
+../bin/gVCF2tFasta -v example.vcf.gz -r ref.fa -o example -c 1
 echo
 echo ---------------------------------------------------------------------------------------------------------------------------------------------
 echo Example 4. Convert the chromosome 1 from a multiple VCF file with all SNPs of 2 different populations to a compressed tFasta file
 echo ---------------------------------------------------------------------------------------------------------------------------------------------
 echo
 echo ../bin/gVCF2tFasta -v example_mult.vcf -r ref.fa -o example_mult -c 1
+../bin/gVCF2tFasta -v example_mult.vcf -r ref.fa -o example_mult -c 1
 echo
 echo --------------------------------------------------------------------------------------------------------
 echo Example 5. Convert the chromosome 1 from a VCF file with the SNPs of a pool to a compressed tFasta file
 echo --------------------------------------------------------------------------------------------------------
 echo
 echo ../bin/gVCF2tFasta -v pool_p10.vcf -r ref.fa -o pool -c 1
+../bin/gVCF2tFasta -v pool_p10.vcf -r ref.fa -o pool -c 1
 echo
 
