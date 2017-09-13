@@ -24,7 +24,7 @@ AS=as
 CND_PLATFORM=GNU-Linux
 CND_DLIB_EXT=so
 CND_CONF=Debug
-CND_DISTDIR=dist
+CND_DISTDIR=bin
 CND_BUILDDIR=build
 
 # Include project Makefile
@@ -64,11 +64,11 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/vcf2tfasta
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/gVCF2tFasta
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/vcf2tfasta: ${OBJECTFILES}
-	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/vcf2tfasta ${OBJECTFILES} ${LDLIBSOPTIONS} -lz -l:libboost_iostreams.a
+${CND_DISTDIR}/gVCF2tFasta: ${OBJECTFILES}
+	${MKDIR} -p ${CND_DISTDIR}/
+	${LINK.cc} -o ${CND_DISTDIR}/gVCF2tFasta ${OBJECTFILES} ${LDLIBSOPTIONS} -lz -l:libboost_iostreams.a
 
 ${OBJECTDIR}/CFai.o: CFai.cpp 
 	${MKDIR} -p ${OBJECTDIR}
@@ -121,7 +121,7 @@ ${OBJECTDIR}/zutil.o: zutil.c
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/vcf2tfasta
+	${RM} ${CND_DISTDIR}/gVCF2tFasta
 
 # Subprojects
 .clean-subprojects:

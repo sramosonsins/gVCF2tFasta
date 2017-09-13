@@ -69,7 +69,7 @@ LDLIBSOPTIONS=
 
 ${CND_DISTDIR}/gVCF2tFasta: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}
-	${LINK.cc} -o ${CND_DISTDIR}/gVCF2tFasta ${OBJECTFILES} ${LDLIBSOPTIONS} -lz -l:libboost_iostreams.a
+	${LINK.cc} -o ${CND_DISTDIR}/gVCF2tFasta ${OBJECTFILES} ${LDLIBSOPTIONS} -lz
 
 ${OBJECTDIR}/CFai.o: ${CND_SOURCES}/CFai.cpp 
 	${MKDIR} -p ${OBJECTDIR}

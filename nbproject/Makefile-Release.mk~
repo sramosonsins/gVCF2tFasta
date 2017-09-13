@@ -26,6 +26,7 @@ CND_DLIB_EXT=so
 CND_CONF=Release
 CND_DISTDIR=bin
 CND_BUILDDIR=build
+CND_SOURCES=sources
 
 # Include project Makefile
 include Makefile
@@ -70,50 +71,50 @@ ${CND_DISTDIR}/gVCF2tFasta: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}
 	${LINK.cc} -o ${CND_DISTDIR}/gVCF2tFasta ${OBJECTFILES} ${LDLIBSOPTIONS} -lz -l:libboost_iostreams.a
 
-${OBJECTDIR}/CFai.o: CFai.cpp 
+${OBJECTDIR}/CFai.o: ${CND_SOURCES}/CFai.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CFai.o CFai.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CFai.o ${CND_SOURCES}/CFai.cpp
 
-${OBJECTDIR}/CFasta.o: CFasta.cpp 
+${OBJECTDIR}/CFasta.o: ${CND_SOURCES}/CFasta.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CFasta.o CFasta.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CFasta.o ${CND_SOURCES}/CFasta.cpp
 
-${OBJECTDIR}/CStringTools.o: CStringTools.cpp 
+${OBJECTDIR}/CStringTools.o: ${CND_SOURCES}/CStringTools.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CStringTools.o CStringTools.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CStringTools.o ${CND_SOURCES}/CStringTools.cpp
 
-${OBJECTDIR}/CTFasta.o: CTFasta.cpp 
+${OBJECTDIR}/CTFasta.o: ${CND_SOURCES}/CTFasta.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CTFasta.o CTFasta.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CTFasta.o ${CND_SOURCES}/CTFasta.cpp
 
-${OBJECTDIR}/CVCF.o: CVCF.cpp 
+${OBJECTDIR}/CVCF.o: ${CND_SOURCES}/CVCF.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CVCF.o CVCF.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CVCF.o ${CND_SOURCES}/CVCF.cpp
 
-${OBJECTDIR}/File.o: File.cpp 
+${OBJECTDIR}/File.o: ${CND_SOURCES}/File.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/File.o File.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/File.o ${CND_SOURCES}/File.cpp
 
-${OBJECTDIR}/main.o: main.cpp 
+${OBJECTDIR}/main.o: ${CND_SOURCES}/main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o ${CND_SOURCES}/main.cpp
 
-${OBJECTDIR}/zindex.o: zindex.c 
+${OBJECTDIR}/zindex.o: ${CND_SOURCES}/zindex.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/zindex.o zindex.c
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/zindex.o ${CND_SOURCES}/zindex.c
 
-${OBJECTDIR}/zutil.o: zutil.c 
+${OBJECTDIR}/zutil.o: ${CND_SOURCES}/zutil.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/zutil.o zutil.c
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/zutil.o ${CND_SOURCES}/zutil.c
 
 # Subprojects
 .build-subprojects:
