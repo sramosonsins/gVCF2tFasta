@@ -57,11 +57,15 @@ std::string CVCF::SetDataline(std::vector<std::string> vcfline) {
 
     int pos = vcfline[7].find("END=");
     int indel = vcfline[7].find("INDEL");
+    int sv = vcfline[7].find("SV");
 
     if (pos != std::string::npos) {
         type_data = "BLOCK";
         position_end_ = CStringTools::stringToInt(vcfline[7].substr(pos + 4, vcfline[7].find(";", pos))); // 4 is the size of "END=", until it finds ";"
     } else if (indel != std::string::npos) {
+        type_data = "INDEL";
+        position_end_ = 0;
+    } else if (sv != std::string::npos) {
         type_data = "INDEL";
         position_end_ = 0;
     } else {

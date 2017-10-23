@@ -28,13 +28,17 @@ void help(std::string name) {
     std::cerr << "VCF2tFasta\n"
             << "Version 0.2\n"
             << "Usage: ./vcf2tfasta -v input.vcf -r reference.fa -o outputname -c chromosome(s)\n"
+            << "Structural Variants are considered as missing data (N)"
             << "Options:\n"
             << "\t-h\t\tHelp and exit\n"
             << "\t-v\t\tInput VCF file\n"
             << "\t-r\t\tReference Fasta file (it must be indexed with samtools faidx)\n"
             << "\t-o\t\tOutput compressed tFasta filename (without extension), it will be added the chromosome(s) of -c option in the final filename\n"
             << "\t-c\t\tChromosome(s) to convert (if there are more than one chromosome, they have to be separated by comma)\n"
-            //<< "\t-i\t\tImputation, 0 if missing data in VCF is equal to N in tFasta, 1 if missing data in VCF is equal to reference fasta in tFasta. Default value is 0\n"
+            << "\t-i\t\tImputation (Only use with VCF files, not gVCF files):\n"
+            << "\t\t\t\t0 if missing data in VCF is equal to N in tFasta\n"
+            << "\t\t\t\t1 if missing data in VCF is equal to reference fasta in tFasta\n"
+            << "\t\t\t\tDefault value is 0\n"
             << std::endl;
 }
 
@@ -161,8 +165,8 @@ int main(int argc, char** argv) {
     tfastaext = tfastaname + "_" + chromgroup + ".tfa.gz";
     std::cout << "tFasta file: " << tfastaext << std::endl;
     std::cout << "Chromosome(s): " << chromgroup << std::endl;
-    /*if (imputation == "0") {
-        std::cout << "Imputation: False" << std::endl;
+    if (imputation == "0") {
+        //std::cout << "Imputation: True" << std::endl;
     } else if (imputation == "1") {
         std::cout << "Imputation: True" << std::endl;
     } else {
@@ -171,7 +175,7 @@ int main(int argc, char** argv) {
         std::cout << "\tIncorrect imputation value (different to 0 or 1)" << std::endl;
         std::cout << std::endl;
         return 1;
-    }*/
+    }
     std::cout << std::endl;
 
     std::vector<std::string> chromosomegroup = CStringTools::split(chromgroup, ',');
