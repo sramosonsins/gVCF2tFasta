@@ -354,55 +354,57 @@ int main(int argc, char** argv) {
                                 block = lineVCF.find("ROH");
                                 indelpos = lineVCF.find("INDEL");
 
-                                if (snppos != std::string::npos) {
-                                    // Si la linea del VCF corresponde a un SNP:
+                                if (CStringTools::stringToInt(pos) != current_position) {
+                                    if (snppos != std::string::npos) {
+                                        // Si la linea del VCF corresponde a un SNP:
 
-                                    linetfasta = chromVCF + ":" + pos + "\t" + nts + "\n";
-                                    tfasta.writeFile(linetfasta);
+                                        linetfasta = chromVCF + ":" + pos + "\t" + nts + "\n";
+                                        tfasta.writeFile(linetfasta);
 
-                                    current_position = CStringTools::stringToInt(pos);
+                                        current_position = CStringTools::stringToInt(pos);
 
-                                } else if (block != std::string::npos) {
-                                    // Si la linea del VCF corresponde a un Bloque Homocigoto:
-                                    pos_f = CStringTools::stringToInt(dline[4]);
+                                    } else if (block != std::string::npos) {
+                                        // Si la linea del VCF corresponde a un Bloque Homocigoto:
+                                        pos_f = CStringTools::stringToInt(dline[4]);
 
-                                    // Obtenemos la secuencia correspondiente al bloque a partir del Fasta de referencia:
-                                    if (fasta.openReadFile()) {
-                                        subseq = fasta.obtainSubSeq(chromVCF, CStringTools::stringToInt(pos), pos_f);
-                                        fasta.closeFile();
-                                    }
-
-                                    counter = 0;
-                                    // Imprimimos la secuencia en formato tFasta:
-                                    for (int n = CStringTools::stringToInt(pos); n <= pos_f; n++) {
-                                        std::string nucleotides = "";
-
-                                        linetfasta = chromVCF + ":" + CStringTools::intToString(n) + "\t";
-
-                                        for (int s = 0; s < nsamples; s++) {
-                                            for (int i = s * count_alleles; i < (s * count_alleles) + count_alleles; i++) {
-                                                if (nts[i] == 'R') {
-                                                    nucleotides = nucleotides + subseq[counter];
-                                                } else if (nts[i] == 'M') {
-                                                    nucleotides = nucleotides + "N";
-                                                }
-                                            }
+                                        // Obtenemos la secuencia correspondiente al bloque a partir del Fasta de referencia:
+                                        if (fasta.openReadFile()) {
+                                            subseq = fasta.obtainSubSeq(chromVCF, CStringTools::stringToInt(pos), pos_f);
+                                            fasta.closeFile();
                                         }
 
-                                        linetfasta = linetfasta + nucleotides + "\n";
+                                        counter = 0;
+                                        // Imprimimos la secuencia en formato tFasta:
+                                        for (int n = CStringTools::stringToInt(pos); n <= pos_f; n++) {
+                                            std::string nucleotides = "";
+
+                                            linetfasta = chromVCF + ":" + CStringTools::intToString(n) + "\t";
+
+                                            for (int s = 0; s < nsamples; s++) {
+                                                for (int i = s * count_alleles; i < (s * count_alleles) + count_alleles; i++) {
+                                                    if (nts[i] == 'R') {
+                                                        nucleotides = nucleotides + subseq[counter];
+                                                    } else if (nts[i] == 'M') {
+                                                        nucleotides = nucleotides + "N";
+                                                    }
+                                                }
+                                            }
+
+                                            linetfasta = linetfasta + nucleotides + "\n";
+                                            tfasta.writeFile(linetfasta);
+                                            counter++;
+                                        }
+
+                                        current_position = pos_f;
+
+                                    } else if (indelpos != std::string::npos) {
+                                        // Si la linea del VCF corresponde a un INDEL, ponemos Ns como si fuera missing data:
+
+                                        linetfasta = chromVCF + ":" + pos + "\t" + nts + "\n";
                                         tfasta.writeFile(linetfasta);
-                                        counter++;
+
+                                        current_position = CStringTools::stringToInt(pos);
                                     }
-
-                                    current_position = pos_f;
-
-                                } else if (indelpos != std::string::npos) {
-                                    // Si la linea del VCF corresponde a un INDEL, ponemos Ns como si fuera missing data:
-
-                                    linetfasta = chromVCF + ":" + pos + "\t" + nts + "\n";
-                                    tfasta.writeFile(linetfasta);
-
-                                    current_position = CStringTools::stringToInt(pos);
                                 }
                             } else {
                                 // Si el cromosoma de la dataline no corresponde al cromosoma actual:
