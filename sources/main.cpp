@@ -27,14 +27,14 @@
 void help(std::string name) {
     std::cerr << "VCF2tFasta\n"
             << "Version 0.2\n"
-            << "Usage: ./vcf2tfasta -v input.vcf -r reference.fa -o outputname -c chromosome(s)\n"
+            << "Usage: ./vcf2tfasta -v input.vcf(.gz) -r reference.fa(.gz) -o outputname -n chromosomes.txt\n"
             << "Structural Variants are considered as missing data (N)"
             << "Options:\n"
             << "\t-h\t\tHelp and exit\n"
             << "\t-v\t\tInput VCF file\n"
-            << "\t-r\t\tReference Fasta file (it must be indexed with samtools faidx)\n"
-            << "\t-o\t\tOutput compressed tFasta filename (without extension), it will be added the chromosome(s) of -c option in the final filename\n"
-            << "\t-c\t\tChromosome(s) to convert (if there are more than one chromosome, they have to be separated by comma)\n"
+            << "\t-r\t\tReference Fasta file\n"
+            << "\t-o\t\tOutput compressed tFasta filename (without extension)\n"
+            << "\t-n\t\tFile with chromosome(s) to convert and its length\n"
             << "\t-i\t\tImputation (Only use with VCF files, not gVCF files):\n"
             << "\t\t\t\t0 if missing data in VCF is equal to N in tFasta\n"
             << "\t\t\t\t1 if missing data in VCF is equal to reference fasta in tFasta\n"
@@ -42,7 +42,7 @@ void help(std::string name) {
             << std::endl;
 }
 
-void test(std::string tfasta, std::string refname, std::string chromosome) {
+/*void test(std::string tfasta, std::string refname, std::string chromosome) {
     FILE *h = 0;
     SGZip gz;
 
@@ -80,7 +80,7 @@ void test(std::string tfasta, std::string refname, std::string chromosome) {
 
         fzclose(h, &gz);
     }
-}
+}*/
 
 int main(int argc, char** argv) {
 
@@ -92,7 +92,7 @@ int main(int argc, char** argv) {
     std::string tfastaname;
     std::string tfastaext;
     std::string refname;
-    std::string chromgroup;
+    std::string chromname;
     std::string imputation;
 
     char tmp;
@@ -101,7 +101,7 @@ int main(int argc, char** argv) {
         exit(1);
     }
 
-    while ((tmp = getopt(argc, argv, "hv:r:o:c:i:")) != -1) {
+    while ((tmp = getopt(argc, argv, "hv:r:o:n:i:")) != -1) {
         switch (tmp) {
             case 'h':
                 help(argv[0]);
@@ -116,8 +116,8 @@ int main(int argc, char** argv) {
             case 'o':
                 tfastaname = std::string(optarg);
                 break;
-            case 'c':
-                chromgroup = std::string(optarg);
+            case 'n':
+                chromname = std::string(optarg);
                 break;
             case 'i':
                 imputation = std::string(optarg);
@@ -148,11 +148,11 @@ int main(int argc, char** argv) {
         std::cout << std::endl;
         return 1;
     }
-    if (chromgroup == "") {
+    if (chromname == "") {
         // Si no se da ningun cromosoma en el comando
         std::cout << std::endl;
         std::cout << "Error:" << std::endl;
-        std::cout << "\tChromosome(s) name not defined" << std::endl;
+        std::cout << "\tFile with chromosomes and lengths not defined" << std::endl;
         std::cout << std::endl;
         return 1;
     }
@@ -162,9 +162,9 @@ int main(int argc, char** argv) {
     std::cout << std::endl;
     std::cout << "VCF file: " << vcfname << std::endl;
     std::cout << "Reference Fasta file: " << refname << std::endl;
-    tfastaext = tfastaname + "_" + chromgroup + ".tfa.gz";
+    tfastaext = tfastaname + ".tfa.gz";
     std::cout << "tFasta file: " << tfastaext << std::endl;
-    std::cout << "Chromosome(s): " << chromgroup << std::endl;
+    std::cout << "File with chromosomes and length: " << chromname << std::endl;
     if (imputation == "0") {
         //std::cout << "Imputation: True" << std::endl;
     } else if (imputation == "1") {
@@ -178,14 +178,16 @@ int main(int argc, char** argv) {
     }
     std::cout << std::endl;
 
-    std::vector<std::string> chromosomegroup = CStringTools::split(chromgroup, ',');
+    //std::vector<std::string> chromosomegroup = CStringTools::split(chromgroup, ',');
 
     CVCF vcf(vcfname);
     CTFasta tfasta(tfastaext);
     CFasta fasta(refname);
-    CFai fai(refname + ".fai");
+    CFai fai(chromname);
 
+    std::vector<std::string> chromosomegroup = {};
     std::string chromosome = "";
+    std::string chromfai = "";
     char c;
     std::string line = "";
     std::vector<std::string> samplenames = {};
@@ -234,6 +236,23 @@ int main(int argc, char** argv) {
                 }
             }
             vcf.closeFile();
+        }
+        
+        if (fai.openReadFile()) {
+            while (!fai.endFile()) {
+                c = fai.getFileChar();
+                if (c == '\n') {
+                    // Dividimos la linea por columnas y obtenemos el cromosoma:
+                    std::vector<std::string> failine = CStringTools::split(line, '\t');
+                    chromfai = failine[0];
+                    chromosomegroup.push_back(chromfai);
+
+                    line = "";
+                } else {
+                    line += c;
+                }
+            }
+            fai.closeFile();
         }
 
         //Por cada cromosoma indicado como argumento del programa:
@@ -289,7 +308,7 @@ int main(int argc, char** argv) {
                                 }
 
                                 std::string header =
-                                        "#vcf2tfasta -v " + vcfname + " -r " + refname + " -o " + tfastaext + " -c " + chromgroup + "\n" +
+                                        "#vcf2tfasta -v " + vcfname + " -r " + refname + " -o " + tfastaext + " -n " + chromname + "\n" +
                                         "#NAMES: " + samplenames_alleles + "\n" +
                                         "#CHROMOSOME:POSITION" + "\t" + "GENOTYPES" + "\n";
                                 tfasta.writeFile(header);
