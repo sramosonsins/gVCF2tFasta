@@ -186,10 +186,13 @@ int main(int argc, char** argv) {
     CFai fai(chromname);
 
     std::vector<std::string> chromosomegroup = {};
+    std::vector<std::string> chromosomelength = {};
     std::string chromosome = "";
     std::string chromfai = "";
+    std::string lengthfai = "";
     char c;
     std::string line = "";
+    std::string linefai = "";
     std::vector<std::string> samplenames = {};
     int nsamples = 0;
     int sizeChrom;
@@ -237,46 +240,45 @@ int main(int argc, char** argv) {
             }
             vcf.closeFile();
         }
-        
+
         if (fai.openReadFile()) {
+            linefai = "";
             while (!fai.endFile()) {
                 c = fai.getFileChar();
                 if (c == '\n') {
                     // Dividimos la linea por columnas y obtenemos el cromosoma:
-                    std::vector<std::string> failine = CStringTools::split(line, '\t');
+                    std::vector<std::string> failine = CStringTools::split(linefai, '\t');
                     chromfai = failine[0];
                     chromosomegroup.push_back(chromfai);
+                    lengthfai = failine[1];
+                    chromosomelength.push_back(lengthfai);
 
-                    line = "";
+                    linefai = "";
                 } else {
-                    line += c;
+                    linefai += c;
                 }
             }
             fai.closeFile();
+        } else {
+            std::cout << std::endl;
+            std::cout << "Error:" << std::endl;
+            std::cout << "\tIndex file of reference fasta not found '" << refname << ".fai'" << std::endl;
+            std::cout << "\tExample: samtools faidx " << refname << std::endl;
+            std::cout << std::endl;
+            return 1;
         }
 
         //Por cada cromosoma indicado como argumento del programa:
         for (std::vector<int>::size_type i = 0; i < chromosomegroup.size(); i++) {
             chromosome = chromosomegroup[i];
+            sizeChrom = CStringTools::stringToInt(chromosomelength[i]);
+            std::cout <<chromosome << ":" << sizeChrom << std::endl;
             // Open the VCF file:
             if (vcf.openReadFile()) {
 
                 line = "";
                 current_chromosome = "";
                 current_position = 0;
-
-                // Obtenemos el tamaño del cromosoma en el que estamos:
-                if (fai.openReadFile()) {
-                    sizeChrom = fai.chromosomeSize(chromosome);
-                    fai.closeFile();
-                } else {
-                    std::cout << std::endl;
-                    std::cout << "Error:" << std::endl;
-                    std::cout << "\tIndex file of reference fasta not found '" << refname << ".fai'" << std::endl;
-                    std::cout << "\tExample: samtools faidx " << refname << std::endl;
-                    std::cout << std::endl;
-                    return 1;
-                }
 
                 // Analizamos cada línea del VCF para obtener la secuencia correspondiente del tFasta:
                 while (!vcf.endFile()) {

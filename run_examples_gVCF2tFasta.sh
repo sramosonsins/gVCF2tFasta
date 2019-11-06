@@ -11,49 +11,42 @@
 #      -h [help and exit]
 
 # To compile:
-make -f nbproject/Makefile-Release.mk build/Release/GNU-Linux/main.o
-mkdir -p build/Release/GNU-Linux
-rm -f "build/Release/GNU-Linux/main.o.d"
-g++ -std=c++0x -lz   -c -O2 -MMD -MP -MF "build/Release/GNU-Linux/main.o.d" -o build/Release/GNU-Linux/main.o sources/main.cpp
-/usr/bin/make -f Makefile CONF=Release
+#make -f nbproject/Makefile-Release.mk build/Release/GNU-Linux/main.o
+#mkdir -p build/Release/GNU-Linux
+#rm -f "build/Release/GNU-Linux/main.o.d"
+#g++ -std=c++0x -lz   -c -O2 -MMD -MP -MF "build/Release/GNU-Linux/main.o.d" -o build/Release/GNU-Linux/main.o sources/main.cpp
+#/usr/bin/make -f Makefile CONF=Release
 
 cd ./Examples
 
 # Run examples
 
-echo --------------------------------------------------------------------------------
-echo Example 1. Convert the chromosome 1 from a VCF file to a compressed tFasta file
-echo --------------------------------------------------------------------------------
+echo ---------------------------------------------------------
+echo Example 1. Convert a VCF file to a compressed tFasta file
+echo ---------------------------------------------------------
 echo
-echo ../bin/gVCF2tFasta -v example.vcf -r ref.fa -o example -c 1
-../bin/gVCF2tFasta -v example.vcf -r ref.fa -o example -c 1
+echo ../bin/gVCF2tFasta -v example.vcf -r ref.fa.gz -o example -n ref.fa.fai
+../bin/gVCF2tFasta -v example.vcf -r ref.fa.gz -o example -n ref.fa.fai
 echo
-echo ---------------------------------------------------------------------------------------
-echo Example 2. Convert the chromosomes 1 and 3 from a VCF file to a compressed tFasta file
-echo ---------------------------------------------------------------------------------------
+echo --------------------------------------------------------------------
+echo Example 2. Convert a compressed VCF file to a compressed tFasta file
+echo --------------------------------------------------------------------
 echo
-echo ../bin/gVCF2tFasta -v example.vcf -r ref.fa -o example -c 1,3
-../bin/gVCF2tFasta -v example.vcf -r ref.fa -o example -c 1,3
+echo ../bin/gVCF2tFasta -v example.vcf.gz -r ref.fa.gz -o example -n ref.fa.fai
+../bin/gVCF2tFasta -v example.vcf.gz -r ref.fa.gz -o example -n ref.fa.fai
 echo
-echo -------------------------------------------------------------------------------------------
-echo Example 3. Convert the chromosome 1 from a compressed VCF file to a compressed tFasta file
-echo -------------------------------------------------------------------------------------------
+echo -----------------------------------------------------------------------------------------------------------
+echo Example 3. Convert a multiple VCF file with all SNPs of 2 different populations to a compressed tFasta file
+echo -----------------------------------------------------------------------------------------------------------
 echo
-echo ../bin/gVCF2tFasta -v example.vcf.gz -r ref.fa -o example -c 1
-../bin/gVCF2tFasta -v example.vcf.gz -r ref.fa -o example -c 1
+echo ../bin/gVCF2tFasta -v multipleVCF_2pop.vcf -r ref.fa.gz -o example_mult -n ref.fa.fai
+../bin/gVCF2tFasta -v multipleVCF_2pop.vcf -r ref.fa.gz -o example_mult -n ref.fa.fai
 echo
-echo ---------------------------------------------------------------------------------------------------------------------------------------------
-echo Example 4. Convert the chromosome 1 from a multiple VCF file with all SNPs of 2 different populations to a compressed tFasta file
-echo ---------------------------------------------------------------------------------------------------------------------------------------------
+echo ---------------------------------------------------------------------------------
+echo Example 4. Convert a VCF file with the SNPs of a pool to a compressed tFasta file
+echo ---------------------------------------------------------------------------------
 echo
-echo ../bin/gVCF2tFasta -v example_mult.vcf -r ref.fa -o example_mult -c 1
-../bin/gVCF2tFasta -v example_mult.vcf -r ref.fa -o example_mult -c 1
-echo
-echo --------------------------------------------------------------------------------------------------------
-echo Example 5. Convert the chromosome 1 from a VCF file with the SNPs of a pool to a compressed tFasta file
-echo --------------------------------------------------------------------------------------------------------
-echo
-echo ../bin/gVCF2tFasta -v pool_p10.vcf -r ref.fa -o pool -c 1
-../bin/gVCF2tFasta -v pool_p10.vcf -r ref.fa -o pool -c 1
+echo ../bin/gVCF2tFasta -v pool_p10.vcf -r ref.fa.gz -o pool -n ref.fa.fai
+../bin/gVCF2tFasta -v pool_p10.vcf -r ref.fa.gz -o pool -n ref.fa.fai
 echo
 
