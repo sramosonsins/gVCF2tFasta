@@ -178,8 +178,6 @@ int main(int argc, char** argv) {
     }
     std::cout << std::endl;
 
-    //std::vector<std::string> chromosomegroup = CStringTools::split(chromgroup, ',');
-
     CVCF vcf(vcfname);
     CTFasta tfasta(tfastaext);
     CFasta fasta(refname);
@@ -272,7 +270,6 @@ int main(int argc, char** argv) {
         for (std::vector<int>::size_type i = 0; i < chromosomegroup.size(); i++) {
             chromosome = chromosomegroup[i];
             sizeChrom = CStringTools::stringToInt(chromosomelength[i]);
-            //std::cout << chromosome << ":" << sizeChrom << std::endl;
             // Open the VCF file:
             if (vcf.openReadFile()) {
 
