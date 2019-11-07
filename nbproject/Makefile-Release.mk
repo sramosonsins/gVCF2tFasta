@@ -51,8 +51,8 @@ OBJECTFILES= \
 CFLAGS=
 
 # CC Compiler Flags
-CCFLAGS=-std=c++0x -lz
-CXXFLAGS=-std=c++0x -lz
+CCFLAGS=-std=c++0x -lz -I/usr/local/include
+CXXFLAGS=-std=c++0x -lz -I/usr/local/include
 
 # Fortran Compiler Flags
 FFLAGS=
