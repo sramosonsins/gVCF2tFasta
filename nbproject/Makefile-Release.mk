@@ -74,47 +74,47 @@ ${CND_DISTDIR}/gVCF2tFasta: ${OBJECTFILES}
 ${OBJECTDIR}/CFai.o: ${CND_SOURCES}/CFai.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CFai.o ${CND_SOURCES}/CFai.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CFai.o ${CND_SOURCES}/CFai.cpp -I/usr/local/include
 
 ${OBJECTDIR}/CFasta.o: ${CND_SOURCES}/CFasta.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CFasta.o ${CND_SOURCES}/CFasta.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CFasta.o ${CND_SOURCES}/CFasta.cpp -I/usr/local/include
 
 ${OBJECTDIR}/CStringTools.o: ${CND_SOURCES}/CStringTools.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CStringTools.o ${CND_SOURCES}/CStringTools.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CStringTools.o ${CND_SOURCES}/CStringTools.cpp -I/usr/local/include
 
 ${OBJECTDIR}/CTFasta.o: ${CND_SOURCES}/CTFasta.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CTFasta.o ${CND_SOURCES}/CTFasta.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CTFasta.o ${CND_SOURCES}/CTFasta.cpp -I/usr/local/include
 
 ${OBJECTDIR}/CVCF.o: ${CND_SOURCES}/CVCF.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CVCF.o ${CND_SOURCES}/CVCF.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CVCF.o ${CND_SOURCES}/CVCF.cpp -I/usr/local/include
 
 ${OBJECTDIR}/File.o: ${CND_SOURCES}/File.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/File.o ${CND_SOURCES}/File.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/File.o ${CND_SOURCES}/File.cpp -I/usr/local/include
 
 ${OBJECTDIR}/main.o: ${CND_SOURCES}/main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o ${CND_SOURCES}/main.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o ${CND_SOURCES}/main.cpp -I/usr/local/include
 
 ${OBJECTDIR}/zindex.o: ${CND_SOURCES}/zindex.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/zindex.o ${CND_SOURCES}/zindex.c
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/zindex.o ${CND_SOURCES}/zindex.c -I/usr/local/include
 
 ${OBJECTDIR}/zutil.o: ${CND_SOURCES}/zutil.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/zutil.o ${CND_SOURCES}/zutil.c
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/zutil.o ${CND_SOURCES}/zutil.c -I/usr/local/include
 
 # Subprojects
 .build-subprojects:
