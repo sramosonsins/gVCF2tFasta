@@ -29,4 +29,3 @@ private:
 };
 
 #endif /* CFASTA_H */
-

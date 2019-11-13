@@ -623,4 +623,3 @@ gz_return unload_all_index_positions(struct SGZIndex *idx) {
 	}
 	return ret;
 }
-

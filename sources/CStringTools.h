@@ -32,4 +32,3 @@ private:
 };
 
 #endif /* CSTRINGTOOLS_H */
-

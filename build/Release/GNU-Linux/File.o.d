@@ -1,8 +1,7 @@
-build/Release/GNU-Linux/File.o: sources/File.cpp sources/File.h \
- sources/zutil.h sources/zindex.h
+build/Release/GNU-Linux/File.o: File.cpp File.h zutil.h zindex.h
 
-sources/File.h:
+File.h:
 
-sources/zutil.h:
+zutil.h:
 
-sources/zindex.h:
+zindex.h:

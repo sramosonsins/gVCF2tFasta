@@ -1,4 +1,3 @@
-build/Release/GNU-Linux/CStringTools.o: sources/CStringTools.cpp \
- sources/CStringTools.h
+build/Release/GNU-Linux/CStringTools.o: CStringTools.cpp CStringTools.h
 
-sources/CStringTools.h:
+CStringTools.h:

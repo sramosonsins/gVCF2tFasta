@@ -1,6 +1,5 @@
-build/Release/GNU-Linux/zindex.o: sources/zindex.c sources/zindex.h \
- sources/zutil.h
+build/Release/GNU-Linux/zindex.o: zindex.c zindex.h zutil.h
 
-sources/zindex.h:
+zindex.h:
 
-sources/zutil.h:
+zutil.h:

@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=vcf2tfasta
+PROJECTNAME=gVCF2tFasta
 
 # Active Configuration
 DEFAULTCONF=Debug

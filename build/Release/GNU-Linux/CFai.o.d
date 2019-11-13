@@ -1,12 +1,12 @@
-build/Release/GNU-Linux/CFai.o: sources/CFai.cpp sources/CFai.h \
- sources/File.h sources/zutil.h sources/zindex.h sources/CStringTools.h
+build/Release/GNU-Linux/CFai.o: CFai.cpp CFai.h File.h zutil.h zindex.h \
+ CStringTools.h
 
-sources/CFai.h:
+CFai.h:
 
-sources/File.h:
+File.h:
 
-sources/zutil.h:
+zutil.h:
 
-sources/zindex.h:
+zindex.h:
 
-sources/CStringTools.h:
+CStringTools.h:

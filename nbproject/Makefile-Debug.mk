@@ -24,7 +24,7 @@ AS=as
 CND_PLATFORM=GNU-Linux
 CND_DLIB_EXT=so
 CND_CONF=Debug
-CND_DISTDIR=bin
+CND_DISTDIR=dist
 CND_BUILDDIR=build
 
 # Include project Makefile
@@ -35,23 +35,23 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/CFai.o \
-	${OBJECTDIR}/CFasta.o \
-	${OBJECTDIR}/CStringTools.o \
-	${OBJECTDIR}/CTFasta.o \
-	${OBJECTDIR}/CVCF.o \
-	${OBJECTDIR}/File.o \
-	${OBJECTDIR}/main.o \
-	${OBJECTDIR}/zindex.o \
-	${OBJECTDIR}/zutil.o
+	${OBJECTDIR}/sources/CFai.o \
+	${OBJECTDIR}/sources/CFasta.o \
+	${OBJECTDIR}/sources/CStringTools.o \
+	${OBJECTDIR}/sources/CTFasta.o \
+	${OBJECTDIR}/sources/CVCF.o \
+	${OBJECTDIR}/sources/File.o \
+	${OBJECTDIR}/sources/main.o \
+	${OBJECTDIR}/sources/zindex.o \
+	${OBJECTDIR}/sources/zutil.o
 
 
 # C Compiler Flags
 CFLAGS=
 
 # CC Compiler Flags
-CCFLAGS=-std=c++0x -lz
-CXXFLAGS=-std=c++0x -lz
+CCFLAGS=-lz
+CXXFLAGS=-lz
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -64,56 +64,56 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/gVCF2tFasta
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/gvcf2tfasta
 
-${CND_DISTDIR}/gVCF2tFasta: ${OBJECTFILES}
-	${MKDIR} -p ${CND_DISTDIR}/
-	${LINK.cc} -o ${CND_DISTDIR}/gVCF2tFasta ${OBJECTFILES} ${LDLIBSOPTIONS} -lz
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/gvcf2tfasta: ${OBJECTFILES}
+	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/gvcf2tfasta ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/CFai.o: CFai.cpp 
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/sources/CFai.o: sources/CFai.cpp
+	${MKDIR} -p ${OBJECTDIR}/sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CFai.o CFai.cpp
+	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/sources/CFai.o sources/CFai.cpp
 
-${OBJECTDIR}/CFasta.o: CFasta.cpp 
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/sources/CFasta.o: sources/CFasta.cpp
+	${MKDIR} -p ${OBJECTDIR}/sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CFasta.o CFasta.cpp
+	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/sources/CFasta.o sources/CFasta.cpp
 
-${OBJECTDIR}/CStringTools.o: CStringTools.cpp 
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/sources/CStringTools.o: sources/CStringTools.cpp
+	${MKDIR} -p ${OBJECTDIR}/sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CStringTools.o CStringTools.cpp
+	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/sources/CStringTools.o sources/CStringTools.cpp
 
-${OBJECTDIR}/CTFasta.o: CTFasta.cpp 
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/sources/CTFasta.o: sources/CTFasta.cpp
+	${MKDIR} -p ${OBJECTDIR}/sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CTFasta.o CTFasta.cpp
+	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/sources/CTFasta.o sources/CTFasta.cpp
 
-${OBJECTDIR}/CVCF.o: CVCF.cpp 
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/sources/CVCF.o: sources/CVCF.cpp
+	${MKDIR} -p ${OBJECTDIR}/sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CVCF.o CVCF.cpp
+	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/sources/CVCF.o sources/CVCF.cpp
 
-${OBJECTDIR}/File.o: File.cpp 
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/sources/File.o: sources/File.cpp
+	${MKDIR} -p ${OBJECTDIR}/sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/File.o File.cpp
+	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/sources/File.o sources/File.cpp
 
-${OBJECTDIR}/main.o: main.cpp 
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/sources/main.o: sources/main.cpp
+	${MKDIR} -p ${OBJECTDIR}/sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/sources/main.o sources/main.cpp
 
-${OBJECTDIR}/zindex.o: zindex.c 
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/sources/zindex.o: sources/zindex.c
+	${MKDIR} -p ${OBJECTDIR}/sources
 	${RM} "$@.d"
-	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/zindex.o zindex.c
+	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/sources/zindex.o sources/zindex.c
 
-${OBJECTDIR}/zutil.o: zutil.c 
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/sources/zutil.o: sources/zutil.c
+	${MKDIR} -p ${OBJECTDIR}/sources
 	${RM} "$@.d"
-	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/zutil.o zutil.c
+	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/sources/zutil.o sources/zutil.c
 
 # Subprojects
 .build-subprojects:
@@ -121,7 +121,6 @@ ${OBJECTDIR}/zutil.o: zutil.c
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/gVCF2tFasta
 
 # Subprojects
 .clean-subprojects:

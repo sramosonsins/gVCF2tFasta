@@ -72,4 +72,3 @@ private:
 };
 
 #endif /* CVCF_H */
-

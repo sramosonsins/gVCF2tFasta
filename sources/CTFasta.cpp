@@ -18,4 +18,3 @@ CTFasta::CTFasta(const std::string & file_name) : File(file_name) {
 
 //CTFasta::~CTFasta() {
 //}
-

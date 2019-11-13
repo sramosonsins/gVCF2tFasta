@@ -8,14 +8,14 @@
 TOP=`pwd`
 CND_PLATFORM=GNU-Linux
 CND_CONF=Debug
-CND_DISTDIR=bin
+CND_DISTDIR=dist
 CND_BUILDDIR=build
 CND_DLIB_EXT=so
 NBTMPDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tmp-packaging
 TMPDIRNAME=tmp-packaging
-OUTPUT_PATH=${CND_DISTDIR}/gVCF2tFasta
-OUTPUT_BASENAME=gVCF2tFasta
-PACKAGE_TOP_DIR=gVCF2tFasta/
+OUTPUT_PATH=${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/gvcf2tfasta
+OUTPUT_BASENAME=gvcf2tfasta
+PACKAGE_TOP_DIR=gvcf2tfasta/
 
 # Functions
 function checkReturnCode
@@ -54,21 +54,21 @@ function copyFileToTmpDir
 
 # Setup
 cd "${TOP}"
-mkdir -p ${CND_DISTDIR}/package
+mkdir -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package
 rm -rf ${NBTMPDIR}
 mkdir -p ${NBTMPDIR}
 
 # Copy files and create directories and links
 cd "${TOP}"
-makeDirectory "${NBTMPDIR}/gVCF2tFasta/bin"
+makeDirectory "${NBTMPDIR}/gvcf2tfasta/bin"
 copyFileToTmpDir "${OUTPUT_PATH}" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}" 0755
 
 
 # Generate tar file
 cd "${TOP}"
-rm -f ${CND_DISTDIR}/package/gVCF2tFasta.tar
+rm -f ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/gvcf2tfasta.tar
 cd ${NBTMPDIR}
-tar -vcf ../../../../${CND_DISTDIR}/package/gVCF2tFasta.tar *
+tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/gvcf2tfasta.tar *
 checkReturnCode
 
 # Cleanup

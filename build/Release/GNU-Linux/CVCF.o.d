@@ -1,12 +1,12 @@
-build/Release/GNU-Linux/CVCF.o: sources/CVCF.cpp sources/CVCF.h \
- sources/zutil.h sources/CStringTools.h sources/File.h sources/zindex.h
+build/Release/GNU-Linux/CVCF.o: CVCF.cpp CVCF.h zutil.h CStringTools.h \
+ File.h zindex.h
 
-sources/CVCF.h:
+CVCF.h:
 
-sources/zutil.h:
+zutil.h:
 
-sources/CStringTools.h:
+CStringTools.h:
 
-sources/File.h:
+File.h:
 
-sources/zindex.h:
+zindex.h:

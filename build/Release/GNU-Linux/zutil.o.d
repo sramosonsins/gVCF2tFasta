@@ -1,3 +1,3 @@
-build/Release/GNU-Linux/zutil.o: sources/zutil.c sources/zutil.h
+build/Release/GNU-Linux/zutil.o: zutil.c zutil.h
 
-sources/zutil.h:
+zutil.h:

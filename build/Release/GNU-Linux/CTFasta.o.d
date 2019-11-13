@@ -1,10 +1,10 @@
-build/Release/GNU-Linux/CTFasta.o: sources/CTFasta.cpp sources/CTFasta.h \
- sources/File.h sources/zutil.h sources/zindex.h
+build/Release/GNU-Linux/CTFasta.o: CTFasta.cpp CTFasta.h File.h zutil.h \
+ zindex.h
 
-sources/CTFasta.h:
+CTFasta.h:
 
-sources/File.h:
+File.h:
 
-sources/zutil.h:
+zutil.h:
 
-sources/zindex.h:
+zindex.h:

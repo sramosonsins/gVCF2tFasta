@@ -27,8 +27,8 @@
 void help(std::string name) {
     std::cerr << "VCF2tFasta\n"
             << "Version 0.2\n"
-            << "Usage: ./vcf2tfasta -v input.vcf(.gz) -r reference.fa(.gz) -o outputname -n chromosomes.txt\n"
-            << "Structural Variants are considered as missing data (N)"
+            << "Usage: ./gVCF2tFasta -v input.vcf(.gz) -r reference.fa(.gz) -o outputname -n chromosomes.txt\n"
+            << "Structural Variants are considered as missing data (N)\n"
             << "Options:\n"
             << "\t-h\t\tHelp and exit\n"
             << "\t-v\t\tInput VCF file\n"
@@ -567,4 +567,3 @@ int main(int argc, char** argv) {
 
     return 0;
 }
-
