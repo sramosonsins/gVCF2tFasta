@@ -1,10 +1,11 @@
+MyDir="build/Release/GNU-Linux"
 #clean:
-rm -rf build/Release/GNU-Linux/main.o
-
+rm -r $MyDir
 #compile:
-make -f nbproject/Makefile-Release.mk build/Release/GNU-Linux/main.o
-mkdir -p build/Release/GNU-Linux
-rm -f "build/Release/GNU-Linux/main.o.d"
-g++ -std=c++0x -lz -c -O2 -MMD -MP -MF "build/Release/GNU-Linux/main.o.d" -o build/Release/GNU-Linux/main.o sources/main.cpp -I/usr/local/include
+make -f nbproject/Makefile-Release.mk $MyDir/main.o
+mkdir $MyDir
+#rm -f $MyDir+"/main.o.d"
+g++ -std=c++0x -lz -c -O2 -MMD -MP -MF -o sources/*.cpp
+mv *.o $MyDir
 make -f Makefile CONF=Release
-
+rm -- -o
