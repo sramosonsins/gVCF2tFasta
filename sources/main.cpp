@@ -565,5 +565,6 @@ int main(int argc, char** argv) {
         tfasta.closeFile();
     }
 
+    std::cout << "Program finished." << std::endl;
     return 0;
 }

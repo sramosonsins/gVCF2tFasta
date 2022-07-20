@@ -1,11 +1,15 @@
-#gVCF2tFasta v0.2 (20170908) Jordi Leno-Colorado
-
+gvcf2tfasta J. Leno-Colorado
+Version 0.2
 Usage: ./gVCF2tFasta -v input.vcf(.gz) -r reference.fa(.gz) -o outputname -n chromosomes.txt
+Structural Variants are considered as missing data (N)
+Options:
+	-h		Help and exit
+	-v		Input VCF file
+	-r		Reference Fasta file
+	-o		Output compressed tFasta filename (without extension)
+	-n		File with chromosome(s) to convert and its length
+	-i		Imputation (Only use with VCF files, not gVCF files):
+				0 if missing data in VCF is equal to N in tFasta
+				1 if missing data in VCF is equal to reference fasta in tFasta
+				Default value is 0
 
-Flags:
-      -v [Input VCF file]
-      -r [Reference Fasta file]
-      -o [Output compressed tFasta filename (without extension)]
-      -n [File with chromosome(s) to convert and its length]
-   OPTIONAL PARAMETERS:
-      -h [help and exit]

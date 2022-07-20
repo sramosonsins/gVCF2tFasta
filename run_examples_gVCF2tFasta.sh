@@ -1,14 +1,17 @@
-#gVCF2tFasta v0.2 (20170908) Jordi Leno-Colorado
-
-# Usage: ./gVCF2tFasta -v input.vcf -r reference.fa -o outputname -c chromosome(s)
-#
-# Flags:
-#      -v [Input VCF file]
-#      -r [Reference Fasta file (it must be indexed with samtools faidx)]
-#      -o [Output compressed tFasta filename (without extension), it will be added the chromosome(s) of -c option in the final filename]
-#      -c [Chromosome(s) to convert (if there are more than one chromosome, they have to be separated by comma)]
-#   OPTIONAL PARAMETERS:
-#      -h [help and exit]
+#VCF2tFasta
+#Version 0.2
+#Usage: ./gVCF2tFasta -v input.vcf(.gz) -r reference.fa(.gz) -o outputname -n chromosomes.txt
+#Structural Variants are considered as missing data (N)
+#Options:
+#    -h        Help and exit
+#    -v        Input VCF file
+#    -r        Reference Fasta file
+#    -o        Output compressed tFasta filename (without extension)
+#    -n        File with chromosome(s) to convert and its length
+#    -i        Imputation (Only use with VCF files, not gVCF files):
+#                0 if missing data in VCF is equal to N in tFasta
+#                1 if missing data in VCF is equal to reference fasta in tFasta
+#                Default value is 0
 
 # To compile:
 #make -f nbproject/Makefile-Release.mk build/Release/GNU-Linux/main.o
@@ -48,5 +51,12 @@ echo ---------------------------------------------------------------------------
 echo
 echo ../bin/gVCF2tFasta -v pool_p10.vcf -r ref.fa.gz -o pool -n ref.fa.fai
 ../bin/gVCF2tFasta -v pool_p10.vcf -r ref.fa.gz -o pool -n ref.fa.fai
+echo
+echo ---------------------------------------------------------------------------------
+echo Example 5. Convert a compressed VCF file to a compressed tFasta file
+echo ---------------------------------------------------------------------------------
+echo
+echo ../bin/gVCF2tFasta -v ./gatk_combined.vcf_10lines.recode.vcf.gz -r ./pdulcis26.contigsPd1-8.fa -o ./TEST_almond_10lines -i 0 -n ./pdulcis26.chromosomes.lengths
+../bin/gVCF2tFasta -v ./gatk_combined.vcf_10lines.recode.vcf.gz -r ./pdulcis26.contigs_Pd1-8.fa -o ./TEST_almond_10lines -i 0 -n ./pdulcis26.chromosomes.lengths
 echo
 
