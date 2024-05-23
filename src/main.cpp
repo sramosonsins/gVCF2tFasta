@@ -23,6 +23,7 @@
 #include "CFasta.h"
 #include "CTFasta.h"
 #include "CFai.h"
+#include "log.h"
 
 void help(std::string name) {
     std::cerr << "VCF2tFasta\n"
@@ -83,7 +84,9 @@ void help(std::string name) {
 }*/
 
 int main(int argc, char** argv) {
-
+    // log_set_level(LOG_DEBUG);
+    // log_trace("Hello %s", "world");
+    // log_debug("Hello %s %d", "world",1);
     /////////////////////////////
     // Argumentos del programa //
     /////////////////////////////
@@ -101,79 +104,106 @@ int main(int argc, char** argv) {
         exit(1);
     }
 
-    while ((tmp = getopt(argc, argv, "hv:r:o:n:i:")) != -1) {
-        switch (tmp) {
-            case 'h':
-                help(argv[0]);
-                return 0;
-                break;
-            case 'v':
-                vcfname = std::string(optarg);
-                break;
-            case 'r':
-                refname = std::string(optarg);
-                break;
-            case 'o':
-                tfastaname = std::string(optarg);
-                break;
-            case 'n':
-                chromname = std::string(optarg);
-                break;
-            case 'i':
-                imputation = std::string(optarg);
-                break;
+    while ((tmp = getopt(argc, argv, "hv:r:o:n:i:")) != -1)
+    {
+        switch (tmp)
+        {
+        case 'h':
+            help(argv[0]);
+            return 0;
+            break;
+        case 'v':
+            vcfname = std::string(optarg);
+            break;
+        case 'r':
+            refname = std::string(optarg);
+            break;
+        case 'o':
+            tfastaname = std::string(optarg);
+            break;
+        case 'n':
+            chromname = std::string(optarg);
+            break;
+        case 'i':
+            imputation = std::string(optarg);
+            break;
         }
     }
-    if (vcfname == "") {
+    if (vcfname == "")
+    {
         // Si no se da ningun VCF en el comando
-        std::cout << std::endl;
-        std::cout << "Error:" << std::endl;
-        std::cout << "\tVCF file not defined" << std::endl;
-        std::cout << std::endl;
+        // std::cout << std::endl;
+        // std::cout << "Error:" << std::endl;
+        // std::cout << "\tVCF file not defined" << std::endl;
+        // std::cout << std::endl;
+        log_error("VCF file not defined");
         return 1;
     }
-    if (refname == "") {
+    if (refname == "")
+    {
         // Si no se da ningun fasta de referencia en el comando
-        std::cout << std::endl;
-        std::cout << "Error:" << std::endl;
-        std::cout << "\tReference fasta file not defined" << std::endl;
-        std::cout << std::endl;
+        // std::cout << std::endl;
+        // std::cout << "Error:" << std::endl;
+        // std::cout << "\tReference fasta file not defined" << std::endl;
+        // std::cout << std::endl;
+        log_error("Reference fasta file not defined");
         return 1;
     }
-    if (tfastaname == "") {
+    if (tfastaname == "")
+    {
         // Si no se da ningun nombre para el output en el comando
-        std::cout << std::endl;
-        std::cout << "Error:" << std::endl;
-        std::cout << "\tOutput tFasta file name not defined" << std::endl;
-        std::cout << std::endl;
+        // std::cout << std::endl;
+        // std::cout << "Error:" << std::endl;
+        // std::cout << "\tOutput tFasta file name not defined" << std::endl;
+        // std::cout << std::endl;
+        log_error("Output tFasta file name not defined");
+
         return 1;
     }
-    if (chromname == "") {
+    if (chromname == "")
+    {
         // Si no se da ningun cromosoma en el comando
-        std::cout << std::endl;
-        std::cout << "Error:" << std::endl;
-        std::cout << "\tFile with chromosomes and lengths not defined" << std::endl;
-        std::cout << std::endl;
+        // std::cout << std::endl;
+        // std::cout << "Error:" << std::endl;
+        // std::cout << "\tFile with chromosomes and lengths not defined" << std::endl;
+        // std::cout << std::endl;
+        log_error("File with chromosomes and lengths not defined");
         return 1;
     }
-    if (imputation == "") {
+    if (imputation == "")
+    {
         imputation = "0";
     }
-    std::cout << std::endl;
-    std::cout << "VCF file: " << vcfname << std::endl;
-    std::cout << "Reference Fasta file: " << refname << std::endl;
+    // std::cout << std::endl;
+    // std::cout << "VCF file: " << vcfname << std::endl;
+    log_info("VCF file: %s \n", vcfname.c_str());
+
+    // std::cout << "Reference Fasta file: " << refname << std::endl;
+    log_info("Reference Fasta file: %s \n", refname.c_str());
+
     tfastaext = tfastaname + ".tfa.gz";
-    std::cout << "tFasta file: " << tfastaext << std::endl;
-    std::cout << "File with chromosomes and length: " << chromname << std::endl;
-    if (imputation == "0") {
-        //std::cout << "Imputation: True" << std::endl;
-    } else if (imputation == "1") {
-        std::cout << "Imputation: True" << std::endl;
-    } else {
-        std::cout << std::endl;
-        std::cout << "Error:" << std::endl;
-        std::cout << "\tIncorrect imputation value (different to 0 or 1)" << std::endl;
-        std::cout << std::endl;
+    // std::cout << "tFasta file: " << tfastaext << std::endl;
+    log_info("tFasta file: %s \n", tfastaext.c_str());
+
+    // std::cout << "File with chromosomes and length: " << chromname << std::endl;
+    log_info("File with chromosomes and length: %s \n", chromname.c_str());
+
+    if (imputation == "0")
+    {
+        // std::cout << "Imputation: True" << std::endl;
+    }
+    else if (imputation == "1")
+    {
+        // std::cout << "Imputation: True" << std::endl;
+        log_info("Imputation: True");
+    }
+    else
+    {
+        // std::cout << std::endl;
+        // std::cout << "Error:" << std::endl;
+        // std::cout << "\tIncorrect imputation value (different to 0 or 1)" << std::endl;
+        // std::cout << std::endl;
+        log_info("ncorrect imputation value (different to 0 or 1)");
         return 1;
     }
     std::cout << std::endl;
@@ -210,11 +240,15 @@ int main(int argc, char** argv) {
     bool start_vcf = true;
     int count_alleles;
 
-    if (fai.openReadFile()) {
+    if (fai.openReadFile())
+    {
         linefai = "";
-        while (!fai.endFile()) {
+        while (!fai.endFile())
+        {
             c = fai.getFileChar();
-            if (c == '\n') {
+            std::cout << c;
+            if (c == '\n')
+            {
                 // Dividimos la linea por columnas y obtenemos el cromosoma:
                 std::vector<std::string> failine = CStringTools::split(linefai, '\t');
                 chromfai = failine[0];
@@ -223,12 +257,16 @@ int main(int argc, char** argv) {
                 chromosomelength.push_back(lengthfai);
 
                 linefai = "";
-            } else {
+            }
+            else
+            {
                 linefai += c;
             }
         }
         fai.closeFile();
-    } else {
+    }
+    else
+    {
         std::cout << std::endl;
         std::cout << "Error:" << std::endl;
         std::cout << "\tIndex file of reference fasta not found '" << refname << ".fai'" << std::endl;
@@ -238,13 +276,20 @@ int main(int argc, char** argv) {
     }
 
     // Create the tFasta file:
-    if (tfasta.openWriteFile()) {
-        if (vcf.openReadFile()) {
-            while (!vcf.endFile()) {
+    if (tfasta.openWriteFile())
+    {
+        if (vcf.openReadFile())
+        {
+            while (!vcf.endFile())
+            {
                 c = vcf.getFileChar();
-                if (c == '\n') {
-                    if (line[0] == '#') {
-                        if (line[1] == 'C' && line[2] == 'H' && line[3] == 'R' && line[4] == 'O' && line[5] == 'M') {
+                // std::cout << c;
+                if (c == '\n')
+                {
+                    if (line[0] == '#')
+                    {
+                        if (line[1] == 'C' && line[2] == 'H' && line[3] == 'R' && line[4] == 'O' && line[5] == 'M')
+                        {
                             // Dividimos la linea por columnas:
                             std::vector<std::string> vcfline = CStringTools::split(line, '\t');
 
@@ -259,62 +304,80 @@ int main(int argc, char** argv) {
                         }
                     }
                     line = "";
-                } else {
+                }
+                else
+                {
                     line += c;
                 }
             }
             vcf.closeFile();
         }
 
-        //Por cada cromosoma indicado como argumento del programa:
-        for (std::vector<int>::size_type i = 0; i < chromosomegroup.size(); i++) {
+        // Por cada cromosoma indicado como argumento del programa:
+        for (std::vector<int>::size_type i = 0; i < chromosomegroup.size(); i++)
+        {
             chromosome = chromosomegroup[i];
             sizeChrom = CStringTools::stringToInt(chromosomelength[i]);
             // Open the VCF file:
-            if (vcf.openReadFile()) {
+            if (vcf.openReadFile())
+            {
 
                 line = "";
                 current_chromosome = "";
                 current_position = 0;
 
                 // Analizamos cada línea del VCF para obtener la secuencia correspondiente del tFasta:
-                while (!vcf.endFile()) {
+                while (!vcf.endFile())
+                {
                     c = vcf.getFileChar();
-                    if (c == '\n') {
-                        if (line[0] != '#') {
+                    //std::cout << c << std::flush;
+
+                    if (c == '\n')
+                    {
+                        if (line[0] != '#')
+                        {
                             // Dividimos la linea por columnas:
                             std::vector<std::string> vcfline = CStringTools::split(line, '\t');
 
                             // Si estamos en la primera linea, escribimos primero el header (hasta aqui no lo hace para saber cuantos alelos hay por muestra):
-                            if ((start_vcf == true) && (current_position == 0)) {
+                            if ((start_vcf == true) && (current_position == 0))
+                            {
                                 count_alleles = 0;
-                                for (int n = 0; n < vcfline[9].size(); n++) {
-                                    if ((vcfline[9][n] == '/') || (vcfline[9][n] == '|')) {
+                                for (int n = 0; n < vcfline[9].size(); n++)
+                                {
+                                    if ((vcfline[9][n] == '/') || (vcfline[9][n] == '|'))
+                                    {
                                         count_alleles++;
                                     }
                                 }
                                 count_alleles++;
 
                                 std::string samplenames_alleles;
-                                for (int s = 0; s < samplenames.size(); s++) {
-                                    for (int m = 0; m < count_alleles; m++) {
-                                        if (samplenames_alleles == "") {
+                                for (int s = 0; s < samplenames.size(); s++)
+                                {
+                                    for (int m = 0; m < count_alleles; m++)
+                                    {
+                                        if (samplenames_alleles == "")
+                                        {
                                             samplenames_alleles = ">" + samplenames[s] + "_" + CStringTools::intToString(m);
-                                        } else {
+                                        }
+                                        else
+                                        {
                                             samplenames_alleles = samplenames_alleles + "\t" + ">" + samplenames[s] + "_" + CStringTools::intToString(m);
                                         }
                                     }
                                 }
 
                                 std::string header =
-                                        "#vcf2tfasta -v " + vcfname + " -r " + refname + " -o " + tfastaext + " -n " + chromname + "\n" +
-                                        "#NAMES: " + samplenames_alleles + "\n" +
-                                        "#CHROMOSOME:POSITION" + "\t" + "GENOTYPES" + "\n";
+                                    "#vcf2tfasta -v " + vcfname + " -r " + refname + " -o " + tfastaext + " -n " + chromname + "\n" +
+                                    "#NAMES: " + samplenames_alleles + "\n" +
+                                    "#CHROMOSOME:POSITION" + "\t" + "GENOTYPES" + "\n";
                                 tfasta.writeFile(header);
                             }
                             start_vcf = false;
 
-                            if (vcfline[0] == chromosome) {
+                            if (vcfline[0] == chromosome)
+                            {
                                 // Si el cromosoma de la dataline corresponde al cromosoma actual:
 
                                 current_chromosome = chromosome;
@@ -327,37 +390,48 @@ int main(int argc, char** argv) {
                                 nts = dline[2];
 
                                 // Si el cromosoma de la dataline corresponde al cromosoma actual:
-                                if (CStringTools::stringToInt(pos) > (current_position + 1)) {
-                                    if (imputation == "0") {
+                                if (CStringTools::stringToInt(pos) > (current_position + 1))
+                                {
+                                    if (imputation == "0")
+                                    {
                                         // Si imputation = 0, el missing data se escribe como N
                                         // Si la posicion de la dataline es mayor a la posición siguiente de la anterior dataline, escribimos las posiciones intermedias con Ns (missing data):
-                                        for (int n = (current_position + 1); n < CStringTools::stringToInt(pos); n++) {
+                                        for (int n = (current_position + 1); n < CStringTools::stringToInt(pos); n++)
+                                        {
                                             std::string nucleotides = "";
 
                                             linetfasta = chromVCF + ":" + CStringTools::intToString(n) + "\t";
 
-                                            for (int s = 0; s < nsamples; s++) {
-                                                for (int i = s * count_alleles; i < (s * count_alleles) + count_alleles; i++) {
+                                            for (int s = 0; s < nsamples; s++)
+                                            {
+                                                for (int i = s * count_alleles; i < (s * count_alleles) + count_alleles; i++)
+                                                {
                                                     nucleotides = nucleotides + "N";
                                                 }
                                             }
                                             linetfasta = linetfasta + nucleotides + "\n";
                                             tfasta.writeFile(linetfasta);
                                         }
-                                    } else if (imputation == "1") {
+                                    }
+                                    else if (imputation == "1")
+                                    {
                                         // Si imputation = 1, el missing data del VCF es igual al nucleotido de referencia
-                                        if (fasta.openReadFile()) {
+                                        if (fasta.openReadFile())
+                                        {
                                             subseq = fasta.obtainSubSeq(chromVCF, (current_position + 1), CStringTools::stringToInt(pos));
                                             fasta.closeFile();
                                         }
                                         counter = 0;
-                                        for (int n = (current_position + 1); n < CStringTools::stringToInt(pos); n++) {
+                                        for (int n = (current_position + 1); n < CStringTools::stringToInt(pos); n++)
+                                        {
                                             std::string nucleotides = "";
 
                                             linetfasta = chromVCF + ":" + CStringTools::intToString(n) + "\t";
 
-                                            for (int s = 0; s < nsamples; s++) {
-                                                for (int i = s * count_alleles; i < (s * count_alleles) + count_alleles; i++) {
+                                            for (int s = 0; s < nsamples; s++)
+                                            {
+                                                for (int i = s * count_alleles; i < (s * count_alleles) + count_alleles; i++)
+                                                {
                                                     nucleotides = nucleotides + subseq[counter];
                                                 }
                                             }
@@ -372,37 +446,47 @@ int main(int argc, char** argv) {
                                 block = lineVCF.find("ROH");
                                 indelpos = lineVCF.find("INDEL");
 
-                                if (CStringTools::stringToInt(pos) != current_position) {
-                                    if (snppos != std::string::npos) {
+                                if (CStringTools::stringToInt(pos) != current_position)
+                                {
+                                    if (snppos != std::string::npos)
+                                    {
                                         // Si la linea del VCF corresponde a un SNP:
 
                                         linetfasta = chromVCF + ":" + pos + "\t" + nts + "\n";
                                         tfasta.writeFile(linetfasta);
 
                                         current_position = CStringTools::stringToInt(pos);
-
-                                    } else if (block != std::string::npos) {
+                                    }
+                                    else if (block != std::string::npos)
+                                    {
                                         // Si la linea del VCF corresponde a un Bloque Homocigoto:
                                         pos_f = CStringTools::stringToInt(dline[4]);
 
                                         // Obtenemos la secuencia correspondiente al bloque a partir del Fasta de referencia:
-                                        if (fasta.openReadFile()) {
+                                        if (fasta.openReadFile())
+                                        {
                                             subseq = fasta.obtainSubSeq(chromVCF, CStringTools::stringToInt(pos), pos_f);
                                             fasta.closeFile();
                                         }
 
                                         counter = 0;
                                         // Imprimimos la secuencia en formato tFasta:
-                                        for (int n = CStringTools::stringToInt(pos); n <= pos_f; n++) {
+                                        for (int n = CStringTools::stringToInt(pos); n <= pos_f; n++)
+                                        {
                                             std::string nucleotides = "";
 
                                             linetfasta = chromVCF + ":" + CStringTools::intToString(n) + "\t";
 
-                                            for (int s = 0; s < nsamples; s++) {
-                                                for (int i = s * count_alleles; i < (s * count_alleles) + count_alleles; i++) {
-                                                    if (nts[i] == 'R') {
+                                            for (int s = 0; s < nsamples; s++)
+                                            {
+                                                for (int i = s * count_alleles; i < (s * count_alleles) + count_alleles; i++)
+                                                {
+                                                    if (nts[i] == 'R')
+                                                    {
                                                         nucleotides = nucleotides + subseq[counter];
-                                                    } else if (nts[i] == 'M') {
+                                                    }
+                                                    else if (nts[i] == 'M')
+                                                    {
                                                         nucleotides = nucleotides + "N";
                                                     }
                                                 }
@@ -414,8 +498,9 @@ int main(int argc, char** argv) {
                                         }
 
                                         current_position = pos_f;
-
-                                    } else if (indelpos != std::string::npos) {
+                                    }
+                                    else if (indelpos != std::string::npos)
+                                    {
                                         // Si la linea del VCF corresponde a un INDEL, ponemos Ns como si fuera missing data:
 
                                         linetfasta = chromVCF + ":" + pos + "\t" + nts + "\n";
@@ -424,40 +509,53 @@ int main(int argc, char** argv) {
                                         current_position = CStringTools::stringToInt(pos);
                                     }
                                 }
-                            } else {
+                            }
+                            else
+                            {
                                 // Si el cromosoma de la dataline no corresponde al cromosoma actual:
-                                if (current_chromosome != "") {
-                                    if (imputation == "0") {
+                                if (current_chromosome != "")
+                                {
+                                    if (imputation == "0")
+                                    {
                                         // Si imputation = 0, el missing data se escribe como N
                                         // Si ya previamente había otro cromosoma con el que se ha trabajado, se escriben Ns hasta la ultima posicion del anterior cromosoma
-                                        for (int n = (current_position + 1); n <= sizeChrom; n++) {
+                                        for (int n = (current_position + 1); n <= sizeChrom; n++)
+                                        {
                                             std::string nucleotides = "";
 
                                             linetfasta = current_chromosome + ":" + CStringTools::intToString(n) + "\t";
 
-                                            for (int s = 0; s < nsamples; s++) {
-                                                for (int i = s * count_alleles; i < (s * count_alleles) + count_alleles; i++) {
+                                            for (int s = 0; s < nsamples; s++)
+                                            {
+                                                for (int i = s * count_alleles; i < (s * count_alleles) + count_alleles; i++)
+                                                {
                                                     nucleotides = nucleotides + "N";
                                                 }
                                             }
                                             linetfasta = linetfasta + nucleotides + "\n";
                                             tfasta.writeFile(linetfasta);
                                         }
-                                    } else if (imputation == "1") {
+                                    }
+                                    else if (imputation == "1")
+                                    {
                                         // Si imputation = 1, el missing data del VCF es igual al nucleotido de referencia
-                                        if (fasta.openReadFile()) {
+                                        if (fasta.openReadFile())
+                                        {
                                             subseq = fasta.obtainSubSeq(current_chromosome, (current_position + 1), sizeChrom);
                                             fasta.closeFile();
                                         }
                                         counter = 0;
                                         // Si ya previamente había otro cromosoma con el que se ha trabajado, se escriben Ns hasta la ultima posicion del anterior cromosoma
-                                        for (int n = (current_position + 1); n <= sizeChrom; n++) {
+                                        for (int n = (current_position + 1); n <= sizeChrom; n++)
+                                        {
                                             std::string nucleotides = "";
 
                                             linetfasta = current_chromosome + ":" + CStringTools::intToString(n) + "\t";
 
-                                            for (int s = 0; s < nsamples; s++) {
-                                                for (int i = s * count_alleles; i < (s * count_alleles) + count_alleles; i++) {
+                                            for (int s = 0; s < nsamples; s++)
+                                            {
+                                                for (int i = s * count_alleles; i < (s * count_alleles) + count_alleles; i++)
+                                                {
                                                     nucleotides = nucleotides + subseq[counter];
                                                 }
                                             }
@@ -471,38 +569,30 @@ int main(int argc, char** argv) {
                             }
                         }
                         line = "";
-                    } else {
+                    }
+                    else
+                    {
                         line += c;
                     }
                 }
-                if (vcf.endFile()) {
-                    //Si llegamos al final del VCF:
-                    if (imputation == "0") {
-                        if (current_chromosome != "") {
+                if (vcf.endFile())
+                {
+                    // Si llegamos al final del VCF:
+                    if (imputation == "0")
+                    {
+                        if (current_chromosome != "")
+                        {
                             // Si ya previamente había algun cromosoma con el que se ha trabajado, se escriben Ns hasta la ultima posicion del este cromosoma
-                            for (int n = (current_position + 1); n <= sizeChrom; n++) {
+                            for (int n = (current_position + 1); n <= sizeChrom; n++)
+                            {
                                 std::string nucleotides = "";
 
                                 linetfasta = current_chromosome + ":" + CStringTools::intToString(n) + "\t";
 
-                                for (int s = 0; s < nsamples; s++) {
-                                    for (int i = s * count_alleles; i < (s * count_alleles) + count_alleles; i++) {
-                                        nucleotides = nucleotides + "N";
-                                    }
-                                }
-                                linetfasta = linetfasta + nucleotides + "\n";
-                                tfasta.writeFile(linetfasta);
-                            }
-                            current_position = sizeChrom;
-                        } else {
-                            // Si no había ninguna linea en el VCF correspondiente al cromosoma actual, se escribe el cromosoma entero con Ns.
-                            for (int n = 1; n <= sizeChrom; n++) {
-                                std::string nucleotides = "";
-
-                                linetfasta = chromosome + ":" + CStringTools::intToString(n) + "\t";
-
-                                for (int s = 0; s < nsamples; s++) {
-                                    for (int i = s * count_alleles; i < (s * count_alleles) + count_alleles; i++) {
+                                for (int s = 0; s < nsamples; s++)
+                                {
+                                    for (int i = s * count_alleles; i < (s * count_alleles) + count_alleles; i++)
+                                    {
                                         nucleotides = nucleotides + "N";
                                     }
                                 }
@@ -511,21 +601,49 @@ int main(int argc, char** argv) {
                             }
                             current_position = sizeChrom;
                         }
-                    } else if (imputation == "1") {
-                        if (current_chromosome != "") {
+                        else
+                        {
+                            // Si no había ninguna linea en el VCF correspondiente al cromosoma actual, se escribe el cromosoma entero con Ns.
+                            for (int n = 1; n <= sizeChrom; n++)
+                            {
+                                std::string nucleotides = "";
+
+                                linetfasta = chromosome + ":" + CStringTools::intToString(n) + "\t";
+
+                                for (int s = 0; s < nsamples; s++)
+                                {
+                                    for (int i = s * count_alleles; i < (s * count_alleles) + count_alleles; i++)
+                                    {
+                                        nucleotides = nucleotides + "N";
+                                    }
+                                }
+                                linetfasta = linetfasta + nucleotides + "\n";
+                                tfasta.writeFile(linetfasta);
+                            }
+                            current_position = sizeChrom;
+                        }
+                    }
+                    else if (imputation == "1")
+                    {
+                        if (current_chromosome != "")
+                        {
                             // Si ya previamente había algun cromosoma con el que se ha trabajado, se escriben Ns hasta la ultima posicion del este cromosoma
-                            if (fasta.openReadFile()) {
+                            if (fasta.openReadFile())
+                            {
                                 subseq = fasta.obtainSubSeq(current_chromosome, (current_position + 1), sizeChrom);
                                 fasta.closeFile();
                             }
                             counter = 0;
-                            for (int n = (current_position + 1); n <= sizeChrom; n++) {
+                            for (int n = (current_position + 1); n <= sizeChrom; n++)
+                            {
                                 std::string nucleotides = "";
 
                                 linetfasta = current_chromosome + ":" + CStringTools::intToString(n) + "\t";
 
-                                for (int s = 0; s < nsamples; s++) {
-                                    for (int i = s * count_alleles; i < (s * count_alleles) + count_alleles; i++) {
+                                for (int s = 0; s < nsamples; s++)
+                                {
+                                    for (int i = s * count_alleles; i < (s * count_alleles) + count_alleles; i++)
+                                    {
                                         nucleotides = nucleotides + subseq[counter];
                                     }
                                 }
@@ -534,20 +652,26 @@ int main(int argc, char** argv) {
                                 counter++;
                             }
                             current_position = sizeChrom;
-                        } else {
+                        }
+                        else
+                        {
                             // Si no había ninguna linea en el VCF correspondiente al cromosoma actual, se escribe el cromosoma entero con Ns.
-                            if (fasta.openReadFile()) {
+                            if (fasta.openReadFile())
+                            {
                                 subseq = fasta.obtainSubSeq(chromosome, 1, sizeChrom);
                                 fasta.closeFile();
                             }
                             counter = 0;
-                            for (int n = 1; n <= sizeChrom; n++) {
+                            for (int n = 1; n <= sizeChrom; n++)
+                            {
                                 std::string nucleotides = "";
 
                                 linetfasta = chromosome + ":" + CStringTools::intToString(n) + "\t";
 
-                                for (int s = 0; s < nsamples; s++) {
-                                    for (int i = s * count_alleles; i < (s * count_alleles) + count_alleles; i++) {
+                                for (int s = 0; s < nsamples; s++)
+                                {
+                                    for (int i = s * count_alleles; i < (s * count_alleles) + count_alleles; i++)
+                                    {
                                         nucleotides = nucleotides + subseq[counter];
                                     }
                                 }
@@ -565,6 +689,7 @@ int main(int argc, char** argv) {
         tfasta.closeFile();
     }
 
-    std::cout << "Program finished." << std::endl;
+    // std::cout << "Program finished." << std::endl;
+    log_info("Program finished.");
     return 0;
 }
