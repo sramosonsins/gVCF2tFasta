@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "(gdb) Launch",
+            "name": "gVCF2tFasta",
             "type": "cppdbg",
             "request": "launch",
             // Resolved by CMake Tools:
@@ -15,7 +15,27 @@
             
             // ../bin/gVCF2tFasta -v example.vcf -r ref.fa.gz -o example -n ref.fa.fai
             //"args": ["-v", "example.vcf", "-r", "ref.fa.gz", "-o", "v1_out_im_0", "-n", "ref.fa.fai"],
-            "args": ["-v", "example.vcf", "-r", "ref.fa.gz", "-o", "v1_out_im_1", "-n", "ref.fa.fai" , "-i","1"],
+            // "args": ["-v", "example.vcf", "-r", "ref.fa.gz", "-o", "v1_out_im_1", "-n", "ref.fa.fai" , "-i","1"],
+
+            "args": ["-v" , "example.vcf.gz"  ,   "-r" , "ref.fa"   ],
+            // "args": ["-v" , "example_unsorted.vcf"  , "-r" , "ref.fa"  , "-o" , "v2_example_gz" ],
+            // "args": ["-v" , "example.vcf.gz"  , "-r" , "ref.fa"  , "-o" , "v2_example_gz" ],
+
+            // "args": ["-v" , "example.vcf"  , "-n" ,"ref.fa.txt" ,  "-r" , "ref.fa"  , "-o" , "v2_example" ],
+
+            //"args": ["-v" , "example.vcf.gz"  , "-n" ,"ref.fa.txt" ,  "-r" , "ref.fa"  , "-o" , "out_tfa_im_1" , "-i" , "1" ],
+
+
+            // ../build/gVCF2tFasta -v multipleVCF_2pop.vcf -r ref.fa.gz -o  v2_example_mult -n ref.fa.fai
+            // "args": ["-v" , "multipleVCF_2pop.vcf"  , "-n" ,"ref.fa.txt" ,  "-r" , "ref.fa"  , "-o" , "v2_example_mult" ],
+
+            // ../build/gVCF2tFasta -v pool_p10.vcf -r ref.fa.gz -o  v2_pool -n ref.fa.fai
+            // "args": ["-v" , "pool_p10.vcf"  , "-n" ,"ref.fa.txt" ,  "-r" , "ref.fa"  , "-o" , "v2_pool" ],
+
+            // ../build/gVCF2tFasta -v ./gatk_combined.vcf_10lines.recode.vcf.gz -r ./pdulcis26.contigs_Pd1-8.fa -o  v2_TEST_almond_10lines -i 0 -n ./pdulcis26.chromosomes.lengths
+            // "args": ["-v" , "./gatk_combined.vcf_10lines.recode.vcf.gz"  , "-n" ,"./pdulcis26.chromosomes.lengths" ,  "-r" , "./pdulcis26.contigs_Pd1-8.fa"  , "-o" , "v2_TEST_almond_10lines" , "-i" , "0" ],
+            
+
 
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/Examples",
