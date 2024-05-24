@@ -14,48 +14,35 @@
 #include "CTFasta.h"
 #include "CFasta.h"
 
+#include <htslib/faidx.h>
+
 inline int end_error(int err)
 {
   log_error("Program finished with errors");
-  exit( err);
+  exit(err);
 }
 
 void help(char *name)
 {
-  // std::cerr << "VCF2tFasta\n"
-  //         << "Version 0.2\n"
-  //         << "Usage: ./gVCF2tFasta -v input.vcf(.gz) -r reference.fa(.gz) -o outputname -n chromosomes.txt\n"
-  //         << "Structural Variants are considered as missing data (N)\n"
-  //         << "Options:\n"
-  //         << "\t-h\t\tHelp and exit\n"
-  //         << "\t-v\t\tInput VCF file\n"
-  //         << "\t-r\t\tReference Fasta file\n"
-  //         << "\t-o\t\tOutput compressed tFasta filename (without extension)\n"
-  //         << "\t-n\t\tFile with chromosome(s) to convert and its length\n"
-  //         << "\t-i\t\tImputation (Only use with VCF files, not gVCF files):\n"
-  //         << "\t\t\t\t0 if missing data in VCF is equal to N in tFasta\n"
-  //         << "\t\t\t\t1 if missing data in VCF is equal to reference fasta in tFasta\n"
-  //         << "\t\t\t\tDefault value is 0\n"
-  //         << std::endl;
-  printf("VCF2tFasta\n"
-         "Version 0.2\n"
-         "Usage: ./gVCF2tFasta -v input.vcf(.gz) -r reference.fa(.gz) -o outputname -n chromosomes.txt\n"
+  printf("gVCF2tFasta\n"
+         "Version 1.0.0\n"
+         "Usage: gVCF2tFasta -v input.vcf(.gz) -r reference.fa(.gz) [-o outputname] [-n chromosomes.txt]\n"
          "Structural Variants are considered as missing data (N)\n"
          "Options:\n"
          "\t-h\t\tHelp and exit\n"
          "\t-v\t\tInput VCF file\n"
          "\t-r\t\tReference Fasta file\n"
-         "\t-o\t\tOutput compressed tFasta filename (without extension)\n"
-         "\t-n\t\tFile with chromosome(s) to convert and its length\n"
+         "\t-o\t\tOptional Output compressed tFasta filename, Default same as input vcf file\n"
+         "\t-n\t\tOptional File with chromosome(s) to convert and its length, Default use all sequences as in reference fasta file\n"
          "\t-i\t\tImputation (Only use with VCF files, not gVCF files):\n"
-         "\t\t\t\t0 if missing data in VCF is equal to N in tFasta\n"
-         "\t\t\t\t1 if missing data in VCF is equal to reference fasta in tFasta\n"
-         "\t\t\t\tDefault value is 0\n"
+         "\t\t\t0 if missing data in VCF is equal to N in tFasta\n"
+         "\t\t\t1 if missing data in VCF is equal to reference fasta in tFasta\n"
+         "\t\t\tDefault value is 0\n"
          "\n");
 }
 
-#include <htslib/faidx.h>
 // Function to read and print sequence names and lengths from a .fai file
+// Not used in the current version of the program
 void read_fai_file(const char *fai_filename)
 {
   // Load the .fai index
@@ -95,37 +82,59 @@ void read_fai_file(const char *fai_filename)
   fai_destroy(fai);
 }
 
-bool set_tfasta_header(CTFasta& tfasta, CVCF& vcf) {
-    // Get the VCF header
- // determine number of alleles
-  // get one line 
-    std::string line = "";
-    if(vcf.getLine(line) < 0){
-      log_error("Error reading the VCF file");
-      return 0;
-    }
-    std::vector<std::string> vcfline = CStringTools::split(line, '\t');
-    int count_alleles = 0;
-    for (int n = 0; n < vcfline[9].size(); n++)
-    {
-      if ((vcfline[9][n] == '/') || (vcfline[9][n] == '|'))
-      {
-        count_alleles++;
-      }
-    }
-    count_alleles++;
-    tfasta.count_alleles = count_alleles;
-    return 1;
+/**
+ * @brief Sets the number of alleles in the CTFasta object based on the VCF file.
+ *
+ * This function reads the first line of the VCF file and counts the number of alleles
+ * in the genotype field. The count is then assigned to the `count_alleles` member variable
+ * of the CTFasta object.
+ *
+ * @param tfasta The CTFasta object to update.
+ * @param vcf The CVCF object representing the VCF file.
+ * @return True if the alleles count was successfully set, false otherwise.
+ */
+bool set_alleles_count(CTFasta &tfasta, CVCF &vcf)
+{
+  // Get the VCF header
+  // determine number of alleles
+  // get one line
+  std::string line = "";
+  if (vcf.getLine(line) < 0)
+  {
+    log_error("Error reading the VCF file");
+    return 0;
   }
+  std::vector<std::string> vcfline = CStringTools::split(line, '\t');
+  int count_alleles = 0;
+  for (int n = 0; n < vcfline[9].size(); n++)
+  {
+    if ((vcfline[9][n] == '/') || (vcfline[9][n] == '|'))
+    {
+      count_alleles++;
+    }
+  }
+  count_alleles++;
+  tfasta.count_alleles = count_alleles;
+  return 1;
+}
 
 int main(int argc, char *argv[])
 {
 
-   // set program name as gVCF2tFasta
+  // set log level to info
+
+#ifdef DEBUG
+  log_set_level(LOG_DEBUG);
+#else
+  log_set_level(LOG_INFO);
+#endif
+
+  // set program name as gVCF2tFasta
   const char *program_name = "gVCF2tFasta";
-  log_start(program_name,argc,argv);
+  log_start(program_name, argc, argv);
 
 
+  log_debug("Debug mode enabled");
   // char *vcfname = NULL;
 
   // Input parameters
@@ -188,13 +197,11 @@ int main(int argc, char *argv[])
 
   // read_fai_file(chromname.c_str());
 
- 
-
   CVCF vcf(vcfname);
 
   CFasta fasta(refname);
 
-  std::string tfastaext = tfastaname ;
+  std::string tfastaext = tfastaname;
   // if tfastaname end with .tfa.bgz or .tfa.gz  do not add the extension
 
   if (tfastaext == "")
@@ -246,10 +253,8 @@ int main(int argc, char *argv[])
   // print tfastaext.substr(tfastaext.size() - 7)
   // log_debug("tfastaext: %s",tfastaext.substr(tfastaext.size() - 7).c_str()  );
 
-  
   log_info("Output file: %s", tfastaext.c_str());
 
- 
   CTFasta tfasta(tfastaext);
 
   std::string linefai = "";
@@ -285,7 +290,7 @@ int main(int argc, char *argv[])
           chromfai = failine[0];
           chromosomegroup.push_back(chromfai);
           lengthfai = failine[1];
-          chromosomelength.push_back( CStringTools::stringToInt(lengthfai));
+          chromosomelength.push_back(CStringTools::stringToInt(lengthfai));
 
           linefai = "";
         }
@@ -304,11 +309,13 @@ int main(int argc, char *argv[])
     }
   }
 
-  if(!fasta.openReadFile() ) {
-    log_error("Error Processing fasta file %s" , refname.c_str() );
+  if (!fasta.openReadFile())
+  {
+    log_error("Error Processing fasta file %s", refname.c_str());
     return end_error(1);
   }
-  if(chromname == ""){
+  if (chromname == "")
+  {
     log_info("Getting chromosome names and lengths from the fasta file");
     chromosomegroup = fasta.chromosomegroup;
     chromosomelength = fasta.chromosomelength;
@@ -327,31 +334,37 @@ int main(int argc, char *argv[])
     return 1;
   }
   int is_sorted = vcf.is_vcf_sorted();
-  if(is_sorted == -1 ){
+  if (is_sorted == -1)
+  {
     log_error("Cannot determine if the VCF file is sorted");
     end_error(1);
   }
-  else if(is_sorted == 0){
+  else if (is_sorted == 0)
+  {
     log_error("The VCF file is not sorted");
 
     log_error("Please sort the VCF file, You can run the following command to sort the VCF file: \n");
-    
+
     // bcftools sort -O v -o sorted_example.vcf example.vcf
     log_info("bcftools sort -O v -o sorted_%s %s", vcfname.c_str(), vcfname.c_str());
 
     end_error(1);
   }
-  else{
+  else
+  {
     log_info("The VCF file is sorted");
   }
   vcf.closeFile();
- 
+
   tfasta.openWriteFile();
 
-  
   vcf.openFile();
 
-  set_tfasta_header(tfasta,vcf);
+  if (!set_alleles_count(tfasta, vcf))
+  {
+    log_error("Error getting the number of alleles from the VCF file");
+    end_error(1);
+  }
   vcf.closeFile();
 
   std::string samplenames_alleles;
@@ -376,81 +389,13 @@ int main(int argc, char *argv[])
       "#CHROMOSOME\tPOSITION\tGENOTYPES\n";
   tfasta.writeFile(header);
 
-  
-  // bcf_hdr_t *hdr = bcf_hdr_read(fp); // Read the VCF header
-  // if (!hdr)
-  // {
-  //   fprintf(stderr, "Failed to read the header from %s", vcfname.c_str());
-  //   hts_close(fp);
-  //   return 1;
-  // }
-  // int num_samples = bcf_hdr_nsamples(hdr);
-  // // log the number of samples
-  // log_info("Number of samples: %d", num_samples);
-  // for (int i = 0; i < num_samples; i++)
-  // {
-  //   // print samile at i hdr->samples[i]
-  //   log_info("Sample %d: %s", i, hdr->samples[i]);
-  // }
-
-  // // Get the sequence dictionary
-  // int nseq = 0;
-  // const char **seq_names = bcf_hdr_seqnames(hdr, &nseq);
-  // if (!seq_names)
-  // {
-  //   fprintf(stderr, "Failed to retrieve sequence names from header.\n");
-  //   bcf_hdr_destroy(hdr);
-  //   bcf_close(fp);
-  //   return 1;
-  // }
-
-  // // Iterate through header lines to find contig lines
-  // for (int i = 0; i < hdr->nhrec; i++)
-  // {
-  //   bcf_hrec_t *hrec = hdr->hrec[i];
-  //   if (hrec->type == BCF_HL_CTG && strcmp(hrec->key, "contig") == 0)
-  //   {
-  //     const char *seq_name = NULL;
-  //     const char *seq_length = NULL;
-  //     for (int j = 0; j < hrec->nkeys; j++)
-  //     {
-  //       if (strcmp(hrec->keys[j], "ID") == 0)
-  //       {
-  //         seq_name = hrec->vals[j];
-  //       }
-  //       else if (strcmp(hrec->keys[j], "length") == 0)
-  //       {
-  //         seq_length = hrec->vals[j];
-  //       }
-  //     }
-  //     if (seq_name && seq_length)
-  //     {
-  //       printf("Sequence name: %s, Length: %s\n", seq_name, seq_length);
-  //     }
-  //   }
-  // }
-
-  // // log the number of sequences
-  // log_info("Number of sequences: %d", nseq);
-  // // log the sequence names
-  // for (int i = 0; i < nseq; i++)
-  // {
-  //   log_info("Sequence %d: %s", i, seq_names[i]);
-  // }
-
-  // // close the file
-  // bcf_hdr_destroy(hdr);
-  // hts_close(fp);
-
   // read file line by line
-  kstring_t str = {0, 0, NULL};
-  int len;
-  std::string line = "";
+  //  kstring_t str = {0, 0, NULL};
+
   // For each chromosome
   bool start_vcf = true;
   int current_position;
   // std::string current_chromosome;
-  
 
   //
   // std::string lineVCF = "";
@@ -465,14 +410,12 @@ int main(int argc, char *argv[])
   std::string linetfasta = "";
   std::string subseq = "";
 
-
-  
   log_info("Processing the VCF file %s", vcfname.c_str());
   // process each chromosome in the same order as provided in the fasta file and the fai file
-  // 
+  //
   for (std::vector<int>::size_type i = 0; i < chromosomegroup.size(); i++)
   {
-    log_debug("Chromosome: %s, Length: %d", chromosomegroup[i].c_str(), chromosomelength[i]);
+    log_info("Chromosome: %s, Length: %d", chromosomegroup[i].c_str(), chromosomelength[i]);
     chromosome = chromosomegroup[i];
     sizeChrom = chromosomelength[i];
 
@@ -480,8 +423,8 @@ int main(int argc, char *argv[])
     {
       return 1;
     }
-    int len = 0;
-    line = "";
+
+    std::string line = "";
     // current_chromosome = "";
     bool processing_chromosome = false;
     current_position = 0;
@@ -492,9 +435,7 @@ int main(int argc, char *argv[])
     while (true)
     {
       // read a new line
-      len = vcf.getLine(line);
-
-      
+      int len = vcf.getLine(line);
 
       // if we reach the end of the file, stop
       if (len < 0)
@@ -532,12 +473,20 @@ int main(int argc, char *argv[])
         log_error("Invalid VCF record: %s", line.c_str());
         continue;
       }
+      #ifdef DEBUG
+      // current_position , each 1000 positions print a message
+      //if (current_position % 1000 == 0)
+      // {
+      //   // log the current position and chromosome
+      //   log_debug("Chromosome: %s, Position: %d", chromosome.c_str(), current_position);
+      // }
+      #endif
 
       std::string lineVCF = vcf.SetDataline(vcfline);
       std::vector<std::string> dline = CStringTools::split(lineVCF, '\t');
       // chromVCF = dline[0];
       pos = CStringTools::stringToInt(dline[1]);
-     
+
       nts = dline[2];
       if (pos > (current_position + 1))
       {
@@ -676,28 +625,22 @@ int main(int argc, char *argv[])
       }
       linetfasta = linetfasta + nucleotides + "\n";
       tfasta.writeFile(linetfasta);
-      
     }
     // finished all the lines for the chromosome in the vcf file, now we need to pad the rest of the chromosome if needed
 
     // when stoped we will have the last position of the chromosome in the vcf file
-    // for the rest of the chromosome we will pad according to the imputation value 
+    // for the rest of the chromosome we will pad according to the imputation value
 
-      // close the VCF file to open it again for the next chromosome 
-      // TODO :: check if we can reset the file pointer to the beginning of the file instead of closing and opening the file
-      vcf.closeFile();
-    } // end for each chromosome
-    
-    
+    // close the VCF file to open it again for the next chromosome
+    // TODO :: check if we can reset the file pointer to the beginning of the file instead of closing and opening the file
+    vcf.closeFile();
+  } // end for each chromosome
+
   // close the files
   fasta.closeFile();
   log_info("Finished processing the VCF file");
-  log_info("Saving Output file and createing an index: %s", tfastaext.c_str());
+  log_info("Saving Output file and creating the index: %s", tfastaext.c_str());
   tfasta.closeFile();
 
-
   return 0;
-
-
-  
 }
