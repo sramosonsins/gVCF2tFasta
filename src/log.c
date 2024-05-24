@@ -176,3 +176,20 @@ void log_log(int level, const char *file, int line, const char *fmt, ...) {
 
   unlock();
 }
+
+
+void log_start(const char *program_name,int argc, char *argv[]) {
+   // echo program started
+  log_info("%s started", program_name);
+  // echo command line arguments as received
+  // construct a string of the command line arguments
+  char *cmdline = (char *)malloc(1);
+  cmdline[0] = '\0';
+  for (int i = 0; i < argc; i++) {
+    cmdline = (char *)realloc(cmdline, strlen(cmdline) + strlen(argv[i]) + 2);
+    strcat(cmdline, argv[i]);
+    strcat(cmdline, " ");
+  }
+  log_info("Command: %s", cmdline);
+
+}

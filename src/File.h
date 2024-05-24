@@ -15,14 +15,14 @@
 #define FILE_H
 
 #include <string>
-#include "zutil.h"
-#include "zindex.h"
-
+#include <htslib/bgzf.h>
+#include <htslib/kseq.h>
 class File {
 private:
-    FILE *file_handle_;
-    SGZip gz;
-    struct SGZIndex idx;
+    BGZF *fp;    
+    kstring_t str = {0, 0, NULL};
+    int curr = 0;
+    int len = 0;
 
 public:
     std::string file_name_;
@@ -30,7 +30,7 @@ public:
 public:
     File();
     File(const std::string & file_name);
-    File(const File& orig);
+    //File(const File& orig);
     virtual ~File();
 
 public:

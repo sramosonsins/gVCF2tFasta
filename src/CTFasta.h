@@ -13,17 +13,23 @@
 
 #include <string>
 #include "File.h"
+#include <htslib/bgzf.h>
 
 #ifndef CTFASTA_H
 #define CTFASTA_H
 
-class CTFasta : public File {
+class CTFasta  {
 public:
     CTFasta(const std::string & file_name);
+    bool openWriteFile(void);
+    void closeFile(void);
     //virtual ~CTFasta();
-    
+    bool writeFile(std::string s);
+    int count_alleles;
 private:
-
+    BGZF *output_fp;
+    std::string tfasta_fname;
+    
 };
 
 #endif /* CTFASTA_H */

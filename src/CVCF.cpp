@@ -13,8 +13,54 @@
 
 #include "CVCF.h"
 
-CVCF::CVCF(const std::string & file_name) : File(file_name) {
+CVCF::CVCF(const std::string & file_name)  {
+    input_vcf_fname = file_name;
     init();
+}
+
+bool CVCF::openFile(){
+    if ((fp = hts_open(input_vcf_fname.c_str(), "r")) == 0) {
+        // std::cerr << "Failed to open VCF file " << input_vcf_fname << std::endl;
+        log_error("Failed to open VCF file %s", input_vcf_fname.c_str());
+        return false;
+    }
+    
+    if(hdr == NULL){
+        // initialize header
+        hdr = bcf_hdr_read(fp);
+        int num_samples = bcf_hdr_nsamples(hdr);
+        // log the number of samples
+        log_info("Number of samples: %d", num_samples);
+        for (int i = 0; i < num_samples; i++)
+        {
+            // print samile at i hdr->samples[i]
+            log_info("Sample %d: %s", i, hdr->samples[i]);
+            samplenames_.push_back(hdr->samples[i]);
+        }
+
+        
+
+    }
+    else {
+        // close the file
+        bcf_hdr_destroy(hdr);
+        // just skip the header
+        hdr = bcf_hdr_read(fp);
+
+    }
+
+
+    return true;
+}
+
+bool CVCF::closeFile(){
+    if (fp != NULL) {
+        hts_close(fp);
+        fp = NULL;
+    }
+    
+    return true;
+
 }
 
 void CVCF::init(void) {
@@ -23,8 +69,8 @@ void CVCF::init(void) {
     allele_ = "";
     position_end_ = -1;
     //type_ = tDataline::UNDEFINED;
-    number_fields_ = 0;
-    samplenames_ = {};
+    // number_fields_ = 0;
+    // samplenames_ = {};
     for (std::list<SGenotype *>::iterator i = genotype_.begin(); i != genotype_.end(); i++) {
         delete *i;
     }
@@ -32,12 +78,88 @@ void CVCF::init(void) {
 
 }
 
+
+
+
+/**
+ * Checks if the VCF file is sorted.
+ *
+ * @return 1 if the VCF file is sorted, 0 otherwise.
+ *         Returns -1 if the VCF file is not opened or if there was an error initializing the VCF record.
+ */
+int CVCF::is_vcf_sorted() {
+    if (fp == NULL) {
+        log_error("VCF file not opened");
+        return -1;
+    }
+    
+
+    // bcf_hdr_t *hdr = bcf_hdr_read(fp);
+    // if (!hdr) {
+    //     fprintf(stderr, "Failed to read VCF header from file: %s\n", vcf_filename);
+    //     bcf_close(vcf_file);
+    //     return 0;
+    // }
+
+    bcf1_t *rec = bcf_init();
+    if (!rec) {
+        // fprintf(stderr, "Failed to initialize VCF record\n");
+        log_error("Failed to initialize VCF record");
+        return -1;
+    }
+
+    int is_sorted = 1;
+    int last_tid = -1;
+    int32_t last_pos = -1;
+
+    // Iterate through VCF records
+    while (bcf_read(fp, hdr, rec) == 0) {
+        if (rec->rid < last_tid || (rec->rid == last_tid && rec->pos < last_pos)) {
+            is_sorted = 0;
+            break;
+        }
+        last_tid = rec->rid;
+        last_pos = rec->pos;
+    }
+
+    // if (is_sorted) {
+    //     printf("VCF file is sorted.\n");
+    // } else {
+    //     printf("VCF file is not sorted.\n");
+    // }
+
+    // Cleanup
+    bcf_destroy(rec);
+   
+
+    return is_sorted;
+}
+
+
+int CVCF::getLine(std::string & line) {
+    int ret = 0;
+    if ((ret = hts_getline(fp, KS_SEP_LINE, &str) ) >= 0) {
+        line = str.s;
+    }
+    else {
+       line = "";
+    }
+    return ret;
+}
+
 //CVCF::CVCF(const CVCF& orig) {
 //}
 
-//CVCF::~CVCF() {
-//    init();
-//}
+CVCF::~CVCF() {
+   closeFile();
+    if (hdr != NULL) {
+        bcf_hdr_destroy(hdr);
+    }
+    // for (std::list<SGenotype *>::iterator i = genotype_.begin(); i != genotype_.end(); i++) {
+    //     delete *i;
+    // }
+    // genotype_.clear();
+}
 
 std::string CVCF::SetDataline(std::vector<std::string> vcfline) {
 
@@ -168,23 +290,23 @@ std::string CVCF::SetDataline(std::vector<std::string> vcfline) {
     return dataline;
 }
 
-int CVCF::GetNumberSamples(std::vector<std::string> vcfline) {
+// int CVCF::GetNumberSamples(std::vector<std::string> vcfline) {
 
-    number_fields_ = vcfline.size();
-    return (number_fields_ - 9);
+//     number_fields_ = vcfline.size();
+//     return (number_fields_ - 9);
 
-}
+// }
 
-std::vector<std::string> CVCF::GetNameSamples(std::vector<std::string> vcfline) {
+// std::vector<std::string> CVCF::GetNameSamples(std::vector<std::string> vcfline) {
 
-    number_fields_ = vcfline.size();
-    for (int i = 9; i < number_fields_; i++) {
-        samplenames_.push_back(vcfline[i]);
-        /*if (samplenames_ == "") {
-            samplenames_ = vcfline[i];
-        } else {
-            samplenames_ = samplenames_ + "\t" + vcfline[i];
-        }*/
-    }
-    return (samplenames_);
-}
+//     number_fields_ = vcfline.size();
+//     for (int i = 9; i < number_fields_; i++) {
+//         samplenames_.push_back(vcfline[i]);
+//         /*if (samplenames_ == "") {
+//             samplenames_ = vcfline[i];
+//         } else {
+//             samplenames_ = samplenames_ + "\t" + vcfline[i];
+//         }*/
+//     }
+//     return (samplenames_);
+// }
