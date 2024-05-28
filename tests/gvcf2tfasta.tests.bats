@@ -6,8 +6,8 @@ load '../node_modules/bats-file/load'
 @test "gvcf2tfasta ok" {
   run gVCF2tFasta -h
   assert_success
-  [ "${lines[0]}" = "VCF2tFasta" ]
-  [ "${lines[2]}" = "Usage: ./gVCF2tFasta -v input.vcf(.gz) -r reference.fa(.gz) -o outputname -n chromosomes.txt" ]
+  [ "${lines[0]}" = "gVCF2tFasta" ]
+  [ "${lines[2]}" = "Usage: gVCF2tFasta -v input.vcf(.gz) -r reference.fa(.gz) [-o outputname] [-n chromosomes.txt]" ]
 }
 
 
@@ -41,7 +41,7 @@ load '../node_modules/bats-file/load'
   # echo -----------------------------------------------------------------------------------------------------------
   # echo Example 3. Convert a multiple VCF file with all SNPs of 2 different populations to a compressed tFasta file
   # echo -----------------------------------------------------------------------------------------------------------
-  run gVCF2tFasta -v $TEST_FILES_DIR/multipleVCF_2pop.vcf -r $TEST_FILES_DIR/ref.fa.gz -o $TEST_OUTPUT/example_mult -n $TEST_FILES_DIR/ref.fa.fai
+  run gVCF2tFasta -v $TEST_FILES_DIR/multipleVCF_2pop.vcf.gz -r $TEST_FILES_DIR/ref.fa.gz -o $TEST_OUTPUT/example_mult -n $TEST_FILES_DIR/ref.fa.fai
   assert_success
   assert_file_exist $TEST_OUTPUT/example_mult.tfa.gz
 }
@@ -53,7 +53,7 @@ load '../node_modules/bats-file/load'
   # echo ---------------------------------------------------------------------------------
   # echo Example 4. Convert a VCF file with the SNPs of a pool to a compressed tFasta file
   # echo ---------------------------------------------------------------------------------
-  run gVCF2tFasta -v $TEST_FILES_DIR/pool_p10.vcf -r $TEST_FILES_DIR/ref.fa.gz -o $TEST_OUTPUT/pool -n $TEST_FILES_DIR/ref.fa.fai
+  run gVCF2tFasta -v $TEST_FILES_DIR/pool_p10.vcf.gz -r $TEST_FILES_DIR/ref.fa.gz -o $TEST_OUTPUT/pool -n $TEST_FILES_DIR/ref.fa.fai
   assert_success
   assert_file_exist $TEST_OUTPUT/pool.tfa.gz
 }
