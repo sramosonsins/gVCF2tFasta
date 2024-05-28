@@ -129,12 +129,7 @@ int main(int argc, char *argv[])
   log_set_level(LOG_INFO);
 #endif
 
-  // set program name as gVCF2tFasta
-  const char *program_name = "gVCF2tFasta";
-  log_start(program_name, argc, argv);
-
-
-  log_debug("Debug mode enabled");
+  
   // char *vcfname = NULL;
 
   // Input parameters
@@ -175,6 +170,13 @@ int main(int argc, char *argv[])
       return 1;
     }
   }
+
+  // set program name as gVCF2tFasta
+  const char *program_name = "gVCF2tFasta";
+  log_start(program_name, argc, argv);
+
+
+  log_debug("Debug mode enabled");
 
   if (vcfname == "")
   {
