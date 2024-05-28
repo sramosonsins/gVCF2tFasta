@@ -13,6 +13,23 @@ ENDIF(CMAKE_BUILD_TYPE MATCHES Debug)
 # Assuming HTSlib was installed in /usr/local
 find_path(HTSLIB_INCLUDE_DIR NAMES htslib/sam.h HINTS /usr/local/include)
 find_library(HTSLIB_LIBRARY NAMES hts PATHS /usr/local/lib)
+
+## find htslib on windows
+if(NOT HTSLIB_INCLUDE_DIR OR NOT HTSLIB_LIBRARY)
+  find_path(HTSLIB_INCLUDE_DIR NAMES htslib/sam.h HINTS "C:/Program Files/htslib/include")
+  find_library(HTSLIB_LIBRARY NAMES hts PATHS "C:/Program Files/htslib/lib")
+endif()
+## find htslib on macos
+if(NOT HTSLIB_INCLUDE_DIR OR NOT HTSLIB_LIBRARY)
+  find_path(HTSLIB_INCLUDE_DIR NAMES htslib/sam.h HINTS "/usr/local/Cellar/htslib")
+  find_library(HTSLIB_LIBRARY NAMES hts PATHS "/usr/local/Cellar/htslib")
+endif()
+
+
+if(NOT HTSLIB_INCLUDE_DIR OR NOT HTSLIB_LIBRARY)
+  message(FATAL_ERROR "Could not find htslib")
+endif()
+
 file(GLOB_RECURSE SOURCE_FILE CONFIGURE_DEPENDS "src/*.c*")
 
 # gVCF2tFasta ${PROJECT_NAME}
