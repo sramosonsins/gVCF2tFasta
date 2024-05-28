@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5.0)
-project(gVCF2tFasta VERSION 0.1.0 LANGUAGES C CXX)
+project(gVCF2tFasta VERSION 1.0.0 LANGUAGES C CXX)
 
 #include(CTest)
 #enable_testing()
@@ -14,12 +14,12 @@ ENDIF(CMAKE_BUILD_TYPE MATCHES Debug)
 find_path(HTSLIB_INCLUDE_DIR NAMES htslib/sam.h HINTS /usr/local/include)
 find_library(HTSLIB_LIBRARY NAMES hts PATHS /usr/local/lib)
 
-## find htslib on windows
+## find htslib on windows NEED TO BE TESTED
 if(NOT HTSLIB_INCLUDE_DIR OR NOT HTSLIB_LIBRARY)
   find_path(HTSLIB_INCLUDE_DIR NAMES htslib/sam.h HINTS "C:/Program Files/htslib/include")
   find_library(HTSLIB_LIBRARY NAMES hts PATHS "C:/Program Files/htslib/lib")
 endif()
-## find htslib on macos
+## find htslib on macos NEED TO BE TESTED
 if(NOT HTSLIB_INCLUDE_DIR OR NOT HTSLIB_LIBRARY)
   find_path(HTSLIB_INCLUDE_DIR NAMES htslib/sam.h HINTS "/usr/local/Cellar/htslib")
   find_library(HTSLIB_LIBRARY NAMES hts PATHS "/usr/local/Cellar/htslib")
