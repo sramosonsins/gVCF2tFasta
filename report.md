@@ -12,9 +12,7 @@
 - Index file : An index file (.tbi) is created for the output tfasta file.
 
 ### Implementation
-gVCF2tFasta now use htslib to read and write Files, this include  VCF and Fasta files. The output tfasta file is compressed (bgzip) and indexed. The index file (.tbi) is created for the output tfasta file.
-The tool is no longer use zlib direclty to compress the output file, instead it uses htslib to deal with compressed files.
-The tfasta index file is created with htslib tabix format.
+gVCF2tFasta now uses htslib to read and write Files, this include VCF and Fasta files. The output tfasta file is compressed (bgzip) and indexed. The index file (.tbi) is created for the output tfasta file. The tool no longer uses zlib directly to compress the output file, instead it uses htslib to deal with compressed files. The tfasta index file is created with htslib tabix format.
 
 ### TFasta file format
 The tfasta file format has the following format:
