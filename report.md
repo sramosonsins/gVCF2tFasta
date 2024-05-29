@@ -1,50 +1,93 @@
-# Summary
+# Update Version 1.0.0 
 
-## Summary result for V0.2.0
+## Input and Output Files
+### Input Files and Flags
+- VCF file (input.vcf(.gz)) : accepts both uncompressed and compressed files (gzip , bgzip). The input VCF file must be sorted.
+- Reference Fasta file (reference.fa(.gz)) : accepts both uncompressed and compressed files (only bgzip). An index file (.fai) is created for the reference fasta file if it does not exist.
+- File with chromosome(s) to convert and its length (chromosomes.txt) : Optional File with chromosome(s) to convert and its length, Default use all sequences as in reference fasta file, if not provided.
+- Output compressed tFasta filename (outputname) : Optional Output compressed tFasta filename, Default same as input vcf file, if not provided.
+- Imputation (Only use with VCF files, not gVCF files) : 0 if missing data in VCF is equal to N in tFasta, 1 if missing data in VCF is equal to reference fasta in tFasta, Default value is 0.
+### Output Files
+- Output tfasta file : The output tfasta file is compressed (bgzip).
+- Index file : An index file (.tbi) is created for the output tfasta file.
 
-<!-- -rw-rw-r-- 1 ahafez ahafez     163204 May 24 09:56 v1_example_gz.tfa.gz
--rw-rw-r-- 1 ahafez ahafez    1282016 May 24 09:56 v1_example_gz.tfa.index
--rw-rw-r-- 1 ahafez ahafez     170568 May 24 09:56 v1_example_mult.tfa.gz
--rw-rw-r-- 1 ahafez ahafez    1282176 May 24 09:56 v1_example_mult.tfa.index
--rw-rw-r-- 1 ahafez ahafez     163190 May 24 09:56 v1_example.tfa.gz
--rw-rw-r-- 1 ahafez ahafez    1282016 May 24 09:56 v1_example.tfa.index
--rw-rw-r-- 1 ahafez ahafez     166407 May 24 09:56 v1_pool.tfa.gz
--rw-rw-r-- 1 ahafez ahafez    1282640 May 24 09:56 v1_pool.tfa.index
--rw-rw-r-- 1 ahafez ahafez  479639496 May 24 10:03 v1_TEST_almond_10lines.tfa.gz
--rw-rw-r-- 1 ahafez ahafez 3337977616 May 24 10:03 v1_TEST_almond_10lines.tfa.index -->
+### Implementation
+gVCF2tFasta now use htslib to read and write Files, this include  VCF and Fasta files. The output tfasta file is compressed (bgzip) and indexed. The index file (.tbi) is created for the output tfasta file.
+The tool is no longer use zlib direclty to compress the output file, instead it uses htslib to deal with compressed files.
+The tfasta index file is created with htslib tabix format.
 
-<!-- Table with file size in Megabyte -->
+### TFasta file format
+The tfasta file format is a compressed fasta file with the following format:
+```ini
+##fileformat=TFAv2.0
+# command1 
+# command2
+#NAMES: >chr1_a >chr1_b .....
+#CHR	POSITION	GENOTYPES
+chr10	31338	GGGGNNGGGGGGGGGGGGGGGGGGGGGGGGGGNNGGGGGGGG
+chr10	31339	GGGGNNGGGGGGGGGGGGGGGGGGGGGGGGGGNNGGGGGGGG
+chr10	31340	AAAANNAAAAAAAAAAAAAAAAAAAAAAAAAANNAAAAAAAA
+chr10	31341	TTTTNNTTTTTTTTTTTTTTTTTTTTTTTTTTNNTTTTTTTT
+chr10	31342	AAAANNAAAAAAAAAAAAAAAAAAAAAAAAAANNAAAAAAAA
+chr10	31343	CCCCNNCCCCCCCCCCCCCCCCCCCCCCCCCCNNCCCCCCCC
+chr10	31344	TTTTNNTTTTTTTTTTTTTTTTTTTTTTTTTTNNTTTTTTTT
+chr10	31345	GGGGNNGGGGGGGGGGGGGGGGGGGGGGGGGGNNGGGGGGGG
+```
+
+Header section:
+- `##fileformat=TFAv2.0` : The version of the tfasta file format.
+- `#command1`: The command used to generate the tfasta file.
+- `#command2`: other command used to generate the tfasta file.
+- `#NAMES` : The names of the sequences in the tfasta file. The names are separated by a space and start with the "`>`" character.
+
+Data section is a tab-separated file with the following columns:
+- `CHR`: Chromosome name
+- `POSITION`: Position in the chromosome
+- `GENOTYPES`: Genotypes in the position. The genotypes are represented by the IUPAC nucleotide code. Missing data is represented by N.
+
+
+## Result Comparison between gVCF2tfasta V0.2.0 and V1.0.0
+
+### V0.2.0
+
 | File Name | Size (MB) |
 | --------- | --------- |
-| v1_example_mult.tfa.gz | 0.17 |
-| v1_example_mult.tfa.index | 1.22 |
-| v1_example.tfa.gz | 0.16 |
-| v1_example.tfa.index | 1.22 |
-| v1_pool.tfa.gz | 0.16 |
-| v1_pool.tfa.index | 1.22 |
-| v1_TEST_almond_10lines.tfa.gz | 479.64 |
-| v1_TEST_almond_10lines.tfa.index | 3337.98 |
+| v0_example_mult.tfa.gz | 0.17 |
+| v0_example_mult.tfa.index | 1.22 |
+| v0_example.tfa.gz | 0.16 |
+| v0_example.tfa.index | 1.22 |
+| v0_pool.tfa.gz | 0.16 |
+| v0_pool.tfa.index | 1.22 |
+| v0_TEST_almond_10lines.tfa.gz | 479.64 |
+| v0_TEST_almond_10lines.tfa.index | 3337.98 |
 
 
-
+### V1.0.0
 | File Name | Size (MB) |
 | --------- | --------- |
-| v2_example_mult.tfa.gz | 0.12 |
-| v2_example_mult.tfa.gz.tbi | 0.00 |
-| v2_example.tfa.gz | 0.11 |
-| v2_example.tfa.gz.tbi | 0.00 |
-| v2_pool.tfa.gz | 0.12 |
-| v2_pool.tfa.gz.tbi | 0.00 |
-| v2_TEST_almond_10lines.tfa.gz | 344.00 |
-| v2_TEST_almond_10lines.tfa.gz.tbi | 0.15 |
+| v1_example_mult.tfa.gz | 0.12 |
+| v1_example_mult.tfa.gz.tbi | 0.00 |
+| v1_example.tfa.gz | 0.11 |
+| v1_example.tfa.gz.tbi | 0.00 |
+| v1_pool.tfa.gz | 0.12 |
+| v1_pool.tfa.gz.tbi | 0.00 |
+| v1_TEST_almond_10lines.tfa.gz | 344.00 |
+| v1_TEST_almond_10lines.tfa.gz.tbi | 0.15 |
 
- | File Name | Size (MB) | File Name | Size (MB) |
+
+### Comparison
+| File Name | Size (MB) | File Name | Size (MB) |
 | --------- | --------- | --------- | --------- |
-| v1_example_mult.tfa.gz | 0.17 | v2_example_mult.tfa.gz | 0.12 |
-| v1_example_mult.tfa.index | 1.22 | v2_example_mult.tfa.gz.tbi | 0.00 |
-| v1_example.tfa.gz | 0.16 | v2_example.tfa.gz | 0.11 |
-| v1_example.tfa.index | 1.22 | v2_example.tfa.gz.tbi | 0.00 |
-| v1_pool.tfa.gz | 0.16 | v2_pool.tfa.gz | 0.12 |
-| v1_pool.tfa.index | 1.22 | v2_pool.tfa.gz.tbi | 0.00 |
-| v1_TEST_almond_10lines.tfa.gz | 479.64 | v2_TEST_almond_10lines.tfa.gz | 344.00 |
-| v1_TEST_almond_10lines.tfa.index | 3337.98 | v2_TEST_almond_10lines.tfa.gz.tbi | 0.15 |
+| v0_example_mult.tfa.gz | 0.17 | v1_example_mult.tfa.gz | 0.12 |
+| v0_example_mult.tfa.index | 1.22 | v1_example_mult.tfa.gz.tbi | 0.00 |
+| v0_example.tfa.gz | 0.16 | v1_example.tfa.gz | 0.11 |
+| v0_example.tfa.index | 1.22 | v1_example.tfa.gz.tbi | 0.00 |
+| v0_pool.tfa.gz | 0.16 | v1_pool.tfa.gz | 0.12 |
+| v0_pool.tfa.index | 1.22 | v1_pool.tfa.gz.tbi | 0.00 |
+| v0_TEST_almond_10lines.tfa.gz | 479.64 | v1_TEST_almond_10lines.tfa.gz | 344.00 |
+| v0_TEST_almond_10lines.tfa.index | 3337.98 | v1_TEST_almond_10lines.tfa.gz.tbi | 0.15 |
+
+
+#### TEST_almond_10lines
+The generated TEST_almond_10lines tfasta is about 7GB, And the compressed file is about 479.64 MB in version 0.2.0 and 344 MB in version 1.0.0. The index file generated by version 1.0.0 is 0.15 MB, while the index file generated by version 0.2.0 is 3337.98 MB (over 3GB). Comparing the files generated by the two versions, Index files generated by version 1.0.0 are much smaller than the files generated by version 0.2.0. 
+

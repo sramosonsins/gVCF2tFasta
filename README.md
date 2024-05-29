@@ -1,5 +1,5 @@
-# VCF2tFasta Version 1.0.0
-### Convert gVCF files to transposed fasta format (tfasta, indexed and compressed).
+# gVCF2tFasta Version 1.0.0
+Convert gvcf/vcf files to transposed fasta format (tfasta, indexed and compressed).
 
 Jordi Leno-Colorado
 
@@ -8,7 +8,7 @@ Jordi Leno-Colorado
 
 Note: Structural Variants are considered as missing data (N)
 
-### Flag Options:
+#### gVCF2tFasta arguments/options:
         -h              Help and exit
         -v              Input VCF file
         -r              Reference Fasta file
@@ -19,22 +19,36 @@ Note: Structural Variants are considered as missing data (N)
                         1 if missing data in VCF is equal to reference fasta in tFasta
                         Default value is 0
 
-## Build 
+gVCF2tFasta accepts both uncompressed and compressed files (gzip). The input VCF file must sorted. 
+If the fasta file is compressed, it must be compressed with bgzip. An index file (.fai) is created for the reference fasta file if it does not exist.
 
-### install htslib first
+The output tfasta file is compressed (bgzip) and indexed.
+
+## Build gVCF2tFasta
+
+#### First Install htslib [Tested with v1.20] 
+
+On linux, you can install htslib using the package manager of your distribution. For example, on Ubuntu, you can install htslib using the following command:
+```bash
+$ sudo apt-get install libhts-dev
+```
+
+Or you can build htslib from source. To do so, follow these steps:
+
 ```bash
 $ git clone https://github.com/samtools/htslib.git
 $ cd htslib
+$ git checkout 1.20
 $ autoreconf -i  # Build the configure script and install files it uses
 $ ./configure    # Optional but recommended, for choosing extra functionality
 $ make
 ## make install or sudo make install as required
 $ make install
 ```
-
+For more information, see the htslib [GITHUB](https://github.com/samtools/htslib)
 
 ### Build gVCF2tFasta
-
+#### Using CMake
 ```bash
 $ git clone https://github.com/sramosonsins/gVCF2tFasta.git 
 $ cd gVCF2tFasta
@@ -42,4 +56,9 @@ $ cd gVCF2tFasta
 $ cmake -B ./build -DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_COMPILER=gcc -DCMAKE_BUILD_TYPE=Release -S ./
 # build
 $ cmake --build ./build --config Release
+
+
+## Run gVCF2tFasta
+$ ./build/gVCF2tFasta -h
+
 ```
