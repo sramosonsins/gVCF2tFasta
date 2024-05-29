@@ -17,7 +17,7 @@ The tool is no longer use zlib direclty to compress the output file, instead it 
 The tfasta index file is created with htslib tabix format.
 
 ### TFasta file format
-The tfasta file format is a compressed fasta file with the following format:
+The tfasta file format has the following format:
 ```ini
 ##fileformat=TFAv2.0
 # command1 
