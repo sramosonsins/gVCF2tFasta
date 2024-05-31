@@ -30,8 +30,8 @@ if(NOT HTSLIB_INCLUDE_DIR OR NOT HTSLIB_LIBRARY)
 endif()
 # /opt/homebrew/opt/htslib
 if(NOT HTSLIB_INCLUDE_DIR OR NOT HTSLIB_LIBRARY)
-  find_path(HTSLIB_INCLUDE_DIR NAMES htslib/sam.h HINTS "/opt/homebrew/opt/htslib")
-  find_library(HTSLIB_LIBRARY NAMES hts PATHS "/opt/homebrew/opt/htslib")
+  find_path(HTSLIB_INCLUDE_DIR NAMES htslib/sam.h HINTS "/opt/homebrew/opt/htslib/include")
+  find_library(HTSLIB_LIBRARY NAMES hts PATHS "/opt/homebrew/opt/htslib/lib")
 endif()
 ## if not search in  /opt/homebrew/Cellar/htslib/1.20
 if(NOT HTSLIB_INCLUDE_DIR OR NOT HTSLIB_LIBRARY)
