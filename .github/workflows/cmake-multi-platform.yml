@@ -136,8 +136,8 @@ jobs:
 
     - name: version
       run: |
-        echo "version=v1.0.0" >> "$GITHUB_ENV"
-        echo "version=v1.0.0" >> "$GITHUB_OUTPUT"
+        echo "version=1.0.0" >> "$GITHUB_ENV"
+        echo "version=1.0.0" >> "$GITHUB_OUTPUT"
       id: version
 
 
@@ -147,8 +147,8 @@ jobs:
       with:
         draft: true
         prerelease: false
-        release_name: ${{ steps.version.outputs.version }}
-        tag_name: ${{ github.ref }}
+        release_name: v${{ steps.version.outputs.version }}
+        tag_name: v${{ steps.version.outputs.version }}
         body_path: README.md
       env:
         GITHUB_TOKEN: ${{ github.token }}
@@ -159,12 +159,12 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ${{ github.workspace }}/release/gVCF2tfasta-${{ steps.version.outputs.version }}-Linux.tar.gz
         # asset_path: ${{ steps.strings.outputs.build-output-dir }}/*.Linux.tar.gz
-        asset_name: gVCF2tfasta-${{ steps.version.outputs.version }}-Linux.tar.gz
+        asset_name: gVCF2tfasta-v${{ steps.version.outputs.version }}-Linux.tar.gz
         asset_content_type: application/gzip
     - name: upload macos artifact
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ${{ github.workspace }}/release/gVCF2tfasta-${{ steps.version.outputs.version }}-Darwin.tar.gz
-        asset_name: gVCF2tfasta-${{ steps.version.outputs.version }}-Darwin.tar.gz
+        asset_name: gVCF2tfasta-v${{ steps.version.outputs.version }}-Darwin.tar.gz
         asset_content_type: application/gzip
