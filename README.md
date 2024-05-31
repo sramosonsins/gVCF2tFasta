@@ -33,6 +33,11 @@ On linux, you can install htslib using the package manager of your distribution.
 $ sudo apt-get install libhts-dev
 ```
 
+On macOS, you can install htslib using Homebrew:
+```bash
+$ brew install htslib
+```
+
 Or you can build htslib from source. To do so, follow these steps:
 
 ```bash
