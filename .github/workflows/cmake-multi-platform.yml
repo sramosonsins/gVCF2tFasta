@@ -72,6 +72,14 @@ jobs:
       if: matrix.os == 'macos-latest'
       run: |
         brew install htslib
+        # list installed packages
+        brew list
+        ## get where htslib is installed
+        brew --prefix htslib
+        ls $(brew --prefix htslib)
+        ls /opt/homebrew/Cellar/htslib/1.20
+        ls /opt/homebrew/Cellar/htslib/1.20/include/htslib
+        ls /opt/homebrew/Cellar/htslib/1.20/lib
 
     
     - name: Configure CMake
