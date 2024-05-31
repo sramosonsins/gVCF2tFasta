@@ -73,8 +73,10 @@ jobs:
       run: |
         brew install htslib
         brew --prefix htslib
-        ls /opt/homebrew/Cellar/htslib/1.20
-        ls /opt/homebrew/opt/htslib
+        ls /opt/homebrew/opt/htslib/include
+        echo "-"
+        ls /opt/homebrew/opt/htslib/lib
+        
     
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
