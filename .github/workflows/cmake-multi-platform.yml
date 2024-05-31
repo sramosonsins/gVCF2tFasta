@@ -23,7 +23,7 @@ jobs:
       #
       # To add more build types (Release, Debug, RelWithDebInfo, etc.) customize the build_type list.
       matrix:
-        os: [ubuntu-latest,macos-latest]  # , windows-latest]
+        os: [ubuntu-latest,macos-latest , macos-latest-xlarge]  # , windows-latest]
         build_type: [Release]
         c_compiler: [gcc, clang] # clang, cl]
         include:
@@ -33,15 +33,22 @@ jobs:
           - os: ubuntu-latest
             c_compiler: gcc
             cpp_compiler: g++
+          - os: ubuntu-latest
+            c_compiler: clang
+            cpp_compiler: clang++
           - os: macos-latest
             c_compiler: gcc
             cpp_compiler: g++
           - os: macos-latest
             c_compiler: clang
             cpp_compiler: clang++
-          - os: ubuntu-latest
+          - os: macos-latest-xlarge
+            c_compiler: gcc
+            cpp_compiler: g++
+          - os: macos-latest-xlarge
             c_compiler: clang
             cpp_compiler: clang++
+
         exclude:
           - os: windows-latest
             c_compiler: gcc
@@ -67,15 +74,11 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y libhts-dev
     
-    ## Install htslib on macOS
-    - name : Install htslib macOS
-      if: matrix.os == 'macos-latest'
+    ## Install htslib on macOS and run only in macos-latest or macos-latest-xlarge
+    - name : Install htslib macOS 
+      if: matrix.os == 'macos-latest' || matrix.os == 'macos-latest-xlarge'
       run: |
         brew install htslib
-        brew --prefix htslib
-        ls /opt/homebrew/opt/htslib/include/htslib
-        echo "-"
-        ls /opt/homebrew/opt/htslib/lib
         
     
     - name: Configure CMake
@@ -99,8 +102,11 @@ jobs:
         cd ${{ steps.strings.outputs.build-output-dir }}
         cpack -G TGZ
     - name: Upload release tarball
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
+        # Name of the artifact. This is the name that will be displayed in the GitHub Actions UI.
+        # get the name of the release tarball
+
         name: release
         path: ${{ steps.strings.outputs.build-output-dir }}/*.tar.gz
 
@@ -109,3 +115,33 @@ jobs:
       # Execute tests defined by the CMake configuration. Note that --build-config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: ctest --build-config ${{ matrix.build_type }}
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    steps:
+    - name: Download release tarball
+      uses: actions/download-artifact@v3
+      with:
+        name: release
+        path: ${{ github.workspace }}/release
+
+    - name: Extract release tarball
+      run: tar -xzf ${{ github.workspace }}/release/*.tar.gz -C ${{ github.workspace }}
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: ${{ github.workspace }}/release/*
+        token: ${{ secrets.GITHUB_TOKEN }}
+        body: |
+          Release for commit ${{ github.sha }}
+          - Changes: ${{ github.event_name }}
+          - Commit message: ${{ github.event.head_commit.message }}
+        tag_name: ${{ github.sha }}
+
+        name: Release ${{ github.ref }}
+        # Remove the line with 'release_name'
+        draft: true
+        prerelease: false       
