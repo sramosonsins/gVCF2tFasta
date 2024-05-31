@@ -1,43 +1,70 @@
-# VCF2tFasta Version 0.2
-
-### Convert gVCF files to transposed fasta format (tfasta, indexed and compressed).
+# gVCF2tFasta Version 1.0.0
+Convert gvcf/vcf files to transposed fasta format (tfasta, indexed and compressed).
 
 Jordi Leno-Colorado
 
 #### Usage: 
-	./gVCF2tFasta -v input.vcf(.gz) -r reference.fa(.gz) -o outputname -n chromosomes.txt
+	gVCF2tFasta -v input.vcf(.gz) -r reference.fa(.gz) [-o outputname] [-n chromosomes.txt]
 
 Note: Structural Variants are considered as missing data (N)
 
-### Flag Options:
-    -h        Help and exit
-    -v        Input VCF file
-    -r        Reference Fasta file
-    -o        Output compressed tFasta filename (without extension)
-    -n        File with chromosome(s) to convert and its length
-    -i        Imputation (Only use with VCF files, not gVCF files):
-                0 if missing data in VCF is equal to N in tFasta
-                1 if missing data in VCF is equal to reference fasta in tFasta
-                Default value is 0
+#### gVCF2tFasta arguments/options:
+        -h              Help and exit
+        -v              Input VCF file
+        -r              Reference Fasta file
+        -o              Optional Output compressed tFasta filename, Default same as input vcf file
+        -n              Optional File with chromosome(s) to convert and its length, Default use all sequences as in reference fasta file
+        -i              Imputation (Only use with VCF files, not gVCF files):
+                        0 if missing data in VCF is equal to N in tFasta
+                        1 if missing data in VCF is equal to reference fasta in tFasta
+                        Default value is 0
 
-### To compile:
-	make -f nbproject/Makefile-Release.mk build/Release/GNU-Linux/main.o
-	mkdir -p build/Release/GNU-Linux
-	rm -f "build/Release/GNU-Linux/main.o.d"
-	g++ -std=c++0x -lz   -c -O2 -MMD -MP -MF "build/Release/GNU-Linux/main.o.d" -o build/Release/GNU-Linux/main.o sources/main.cpp
-	/usr/bin/make -f Makefile CONF=Release
+gVCF2tFasta accepts both uncompressed and compressed files (gzip). The input VCF file must sorted. 
+If the fasta file is compressed, it must be compressed with bgzip. An index file (.fai) is created for the reference fasta file if it does not exist.
 
-### Examples:
+The output tfasta file is compressed (bgzip) and indexed.
 
-Convert a compressed single individual VCF file to a compressed tFasta file
+## Build gVCF2tFasta
 
-	../bin/gVCF2tFasta -v example.vcf.gz -r ref.fa.gz -o example -n ref.fa.fai
+#### First Install htslib [Tested with v1.20] 
 
-Convert a VCF file with the SNPs of a pool to a compressed tFasta file
-	
-	../bin/gVCF2tFasta -v pool_p10.vcf -r ref.fa.gz -o pool -n ref.fa.fai
+On linux, you can install htslib using the package manager of your distribution. For example, on Ubuntu, you can install htslib using the following command:
+```bash
+$ sudo apt-get install libhts-dev
+```
+
+On macOS, you can install htslib using Homebrew:
+```bash
+$ brew install htslib
+```
+
+Or you can build htslib from source. To do so, follow these steps:
+
+```bash
+$ git clone https://github.com/samtools/htslib.git
+$ cd htslib
+$ git checkout 1.20
+$ autoreconf -i  # Build the configure script and install files it uses
+$ ./configure    # Optional but recommended, for choosing extra functionality
+$ make
+## make install or sudo make install as required
+$ make install
+```
+For more information, see the htslib [GITHUB](https://github.com/samtools/htslib)
+
+### Build gVCF2tFasta
+#### Using CMake
+```bash
+$ git clone https://github.com/sramosonsins/gVCF2tFasta.git 
+$ cd gVCF2tFasta
+## configure cmake
+$ cmake -B ./build -DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_COMPILER=gcc -DCMAKE_BUILD_TYPE=Release -S ./
+# build
+$ cmake --build ./build --config Release
 
 
-Convert a compressed multiple individual VCF file to a compressed tFasta file
+## Run gVCF2tFasta
 
-	../bin/gVCF2tFasta -v ./gatk_combined.vcf_10lines.recode.vcf.gz -r ./pdulcis26.contigs_Pd1-8.fa -o ./TEST_almond_10lines -i 0 -n ./pdulcis26.chromosomes.lengths
+$ ./build/gVCF2tFasta -h
+
+```

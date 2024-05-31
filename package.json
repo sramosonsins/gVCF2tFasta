@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "bats-assert": "github:ztombol/bats-assert",
+    "bats-file": "github:ztombol/bats-file",
+    "bats-support": "github:ztombol/bats-support"
+  }
+}
