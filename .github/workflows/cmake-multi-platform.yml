@@ -61,14 +61,14 @@ jobs:
         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
     ## Install htslib and run only in ubuntu-latest
-    - name : Install htslib
+    - name : Install htslib ubuntu
       if: matrix.os == 'ubuntu-latest'
       run: |
         sudo apt-get update
         sudo apt-get install -y libhts-dev
     
     ## Install htslib on macOS
-    - name : Install htslib
+    - name : Install htslib macOS
       if: matrix.os == 'macos-latest'
       run: |
         brew install htslib
