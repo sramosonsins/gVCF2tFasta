@@ -59,6 +59,7 @@ $ cmake --build ./build --config Release
 
 
 ## Run gVCF2tFasta
+
 $ ./build/gVCF2tFasta -h
 
 ```
