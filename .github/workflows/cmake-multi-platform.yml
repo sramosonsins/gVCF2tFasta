@@ -125,8 +125,8 @@ jobs:
         name: release
         path: ${{ github.workspace }}/release
 
-    - name: Extract release tarball
-      run: tar -xzf ${{ github.workspace }}/release/*.tar.gz -C ${{ github.workspace }}
+    - name: check release tarball
+      run: ls -l ${{ github.workspace }}/release/ 
 
     - name: release
       uses: actions/create-release@v1
@@ -144,13 +144,14 @@ jobs:
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ github.workspace }}/release/*.Linux.tar.gz
-        asset_name: ${{ github.workspace }}/release/*.Linux.tar.gz
+        # asset_path: ${{ github.workspace }}/release/*.Linux.tar.gz
+        asset_path: ${{ steps.strings.outputs.build-output-dir }}/*.Linux.tar.gz
+        asset_name: gVCF2tfasta-${{ steps.version.outputs.version }}.Linux.tar.gz
         asset_content_type: application/gzip
     - name: upload macos artifact
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ github.workspace }}/release/*.Darwin.tar.gz
-        asset_name: ${{ github.workspace }}/release/*.Darwin.tar.gz
+        asset_path: ${{ steps.strings.outputs.build-output-dir }}/*.Darwin.tar.gz
+        asset_name: gVCF2tfasta-${{ steps.version.outputs.version }}.Darwin.tar.gz
         asset_content_type: application/gzip
