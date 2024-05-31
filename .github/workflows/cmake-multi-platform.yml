@@ -155,6 +155,8 @@ jobs:
 
     - name: upload linux artifact
       uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ${{ github.workspace }}/release/gVCF2tFasta-${{ steps.version.outputs.version }}-Linux.tar.gz
@@ -163,6 +165,8 @@ jobs:
         asset_content_type: application/gzip
     - name: upload macos artifact
       uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ${{ github.workspace }}/release/gVCF2tFasta-${{ steps.version.outputs.version }}-Darwin.tar.gz
