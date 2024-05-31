@@ -96,7 +96,7 @@ jobs:
       run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
     
     - name: version
-      run: echo "::set-output name=version::v1.0.0"
+      run: echo "version=v1.0.0" >> "$GITHUB_ENV"
       id: version
 
     ## make release
@@ -135,7 +135,7 @@ jobs:
       run: ls -l ${{ github.workspace }}/release/ 
 
     - name: version
-      run: echo "::set-output name=version::v1.0.0"
+      run: echo "version=v1.0.0" >> "$GITHUB_ENV"
       id: version
 
 
@@ -155,14 +155,14 @@ jobs:
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ github.workspace }}/release/*.Linux.tar.gz
+        asset_path: ${{ github.workspace }}/release/*-Linux.tar.gz
         # asset_path: ${{ steps.strings.outputs.build-output-dir }}/*.Linux.tar.gz
-        asset_name: gVCF2tfasta-${{ steps.version.outputs.version }}.Linux.tar.gz
+        asset_name: gVCF2tfasta-${{ steps.version.outputs.version }}-Linux.tar.gz
         asset_content_type: application/gzip
     - name: upload macos artifact
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ github.workspace }}/release/*.Darwin.tar.gz
-        asset_name: gVCF2tfasta-${{ steps.version.outputs.version }}.Darwin.tar.gz
+        asset_path: ${{ github.workspace }}/release/*-Darwin.tar.gz
+        asset_name: gVCF2tfasta-${{ steps.version.outputs.version }}-Darwin.tar.gz
         asset_content_type: application/gzip
