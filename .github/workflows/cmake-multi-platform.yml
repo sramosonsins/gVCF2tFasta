@@ -76,6 +76,8 @@ jobs:
         ls /opt/homebrew/opt/htslib/include/htslib
         echo "-"
         ls /opt/homebrew/opt/htslib/lib
+        echo "--"
+        ls /usr/local/include/
         
     
     - name: Configure CMake
