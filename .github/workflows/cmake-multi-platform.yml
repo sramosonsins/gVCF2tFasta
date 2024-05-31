@@ -23,7 +23,7 @@ jobs:
       #
       # To add more build types (Release, Debug, RelWithDebInfo, etc.) customize the build_type list.
       matrix:
-        os: [ubuntu-latest,macos-latest , macos-latest-xlarge]  # , windows-latest]
+        os: [ubuntu-latest,macos-latest ]  # , windows-latest]
         build_type: [Release]
         c_compiler: [gcc, clang] # clang, cl]
         include:
@@ -42,12 +42,12 @@ jobs:
           - os: macos-latest
             c_compiler: clang
             cpp_compiler: clang++
-          - os: macos-latest-xlarge
-            c_compiler: gcc
-            cpp_compiler: g++
-          - os: macos-latest-xlarge
-            c_compiler: clang
-            cpp_compiler: clang++
+          # - os: macos-latest-xlarge
+          #   c_compiler: gcc
+          #   cpp_compiler: g++
+          # - os: macos-latest-xlarge
+          #   c_compiler: clang
+          #   cpp_compiler: clang++
 
         exclude:
           - os: windows-latest
@@ -94,7 +94,10 @@ jobs:
     - name: Build
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
       run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
-
+    
+    - name: version
+      run: echo "::set-output name=version::v1.0.0"
+      id: version
 
     ## make release
     - name: Create release tarball
@@ -116,11 +119,6 @@ jobs:
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: ctest --build-config ${{ matrix.build_type }}
 
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/')
-    steps:
     - name: Download release tarball
       uses: actions/download-artifact@v3
       with:
@@ -130,18 +128,33 @@ jobs:
     - name: Extract release tarball
       run: tar -xzf ${{ github.workspace }}/release/*.tar.gz -C ${{ github.workspace }}
 
-    - name: Create GitHub Release
-      uses: softprops/action-gh-release@v1
+    - name: release
+      uses: actions/create-release@v1
+      id: create_release
       with:
-        files: ${{ github.workspace }}/release/*
-        token: ${{ secrets.GITHUB_TOKEN }}
-        body: |
-          Release for commit ${{ github.sha }}
-          - Changes: ${{ github.event_name }}
-          - Commit message: ${{ github.event.head_commit.message }}
-        tag_name: ${{ github.sha }}
-
-        name: Release ${{ github.ref }}
-        # Remove the line with 'release_name'
         draft: true
-        prerelease: false       
+        prerelease: false
+        release_name: ${{ steps.version.outputs.version }}
+        tag_name: ${{ github.ref }}
+        body_path: README.md
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+
+    - name: upload linux artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./bin/azblogfilter.linux-amd64.tar.gz
+          asset_name: azblogfilter.linux-amd64.tar.gz
+          asset_content_type: application/gzip
+      - name: upload darwin artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./bin/azblogfilter.darwin-amd64.tar.gz
+          asset_name: azblogfilter.darwin-amd64.tar.gz
+          asset_content_type: application/gzip
