@@ -124,6 +124,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
+    - uses: actions/checkout@v4
     - name: Download release tarball
       uses: actions/download-artifact@v3
       with:
@@ -141,8 +142,6 @@ jobs:
     - name: release
       uses: actions/create-release@v1
       id: create_release
-      ## check if release exists
-
       with:
         draft: true
         prerelease: false
