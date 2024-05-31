@@ -4,6 +4,10 @@ project(gVCF2tFasta VERSION 1.0.0 LANGUAGES C CXX)
 #include(CTest)
 #enable_testing()
 
+# Set the C++ standard
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_compile_options("-DLOG_USE_COLOR")
 IF(CMAKE_BUILD_TYPE MATCHES Debug)
@@ -24,7 +28,11 @@ if(NOT HTSLIB_INCLUDE_DIR OR NOT HTSLIB_LIBRARY)
   find_path(HTSLIB_INCLUDE_DIR NAMES htslib/sam.h HINTS "/usr/local/Cellar/htslib")
   find_library(HTSLIB_LIBRARY NAMES hts PATHS "/usr/local/Cellar/htslib")
 endif()
-
+## if not search in  /opt/homebrew/Cellar/htslib/1.20
+if(NOT HTSLIB_INCLUDE_DIR OR NOT HTSLIB_LIBRARY)
+  find_path(HTSLIB_INCLUDE_DIR NAMES htslib/sam.h HINTS "/opt/homebrew/Cellar/htslib")
+  find_library(HTSLIB_LIBRARY NAMES hts PATHS "/opt/homebrew/Cellar/htslib") 
+endif()
 
 if(NOT HTSLIB_INCLUDE_DIR OR NOT HTSLIB_LIBRARY)
   message(FATAL_ERROR "Could not find htslib")
