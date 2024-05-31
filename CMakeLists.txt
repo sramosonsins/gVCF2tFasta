@@ -45,6 +45,10 @@ endif()
 
 file(GLOB_RECURSE SOURCE_FILE CONFIGURE_DEPENDS "src/*.c*")
 
+
+## add include directories
+include_directories(${HTSLIB_INCLUDE_DIR})
+
 # gVCF2tFasta ${PROJECT_NAME}
 add_executable(gVCF2tFasta ${SOURCE_FILE})
 
