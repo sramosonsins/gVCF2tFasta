@@ -35,7 +35,7 @@ void help(char *name)
          "\t-c\t\tNumber of allele copies per position per individual (ploidy)\n"//SRO
          "\t-o\t\tOptional Output compressed tFasta filename, Default same as input vcf file\n"
          "\t-n\t\tOptional File with chromosome(s) to convert and its length, Default use all sequences as in reference fasta file\n"
-         "\t-i\t\tImputation (Only use with VCF files, not gVCF files):\n"
+         "\t-i\t\tImputation (include reference: Only use with VCF files, not gVCF files):\n"
          "\t\t\t0 if missing data in VCF is equal to N in tFasta\n"
          "\t\t\t1 if missing data in VCF is equal to reference fasta in tFasta\n"
          "\t\t\tDefault value is 0\n"
