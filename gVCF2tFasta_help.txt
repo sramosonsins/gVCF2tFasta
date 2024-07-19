@@ -1,6 +1,6 @@
 gVCF2tFasta
 Version 1.0.1
-Usage: gVCF2tFasta -v input.vcf(.gz) -r reference.fa(.gz) [-o outputname] [-n chromosomes.txt]
+Usage: gVCF2tFasta -v input.vcf(.gz) -r reference.fa(.gz) -c ploidy [-o outputname] [-n chromosomes.txt] [-i 0/1]
 Structural Variants are considered as missing data (N)
 Options:
 	-h		Help and exit

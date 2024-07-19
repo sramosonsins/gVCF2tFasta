@@ -26,7 +26,7 @@ void help(char *name)
 {
   printf("gVCF2tFasta\n"
          "Version 1.0.1\n"
-         "Usage: gVCF2tFasta -v input.vcf(.gz) -r reference.fa(.gz) [-o outputname] [-n chromosomes.txt]\n"
+         "Usage: gVCF2tFasta -v input.vcf(.gz) -r reference.fa(.gz) -c ploidy [-o outputname] [-n chromosomes.txt] [-i 0/1]\n"
          "Structural Variants are considered as missing data (N)\n"
          "Options:\n"
          "\t-h\t\tHelp and exit\n"
