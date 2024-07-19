@@ -145,7 +145,7 @@ int main(int argc, char *argv[])
   // default imputation == "0" missing data in VCF is equal to N in tFasta
 
   char tmp;
-  while ((tmp = getopt(argc, argv, "hv:r:o:n:i:c:")) != -1)
+  while ((tmp = getopt(argc, argv, "h:v:r:o:n:i:c:")) != -1)
   {
     switch (tmp)
     {
