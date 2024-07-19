@@ -177,14 +177,26 @@ std::string CVCF::SetDataline(std::vector<std::string> vcfline) {
         allele_ += tmp[i];
     }
 
-    int pos = vcfline[7].find("END=");
-    int indel = vcfline[7].find("INDEL");
-    int sv = vcfline[7].find("SV");
+    unsigned long int pos = vcfline[7].find("END=");
+    unsigned long int indel = vcfline[7].find("INDEL");
+    unsigned long int ins = vcfline[7].find("TYPE=ins");
+    unsigned long int del = vcfline[7].find("TYPE=del");
+    unsigned long int complex = vcfline[7].find("TYPE=complex");
+    unsigned long int sv = vcfline[7].find("SV");
 
     if (indel != std::string::npos) {
         type_data = "INDEL";
         position_end_ = 0;
     } else if (sv != std::string::npos) {
+        type_data = "INDEL";
+        position_end_ = 0;
+    } else if (ins != std::string::npos) {
+        type_data = "INDEL";
+        position_end_ = 0;
+    } else if (del != std::string::npos) {
+        type_data = "INDEL";
+        position_end_ = 0;
+    } else if (complex != std::string::npos) {
         type_data = "INDEL";
         position_end_ = 0;
     } else if (pos != std::string::npos) {
