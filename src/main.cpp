@@ -510,6 +510,12 @@ int main(int argc, char *argv[])
       std::vector<std::string> dline = CStringTools::split(lineVCF, '\t');
       // chromVCF = dline[0];
       pos = CStringTools::stringToInt(dline[1]);
+      //SRO->
+      if(pos > sizeChrom) {
+        log_error("defined position (%ld) is larger than chromosome size (%ld)",pos,sizeChrom);
+        return 1;
+      }
+      //SRO<-
       /* //SRO->
         if(pos<current_position) {
             log_error(" VCF rows must be sorted by position, including END blocks: Called position (%ld) is smaller than current position (%ld) ",pos,current_position);
@@ -583,7 +589,12 @@ int main(int argc, char *argv[])
         {
           // Si la linea del VCF corresponde a un Bloque Homocigoto:
           pos_f = CStringTools::stringToInt(dline[4]);
-
+          //SRO->
+          if(pos_f > sizeChrom) {
+            log_error("defined position END (%ld) is larger than chromosome size (%ld)",pos_f,sizeChrom);
+            return 1;
+          }
+          //SRO<-
           // // Obtenemos la secuencia correspondiente al bloque a partir del Fasta de referencia:
           // if (fasta.openReadFile())
           // {
@@ -593,6 +604,7 @@ int main(int argc, char *argv[])
 
           int counter = 0;
           // Imprimimos la secuencia en formato tFasta:
+
           for (int n = pos; n <= pos_f; n++)
           {
             std::string nucleotides = "";
@@ -605,7 +617,7 @@ int main(int argc, char *argv[])
                 if (nts[i] == 'R')
                 {
                   nucleotides = nucleotides + subseq[counter];
-                  chr_genotypes.at(n_geno*n+i)=subseq[counter];//SRO
+                  chr_genotypes.at((n-1)*n_geno+i)=subseq[counter];//SRO
                 }
                 else if (nts[i] == 'M')
                 {
