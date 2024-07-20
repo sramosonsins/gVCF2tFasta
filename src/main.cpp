@@ -171,7 +171,7 @@ int main(int argc, char *argv[])
     case 'c':
       ccopies = std::stoi(optarg);
       break;
-    //<-SRO
+    //SRO<-
     default:
       help(argv[0]);
       return 1;
@@ -686,7 +686,7 @@ int main(int argc, char *argv[])
         std::string nucleotides = "";
         linetfasta = chromosome + "\t" + CStringTools::intToString(n) + "\t";
         for(int s=0;s<n_geno;s++) {
-            nucleotides = nucleotides + chr_genotypes[n*n_geno+s];
+            nucleotides = nucleotides + chr_genotypes[(n-1)*n_geno+s];
         }
         linetfasta = linetfasta + nucleotides + "\n";
         tfasta.writeFile(linetfasta);
