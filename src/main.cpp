@@ -579,7 +579,7 @@ int main(int argc, char *argv[])
           //tfasta.writeFile(linetfasta);
           for (int s = 0; s < n_geno; s++) {
             if(nts[s]!='N') {
-                chr_genotypes.at(n_geno*pos+s)=nts[s];
+                chr_genotypes.at((pos-1)*n_geno+s)=nts[s];
             }
           }
             
