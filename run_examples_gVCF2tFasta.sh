@@ -6,6 +6,7 @@
 #    -h        Help and exit
 #    -v        Input VCF file
 #    -r        Reference Fasta file
+#    -c        Number of allele copies per position per individual (ploidy)
 #    -o        Output compressed tFasta filename (without extension)
 #    -n        File with chromosome(s) to convert and its length
 #    -i        Imputation (Only use with VCF files, not gVCF files):
@@ -37,8 +38,8 @@ echo --------------------------------------------------------------------
 echo Example 2. Convert a compressed VCF file to a compressed tFasta file
 echo --------------------------------------------------------------------
 echo
-echo ../build/gVCF2tFasta -v example.vcf.gz -r ref.fa.gz -c 2 -o v2_example -n ref.fa.fai
-../build/gVCF2tFasta -v example.vcf.gz -r ref.fa.gz -c 2 -o v2_example -n ref.fa.fai
+echo ../build/gVCF2tFasta -v example.vcf.gz -r ref.fa.gz -o v2_example -n ref.fa.fai
+../build/gVCF2tFasta -v example.vcf.gz -r ref.fa.gz -o v2_example -n ref.fa.fai
 echo
 echo -----------------------------------------------------------------------------------------------------------
 echo Example 3. Convert a multiple VCF file with all SNPs of 2 different populations to a compressed tFasta file

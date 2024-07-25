@@ -26,7 +26,7 @@ void help(char *name)
 {
   printf("gVCF2tFasta\n"
          "Version 1.0.1\n"
-         "Usage: gVCF2tFasta -v input.vcf(.gz) -r reference.fa(.gz) [-o outputname] [-n chromosomes.txt]\n"
+         "Usage: gVCF2tFasta -v input.vcf(.gz) -r reference.fa(.gz) -c ploidy [-o outputname] [-n chromosomes.txt] [-i 0/1]\n"
          "Structural Variants are considered as missing data (N)\n"
          "Options:\n"
          "\t-h\t\tHelp and exit\n"
@@ -35,7 +35,7 @@ void help(char *name)
          "\t-c\t\tNumber of allele copies per position per individual (ploidy)\n"//SRO
          "\t-o\t\tOptional Output compressed tFasta filename, Default same as input vcf file\n"
          "\t-n\t\tOptional File with chromosome(s) to convert and its length, Default use all sequences as in reference fasta file\n"
-         "\t-i\t\tImputation (Only use with VCF files, not gVCF files):\n"
+         "\t-i\t\tImputation (include reference: Only use with VCF files, not gVCF files):\n"
          "\t\t\t0 if missing data in VCF is equal to N in tFasta\n"
          "\t\t\t1 if missing data in VCF is equal to reference fasta in tFasta\n"
          "\t\t\tDefault value is 0\n"
@@ -145,7 +145,7 @@ int main(int argc, char *argv[])
   // default imputation == "0" missing data in VCF is equal to N in tFasta
 
   char tmp;
-  while ((tmp = getopt(argc, argv, "hv:r:o:n:i:c:")) != -1)
+  while ((tmp = getopt(argc, argv, "h:v:r:o:n:i:c:")) != -1)
   {
     switch (tmp)
     {
@@ -171,7 +171,7 @@ int main(int argc, char *argv[])
     case 'c':
       ccopies = std::stoi(optarg);
       break;
-    //<-SRO
+    //SRO<-
     default:
       help(argv[0]);
       return 1;
@@ -510,6 +510,12 @@ int main(int argc, char *argv[])
       std::vector<std::string> dline = CStringTools::split(lineVCF, '\t');
       // chromVCF = dline[0];
       pos = CStringTools::stringToInt(dline[1]);
+      //SRO->
+      if(pos > sizeChrom) {
+        log_error("defined position (%ld) is larger than chromosome size (%ld)",pos,sizeChrom);
+        return 1;
+      }
+      //SRO<-
       /* //SRO->
         if(pos<current_position) {
             log_error(" VCF rows must be sorted by position, including END blocks: Called position (%ld) is smaller than current position (%ld) ",pos,current_position);
@@ -573,7 +579,7 @@ int main(int argc, char *argv[])
           //tfasta.writeFile(linetfasta);
           for (int s = 0; s < n_geno; s++) {
             if(nts[s]!='N') {
-                chr_genotypes.at(n_geno*pos+s)=nts[s];
+                chr_genotypes.at((pos-1)*n_geno+s)=nts[s];
             }
           }
             
@@ -583,7 +589,12 @@ int main(int argc, char *argv[])
         {
           // Si la linea del VCF corresponde a un Bloque Homocigoto:
           pos_f = CStringTools::stringToInt(dline[4]);
-
+          //SRO->
+          if(pos_f > sizeChrom) {
+            log_error("defined position END (%ld) is larger than chromosome size (%ld)",pos_f,sizeChrom);
+            return 1;
+          }
+          //SRO<-
           // // Obtenemos la secuencia correspondiente al bloque a partir del Fasta de referencia:
           // if (fasta.openReadFile())
           // {
@@ -593,6 +604,7 @@ int main(int argc, char *argv[])
 
           int counter = 0;
           // Imprimimos la secuencia en formato tFasta:
+
           for (int n = pos; n <= pos_f; n++)
           {
             std::string nucleotides = "";
@@ -605,7 +617,7 @@ int main(int argc, char *argv[])
                 if (nts[i] == 'R')
                 {
                   nucleotides = nucleotides + subseq[counter];
-                  chr_genotypes.at(n_geno*n+i)=subseq[counter];//SRO
+                  chr_genotypes.at((n-1)*n_geno+i)=subseq[counter];//SRO
                 }
                 else if (nts[i] == 'M')
                 {
@@ -686,7 +698,7 @@ int main(int argc, char *argv[])
         std::string nucleotides = "";
         linetfasta = chromosome + "\t" + CStringTools::intToString(n) + "\t";
         for(int s=0;s<n_geno;s++) {
-            nucleotides = nucleotides + chr_genotypes[n*n_geno+s];
+            nucleotides = nucleotides + chr_genotypes[(n-1)*n_geno+s];
         }
         linetfasta = linetfasta + nucleotides + "\n";
         tfasta.writeFile(linetfasta);
