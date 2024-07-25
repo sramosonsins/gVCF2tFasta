@@ -1,7 +1,7 @@
-# gVCF2tFasta Version 1.0.0
+# gVCF2tFasta Version 1.0.1
 Convert gvcf/vcf files to transposed fasta format (tfasta, indexed and compressed).
 
-Jordi Leno-Colorado, Sebastian E. Ramos-Onsins, Ahmed Hafed
+Jordi Leno-Colorado, Sebastian E. Ramos-Onsins, Ahmed Hafez
 
 #### Usage: 
 	gVCF2tFasta -v input.vcf(.gz) -r reference.fa(.gz) -c ploidy [-o outputname] [-n chromosomes.txt] [-i 0/1]
