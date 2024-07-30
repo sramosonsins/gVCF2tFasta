@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5.0)
-project(gVCF2tFasta VERSION 1.0.0 LANGUAGES C CXX)
+project(gVCF2tFasta VERSION 1.0.1 LANGUAGES C CXX)
 
 #include(CTest)
 #enable_testing()
@@ -8,6 +8,29 @@ project(gVCF2tFasta VERSION 1.0.0 LANGUAGES C CXX)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+
+
+# Get the current date and time
+string(TIMESTAMP CURRENT_DATE "%Y%m%d")
+string(TIMESTAMP CURRENT_TIME "%H%M%S")
+
+
+# Concatenate date and time to create a build number
+set(BUILD_NUMBER "${CURRENT_DATE}${CURRENT_TIME}")
+
+# Define the version number
+set(VERSION_NUMBER "${gVCF2tFasta_VERSION}")
+
+
+# Define preprocessor macros for date, time, build number, and version number
+add_definitions(-DCURRENT_DATE=\"${CURRENT_DATE}\")
+add_definitions(-DCURRENT_TIME=\"${CURRENT_TIME}\")
+add_definitions(-DBUILD_NUMBER=\"${BUILD_NUMBER}\")
+add_definitions(-DVERSION_NUMBER=\"${VERSION_NUMBER}\")
+
+
+# Write version number to a text file
+file(WRITE "${CMAKE_BINARY_DIR}/version.txt" "${VERSION_NUMBER}")
 
 add_compile_options("-DLOG_USE_COLOR")
 IF(CMAKE_BUILD_TYPE MATCHES Debug)

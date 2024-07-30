@@ -1,3 +1,9 @@
+# Change log Version 1.0.1
+#### Usage: 
+	gVCF2tFasta -v input.vcf(.gz) -r reference.fa(.gz) -c ploidy [-o outputname] [-n chromosomes.txt] [-i 0/1]
+* add -c INT option to take ploidy as input 
+
+
 # Change log Version 1.0.0 
 
 

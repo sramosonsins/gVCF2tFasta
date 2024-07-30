@@ -1,10 +1,10 @@
-# gVCF2tFasta Version 1.0.0
+# gVCF2tFasta Version 1.0.1
 Convert gvcf/vcf files to transposed fasta format (tfasta, indexed and compressed).
 
-Jordi Leno-Colorado
+Jordi Leno-Colorado, Sebastian E. Ramos-Onsins, Ahmed Hafez
 
 #### Usage: 
-	gVCF2tFasta -v input.vcf(.gz) -r reference.fa(.gz) [-o outputname] [-n chromosomes.txt]
+	gVCF2tFasta -v input.vcf(.gz) -r reference.fa(.gz) -c ploidy [-o outputname] [-n chromosomes.txt] [-i 0/1]
 
 Note: Structural Variants are considered as missing data (N)
 
@@ -12,6 +12,7 @@ Note: Structural Variants are considered as missing data (N)
         -h              Help and exit
         -v              Input VCF file
         -r              Reference Fasta file
+        -c              Number of allele copies per position and individual (ploidy)
         -o              Optional Output compressed tFasta filename, Default same as input vcf file
         -n              Optional File with chromosome(s) to convert and its length, Default use all sequences as in reference fasta file
         -i              Imputation (Only use with VCF files, not gVCF files):
@@ -66,5 +67,5 @@ $ cmake --build ./build --config Release
 ## Run gVCF2tFasta
 
 $ ./build/gVCF2tFasta -h
-
+$ sh run_examples_gVCF2tFasta.sh
 ```
