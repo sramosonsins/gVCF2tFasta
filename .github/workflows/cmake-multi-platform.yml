@@ -108,7 +108,9 @@ jobs:
         # get the name of the release tarball
 
         name: gVCF2tFasta-release
-        path: ${{ steps.strings.outputs.build-output-dir }}/*.tar.gz
+        path: |
+           ${{ steps.strings.outputs.build-output-dir }}/*.tar.gz
+           ${{ steps.strings.outputs.build-output-dir }}/version.txt
 
     - name: Test
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
