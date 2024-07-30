@@ -16,6 +16,15 @@
 
 #include <htslib/faidx.h>
 
+
+
+
+
+#define FULL_VERSION "v." VERSION_NUMBER " (" BUILD_NUMBER ")"
+
+// store FULL_VERSION as a global variable
+// const char *FULL_VERSION = "v." VERSION_NUMBER " (" BUILD_NUMBER ")";
+
 inline int end_error(int err)
 {
   log_error("Program finished with errors");
@@ -24,8 +33,10 @@ inline int end_error(int err)
 
 void help(char *name)
 {
+  
   printf("gVCF2tFasta\n"
-         "Version 1.0.1\n"
+         // "Version 1.0.1\n"
+         "Version " FULL_VERSION "\n"
          "Usage: gVCF2tFasta -v input.vcf(.gz) -r reference.fa(.gz) -c ploidy [-o outputname] [-n chromosomes.txt] [-i 0/1]\n"
          "Structural Variants are considered as missing data (N)\n"
          "Options:\n"

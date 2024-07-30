@@ -107,7 +107,7 @@ jobs:
         # Name of the artifact. This is the name that will be displayed in the GitHub Actions UI.
         # get the name of the release tarball
 
-        name: release
+        name: gVCF2tFasta-release
         path: ${{ steps.strings.outputs.build-output-dir }}/*.tar.gz
 
     - name: Test
@@ -128,16 +128,16 @@ jobs:
     - name: Download release tarball
       uses: actions/download-artifact@v3
       with:
-        name: release
-        path: ${{ github.workspace }}/release
+        name: gVCF2tFasta-release
+        path: ${{ github.workspace }}/gVCF2tFasta-release
 
     - name: check release tarball
-      run: ls -l ${{ github.workspace }}/release/ 
+      run: ls -l ${{ github.workspace }}/gVCF2tFasta-release/ 
 
     - name: version
       run: |
-        echo "version=1.0.0" >> "$GITHUB_ENV"
-        echo "version=1.0.0" >> "$GITHUB_OUTPUT"
+        echo "version=$(cat ${{ github.workspace }}/gVCF2tFasta-release/version.txt)" >> "$GITHUB_ENV"
+        echo "version=$(cat ${{ github.workspace }}/gVCF2tFasta-release/version.txt)" >> "$GITHUB_OUTPUT"
       id: version
 
 
@@ -160,7 +160,7 @@ jobs:
         GITHUB_TOKEN: ${{ github.token }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ github.workspace }}/release/gVCF2tFasta-${{ steps.version.outputs.version }}-Linux.tar.gz
+        asset_path: ${{ github.workspace }}/gVCF2tFasta-release/gVCF2tFasta-${{ steps.version.outputs.version }}-Linux.tar.gz
         # asset_path: ${{ steps.strings.outputs.build-output-dir }}/*.Linux.tar.gz
         asset_name: gVCF2tFasta-v${{ steps.version.outputs.version }}-Linux.tar.gz
         asset_content_type: application/gzip
@@ -170,6 +170,6 @@ jobs:
         GITHUB_TOKEN: ${{ github.token }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ github.workspace }}/release/gVCF2tFasta-${{ steps.version.outputs.version }}-Darwin.tar.gz
+        asset_path: ${{ github.workspace }}/gVCF2tFasta-release/gVCF2tFasta-${{ steps.version.outputs.version }}-Darwin.tar.gz
         asset_name: gVCF2tFasta-v${{ steps.version.outputs.version }}-Darwin.tar.gz
         asset_content_type: application/gzip
