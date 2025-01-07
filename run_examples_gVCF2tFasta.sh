@@ -23,6 +23,10 @@
 
 # cmake --no-warn-unused-cli -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -S./ -B./build -G "Unix Makefiles"
 # cmake --build ./build --config Release --target gVCF2tFasta -j 14 --
+
+brew install htslib
+sh build.sh
+
 cd ./Examples
 
 # Run examples
@@ -54,19 +58,5 @@ echo ---------------------------------------------------------------------------
 echo
 echo ../build/gVCF2tFasta -v pool_p10.vcf -r ref.fa.gz -c 10 -o v2_pool -n ref.fa.fai
 ../build/gVCF2tFasta -v pool_p10.vcf.gz -r ref.fa.gz -c 10 -o v2_pool -n ref.fa.fai
-echo
-echo ---------------------------------------------------------------------------------
-echo Example 5. Convert a compressed VCF file to a compressed tFasta file
-echo ---------------------------------------------------------------------------------
-echo
-echo ../build/gVCF2tFasta -v ./gatk_combined.vcf_10lines.recode.vcf.gz -r ./pdulcis26.contigsPd1-8.fa -c 2 -o ./v2_TEST_almond_10lines -i 0 -n ./pdulcis26.chromosomes.lengths
-../build/gVCF2tFasta -v ./gatk_combined.vcf_10lines.recode.vcf.gz -r ./pdulcis26.contigs_Pd1-8.fa -c 2 -o ./v2_TEST_almond_10lines -i 0 -n ./pdulcis26.chromosomes.lengths
-echo
-echo --------------------------------------------------------------------------------------------
-echo Example 6. Convert a compressed gVCF file to a compressed tFasta file for tetraploid samples
-echo ---------------------------------------------------------------------------------------------
-echo
-echo ../build/gVCF2tFasta -v ./Ewi_prueba_merge.vcf.gz -r ./prueba_Eche_ref.fa -c 4
-../build/gVCF2tFasta -v ./Ewi_prueba_merge.vcf.gz -r ./prueba_Eche_ref.fa -c 4
 echo
 

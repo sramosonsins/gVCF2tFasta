@@ -62,10 +62,17 @@ $ cd gVCF2tFasta
 $ cmake -B ./build -DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_COMPILER=gcc -DCMAKE_BUILD_TYPE=Release -S ./
 # build
 $ cmake --build ./build --config Release
+```
 
+Or you can try:
 
-## Run gVCF2tFasta
+```bash
+sh ./build.sh
+```
 
+### Run Examples for gVCF2tFasta
+
+```bash
 $ ./build/gVCF2tFasta -h
 $ sh run_examples_gVCF2tFasta.sh
 ```
