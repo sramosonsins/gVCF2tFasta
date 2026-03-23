@@ -39,6 +39,7 @@ void help(char *name)
          "Version " FULL_VERSION "\n"
          "Usage: gVCF2tFasta -v input.vcf(.gz) -r reference.fa(.gz) -c ploidy [-o outputname] [-n chromosomes.txt] [-i 0/1]\n"
          "Structural Variants are considered as missing data (N)\n"
+         "gVCF2TFasta is NOT a SNP caller, only takes the Genotype Information (GT) to convert vcf into tfa format\n"
          "Options:\n"
          "\t-h\t\tHelp and exit\n"
          "\t-v\t\tInput VCF file\n"
@@ -156,7 +157,7 @@ int main(int argc, char *argv[])
   // default imputation == "0" missing data in VCF is equal to N in tFasta
 
   char tmp;
-  while ((tmp = getopt(argc, argv, "h:v:r:o:n:i:c:")) != -1)
+  while ((tmp = getopt(argc, argv, "hv:v:r:o:n:i:c:")) != -1)
   {
     switch (tmp)
     {
@@ -589,7 +590,7 @@ int main(int argc, char *argv[])
           linetfasta = chromosome + "\t" + CStringTools::intToString(pos) + "\t" + nts + "\n";
           //tfasta.writeFile(linetfasta);
           for (int s = 0; s < n_geno; s++) {
-            if(nts[s]!='N') {
+            if(nts[s]!='N' && nts[s]!='*') {
                 chr_genotypes.at((pos-1)*n_geno+s)=nts[s];
             }
           }
