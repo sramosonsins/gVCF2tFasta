@@ -161,4 +161,4 @@ jobs:
           --notes-file CHANGELOG.md \
           --draft \
           "${{ github.workspace }}/vcf2tfa-release/vcf2tfa-${{ steps.version.outputs.version }}-Linux.tar.gz#vcf2tfa-${{ steps.version.outputs.version }}-Linux.tar.gz" \
-          "${{ github.workspace }}/gVCF2tFasta-release/vc2tfa-${{ steps.version.outputs.version }}-Darwin.tar.gz#gVCF2tFasta-${{ steps.version.outputs.version }}-Darwin.tar.gz"
+          "${{ github.workspace }}/gVCF2tFasta-release/vc2tfa-${{ steps.version.outputs.version }}-Darwin.tar.gz#vcf2tfa-${{ steps.version.outputs.version }}-Darwin.tar.gz"
