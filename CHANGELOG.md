@@ -1,3 +1,8 @@
+# Change log Version 1.0.2
+#### Usage: 
+	vcf2tfa -v input.vcf(.gz) -r reference.fa(.gz) -c ploidy [-o outputname] [-n chromosomes.txt] [-i 0/1]
+* repository name changed to avoid confusion
+
 # Change log Version 1.0.1
 #### Usage: 
 	gVCF2tFasta -v input.vcf(.gz) -r reference.fa(.gz) -c ploidy [-o outputname] [-n chromosomes.txt] [-i 0/1]
