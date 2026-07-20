@@ -72,9 +72,9 @@ sh ./build.sh
 
 ### How to obtain the vcf file including callable positions
 
-One option it to use gatk:
+One option is to use gatk:
 
-Example: 
+Simplified example: 
 
 ```bash
 gatk GenotypeGs \
@@ -85,7 +85,6 @@ gatk GenotypeGs \
 ```
 
 ### Run Examples for vcf2tfa
-NOT WORKING YET 
 
 ```bash
 $ ./build/vcf2tfa -h
