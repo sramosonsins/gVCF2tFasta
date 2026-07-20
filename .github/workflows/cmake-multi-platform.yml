@@ -157,7 +157,7 @@ jobs:
         GITHUB_TOKEN: ${{ github.token }}
 
     - name: upload linux artifact
-      uses: actions/upload-release-asset@v4
+      uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ github.token }}
       with:
@@ -167,7 +167,7 @@ jobs:
         asset_name: vcf2tfa-v${{ steps.version.outputs.version }}-Linux.tar.gz
         asset_content_type: application/gzip
     - name: upload macos artifact
-      uses: actions/upload-release-asset@v4
+      uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ github.token }}
       with:
