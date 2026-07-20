@@ -126,7 +126,7 @@ jobs:
     ## only run on master branch
     if: github.ref == 'refs/heads/master'
     
-    # Requerit perquè la GitHub CLI tingui permís per crear el release
+    #Required to allow GitHub CLI permissions to create release
     permissions:
       contents: write
 
@@ -148,7 +148,7 @@ jobs:
         echo "version=$(cat ${{ github.workspace }}/vcf2tfa-release/version.txt)" >> "$GITHUB_OUTPUT"
       id: version
 
-    # Crea el release i puja els artifacts de manera nativa en un sol pas
+    # Create release and upload artifacts
     - name: Create Release and Upload Assets
       env:
         GITHUB_TOKEN: ${{ github.token }}
@@ -161,4 +161,4 @@ jobs:
           --notes-file CHANGELOG.md \
           --draft \
           "${{ github.workspace }}/vcf2tfa-release/vcf2tfa-${{ steps.version.outputs.version }}-Linux.tar.gz#vcf2tfa-${{ steps.version.outputs.version }}-Linux.tar.gz" \
-          "${{ github.workspace }}/gVCF2tFasta-release/gVCF2tFasta-${{ steps.version.outputs.version }}-Darwin.tar.gz#gVCF2tFasta-${{ steps.version.outputs.version }}-Darwin.tar.gz"
+          "${{ github.workspace }}/gVCF2tFasta-release/vc2tfa-${{ steps.version.outputs.version }}-Darwin.tar.gz#gVCF2tFasta-${{ steps.version.outputs.version }}-Darwin.tar.gz"
