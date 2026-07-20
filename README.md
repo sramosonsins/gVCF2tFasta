@@ -1,7 +1,7 @@
 # vcf2tfa
 Convert vcf files including all callable positions into transposed fasta format (tfasta, indexed and compressed).
 
-Jordi Leno-Colorado, Sebastian E. Ramos-Onsins, Ahmed Hafez
+##### Jordi Leno-Colorado, Sebastian E. Ramos-Onsins, Ahmed Hafez
 
 #### Usage: 
 	vcf2tfa -v input.vcf(.gz) -r reference.fa(.gz) -c ploidy [-o outputname] [-n chromosomes.txt] [-i 0/1]
