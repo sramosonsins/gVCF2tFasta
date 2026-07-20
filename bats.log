@@ -1,0 +1,55 @@
+# Test 
+#####
+BATS_TEST_NAME:        test_vcf2tfa_ok
+BATS_TEST_NAMES:       test_vcf2tfa_ok
+BATS_TEST_DESCRIPTION: vcf2tfa ok
+BATS_TEST_NUMBER:      1
+====
+TEST_CMD:      vcf2tfa -h
+##### test_vcf2tfa_ok #####
+
+#####
+BATS_TEST_NAME:        test_Convert_a_VCF
+BATS_TEST_NAMES:       test_Convert_a_VCF
+BATS_TEST_DESCRIPTION: Convert a VCF
+BATS_TEST_NUMBER:      2
+====
+TEST_CMD:      vcf2tfa -v /Users/sramos/Documents/Github/vcf2tfa/Examples/example.vcf -r /Users/sramos/Documents/Github/vcf2tfa/Examples/ref.fa.gz -c 2 -o /Users/sramos/Documents/Github/vcf2tfa/tests/test_output/test_Convert_a_VCF/example -n /Users/sramos/Documents/Github/vcf2tfa/Examples/ref.fa.fai
+##### test_Convert_a_VCF #####
+
+#####
+BATS_TEST_NAME:        test_Convert_a_compressed_VCF_1
+BATS_TEST_NAMES:       test_Convert_a_compressed_VCF_1
+BATS_TEST_DESCRIPTION: Convert a compressed VCF 1
+BATS_TEST_NUMBER:      3
+====
+TEST_CMD:      vcf2tfa -v /Users/sramos/Documents/Github/vcf2tfa/Examples/example.vcf.gz -r /Users/sramos/Documents/Github/vcf2tfa/Examples/ref.fa.gz -c 2 -o /Users/sramos/Documents/Github/vcf2tfa/tests/test_output/test_Convert_a_compressed_VCF_1/example -n /Users/sramos/Documents/Github/vcf2tfa/Examples/ref.fa.fai
+##### test_Convert_a_compressed_VCF_1 #####
+
+#####
+BATS_TEST_NAME:        test_Convert_a_multiple_VCF_with_SNPs_of_2_pop
+BATS_TEST_NAMES:       test_Convert_a_multiple_VCF_with_SNPs_of_2_pop
+BATS_TEST_DESCRIPTION: Convert a multiple VCF with SNPs of 2 pop
+BATS_TEST_NUMBER:      4
+====
+TEST_CMD:      vcf2tfa -v /Users/sramos/Documents/Github/vcf2tfa/Examples/multipleVCF_2pop.vcf.gz -r /Users/sramos/Documents/Github/vcf2tfa/Examples/ref.fa.gz -c 2 -o /Users/sramos/Documents/Github/vcf2tfa/tests/test_output/test_Convert_a_multiple_VCF_with_SNPs_of_2_pop/example_mult -n /Users/sramos/Documents/Github/vcf2tfa/Examples/ref.fa.fai
+##### test_Convert_a_multiple_VCF_with_SNPs_of_2_pop #####
+
+#####
+BATS_TEST_NAME:        test_Convert_a_VCF_with_SNPs_pool
+BATS_TEST_NAMES:       test_Convert_a_VCF_with_SNPs_pool
+BATS_TEST_DESCRIPTION: Convert a VCF with SNPs pool
+BATS_TEST_NUMBER:      5
+====
+TEST_CMD:      vcf2tfa -v /Users/sramos/Documents/Github/vcf2tfa/Examples/pool_p10.vcf.gz -r /Users/sramos/Documents/Github/vcf2tfa/Examples/ref.fa.gz -c 10 -o /Users/sramos/Documents/Github/vcf2tfa/tests/test_output/test_Convert_a_VCF_with_SNPs_pool/pool -n /Users/sramos/Documents/Github/vcf2tfa/Examples/ref.fa.fai
+##### test_Convert_a_VCF_with_SNPs_pool #####
+
+#####
+BATS_TEST_NAME:        test_Convert_a_compressed_VCF_2
+BATS_TEST_NAMES:       test_Convert_a_compressed_VCF_2
+BATS_TEST_DESCRIPTION: Convert a compressed VCF 2
+BATS_TEST_NUMBER:      6
+====
+TEST_CMD:      vcf2tfa -v /Users/sramos/Documents/Github/vcf2tfa/Examples/gatk_combined.vcf_10lines.recode.vcf.gz -r /Users/sramos/Documents/Github/vcf2tfa/Examples/pdulcis26.contigs_Pd1-8.fa -c 2 -o /Users/sramos/Documents/Github/vcf2tfa/tests/test_output/test_Convert_a_compressed_VCF_2/TEST_almond_10lines -i 0 -n /Users/sramos/Documents/Github/vcf2tfa/Examples/pdulcis26.chromosomes.lengths
+##### test_Convert_a_compressed_VCF_2 #####
+

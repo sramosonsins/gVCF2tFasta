@@ -1,6 +1,6 @@
 #VCF2tFasta
 #Version 0.2
-#Usage: ./gVCF2tFasta -v input.vcf(.gz) -r reference.fa(.gz) -o v2_outputname -n chromosomes.txt
+#Usage: ./vcf2tfa -v input.vcf(.gz) -r reference.fa(.gz) -o v2_outputname -n chromosomes.txt
 #Structural Variants are considered as missing data (N)
 #Options:
 #    -h        Help and exit
@@ -22,7 +22,7 @@
 #/usr/bin/make -f Makefile CONF=Release
 
 # cmake --no-warn-unused-cli -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -S./ -B./build -G "Unix Makefiles"
-# cmake --build ./build --config Release --target gVCF2tFasta -j 14 --
+# cmake --build ./build --config Release --target vcf2tfa -j 14 --
 
 brew install htslib
 sh build.sh
@@ -35,28 +35,28 @@ echo ---------------------------------------------------------
 echo Example 1. Convert a VCF file to a compressed tFasta file
 echo ---------------------------------------------------------
 echo
-echo ../build/gVCF2tFasta -v example.vcf -r ref.fa.gz -c 2 -o v2_example -n ref.fa.fai
-../build/gVCF2tFasta -v example.vcf -r ref.fa.gz -c 2 -o v2_example -n ref.fa.fai
+echo ../build/vcf2tfa -v example.vcf -r ref.fa.gz -c 2 -o v2_example -n ref.fa.fai
+../build/vcf2tfa -v example.vcf -r ref.fa.gz -c 2 -o v2_example -n ref.fa.fai
 echo
 echo --------------------------------------------------------------------
 echo Example 2. Convert a compressed VCF file to a compressed tFasta file
 echo --------------------------------------------------------------------
 echo
-echo ../build/gVCF2tFasta -v example.vcf.gz -r ref.fa.gz -o v2_example -n ref.fa.fai
-../build/gVCF2tFasta -v example.vcf.gz -r ref.fa.gz -o v2_example -n ref.fa.fai
+echo ../build/vcf2tfa -v example.vcf.gz -r ref.fa.gz -o v2_example -n ref.fa.fai
+../build/vcf2tfa -v example.vcf.gz -r ref.fa.gz -o v2_example -n ref.fa.fai
 echo
 echo -----------------------------------------------------------------------------------------------------------
 echo Example 3. Convert a multiple VCF file with all SNPs of 2 different populations to a compressed tFasta file
 echo -----------------------------------------------------------------------------------------------------------
 echo
-echo ../build/gVCF2tFasta -v multipleVCF_2pop.vcf -r ref.fa.gz -c 2 -o v2_example_mult -n ref.fa.fai
-../build/gVCF2tFasta -v multipleVCF_2pop.vcf.gz -r ref.fa.gz -c 2 -o v2_example_mult -n ref.fa.fai
+echo ../build/vcf2tfa -v multipleVCF_2pop.vcf -r ref.fa.gz -c 2 -o v2_example_mult -n ref.fa.fai
+../build/vcf2tfa -v multipleVCF_2pop.vcf.gz -r ref.fa.gz -c 2 -o v2_example_mult -n ref.fa.fai
 echo
 echo ---------------------------------------------------------------------------------
 echo Example 4. Convert a VCF file with the SNPs of a pool to a compressed tFasta file
 echo ---------------------------------------------------------------------------------
 echo
-echo ../build/gVCF2tFasta -v pool_p10.vcf -r ref.fa.gz -c 10 -o v2_pool -n ref.fa.fai
-../build/gVCF2tFasta -v pool_p10.vcf.gz -r ref.fa.gz -c 10 -o v2_pool -n ref.fa.fai
+echo ../build/vcf2tfa -v pool_p10.vcf -r ref.fa.gz -c 10 -o v2_pool -n ref.fa.fai
+../build/vcf2tfa -v pool_p10.vcf.gz -r ref.fa.gz -c 10 -o v2_pool -n ref.fa.fai
 echo
 

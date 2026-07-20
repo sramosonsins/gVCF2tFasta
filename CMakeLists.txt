@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5.0)
-project(gVCF2tFasta VERSION 1.0.1 LANGUAGES C CXX)
+project(vcf2tfa VERSION 1.0.1 LANGUAGES C CXX)
 
 #include(CTest)
 #enable_testing()
@@ -19,7 +19,7 @@ string(TIMESTAMP CURRENT_TIME "%H%M%S")
 set(BUILD_NUMBER "${CURRENT_DATE}${CURRENT_TIME}")
 
 # Define the version number
-set(VERSION_NUMBER "${gVCF2tFasta_VERSION}")
+set(VERSION_NUMBER "${vcf2tfa_VERSION}")
 
 
 # Define preprocessor macros for date, time, build number, and version number
@@ -72,10 +72,10 @@ file(GLOB_RECURSE SOURCE_FILE CONFIGURE_DEPENDS "src/*.c*")
 ## add include directories
 include_directories(${HTSLIB_INCLUDE_DIR})
 
-# gVCF2tFasta ${PROJECT_NAME}
-add_executable(gVCF2tFasta ${SOURCE_FILE})
+# vcf2tfa ${PROJECT_NAME}
+add_executable(vcf2tfa ${SOURCE_FILE})
 
-target_link_libraries(gVCF2tFasta ${HTSLIB_LIBRARY} )
+target_link_libraries(vcf2tfa ${HTSLIB_LIBRARY} )
 
 
 
@@ -87,6 +87,6 @@ target_link_libraries(gVCF2tFasta ${HTSLIB_LIBRARY} )
 include(CPack)
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
-install(TARGETS gVCF2tFasta DESTINATION bin)
+install(TARGETS vcf2tfa DESTINATION bin)
 install(FILES README.md DESTINATION .)
 set(CPACK_RESOURCE_FILE_README "${CMAKE_SOURCE_DIR}/README.md")

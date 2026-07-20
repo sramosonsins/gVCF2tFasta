@@ -1,4 +1,4 @@
-# VCF2tFasta
+# vcf2tfa
 
 ## Testing
 ```
@@ -11,5 +11,5 @@ npm install  https://github.com/ztombol/bats-file
 ```
 
 ## To Run the Test
-bats ./tests/gvcf2tfasta.tests.bats
+bats ./tests/vcf2tfa.tests.bats
 ```

@@ -34,12 +34,12 @@ inline int end_error(int err)
 void help(char *name)
 {
   
-  printf("gVCF2tFasta\n"
+  printf("vcf2tfa\n"
          // "Version 1.0.1\n"
          "Version " FULL_VERSION "\n"
-         "Usage: gVCF2tFasta -v input.vcf(.gz) -r reference.fa(.gz) -c ploidy [-o outputname] [-n chromosomes.txt] [-i 0/1]\n"
+         "Usage: vcf2tfa -v input.vcf(.gz) -r reference.fa(.gz) -c ploidy [-o outputname] [-n chromosomes.txt] [-i 0/1]\n"
          "Structural Variants are considered as missing data (N)\n"
-         "gVCF2TFasta is NOT a SNP caller, only takes the Genotype Information (GT) to convert vcf into tfa format\n"
+         "vcf2tfa is NOT a SNP caller, only takes the Genotype Information (GT) to convert vcf into tfa format\n"
          "Options:\n"
          "\t-h\t\tHelp and exit\n"
          "\t-v\t\tInput VCF file\n"
@@ -190,8 +190,8 @@ int main(int argc, char *argv[])
     }
   }
 
-  // set program name as gVCF2tFasta
-  const char *program_name = "gVCF2tFasta";
+  // set program name as vcf2tfa
+  const char *program_name = "vcf2tfa";
   log_start(program_name, argc, argv);
 
 
@@ -355,7 +355,7 @@ int main(int argc, char *argv[])
   std::string chromosome = "";
   int sizeChrom = 0;
 
-  // Follow same logic as in gVCF2tFasta
+  // Follow same logic as in vcf2tfa
 
   if (!vcf.openFile())
   {
@@ -411,7 +411,7 @@ int main(int argc, char *argv[])
   //SRO<-
 
   std::string header =
-      "#gVCF2tfasta -v " + vcfname + " -r " + refname + " -o " + tfastaext + " -n " + chromname + "\n" +
+      "#vcf2tfa -v " + vcfname + " -r " + refname + " -o " + tfastaext + " -n " + chromname + "\n" +
       "#NAMES: " + samplenames_alleles + "\n" +
       "#CHROMOSOME\tPOSITION\tGENOTYPES\n";
   tfasta.writeFile(header);
