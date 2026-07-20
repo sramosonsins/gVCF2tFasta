@@ -102,7 +102,7 @@ jobs:
         cd ${{ steps.strings.outputs.build-output-dir }}
         cpack -G TGZ
     - name: Upload release tarball
-      uses: s/upload-artifact@v4
+      uses: actions/upload-artifact@v4
       with:
         # Name of the artifact. This is the name that will be displayed in the GitHub Actions UI.
         # get the name of the release tarball
@@ -142,7 +142,6 @@ jobs:
         echo "version=$(cat ${{ github.workspace }}/vcf2tfa-release/version.txt)" >> "$GITHUB_OUTPUT"
       id: version
 
-
     - name: release
       uses: actions/create-release@v1
       id: create_release
@@ -173,5 +172,5 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ${{ github.workspace }}/vcf2tfa-release/vcf2tfa-${{ steps.version.outputs.version }}-Darwin.tar.gz
-        asset_name: gVCF2tFasta-v${{ steps.version.outputs.version }}-Darwin.tar.gz
+        asset_name: vcf2tfa-v${{ steps.version.outputs.version }}-Darwin.tar.gz
         asset_content_type: application/gzip
