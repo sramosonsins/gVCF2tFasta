@@ -70,7 +70,7 @@ Or you can try:
 sh ./build.sh
 ```
 
-### How to obtain the vcf file with callable positions
+### How to obtain the vcf file including callable positions
 
 One option it to use gatk:
 
@@ -79,7 +79,7 @@ Example:
 ```bash
 gatk GenotypeGs \
 	⁃R reference.fasta \
-	⁃V input_cohort.g.vct.gz\
+	⁃V input_cohort.g.vcf.gz\
 	⁃﻿O cohort_all_sites.vcf.gz
 	﻿--include-non-variant-sites
 ```
