@@ -102,7 +102,7 @@ jobs:
         cd ${{ steps.strings.outputs.build-output-dir }}
         cpack -G TGZ
     - name: Upload release tarball
-      uses: actions/upload-artifact@v4
+      uses: s/upload-artifact@v4
       with:
         # Name of the artifact. This is the name that will be displayed in the GitHub Actions UI.
         # get the name of the release tarball
@@ -125,8 +125,14 @@ jobs:
     needs: build
     ## only run on master branch
     if: github.ref == 'refs/heads/master'
+    
+    # Requerit perquè la GitHub CLI tingui permís per crear el release
+    permissions:
+      contents: write
+
     steps:
     - uses: actions/checkout@v4
+    
     - name: Download release tarball
       uses: actions/download-artifact@v4
       with:
@@ -142,36 +148,17 @@ jobs:
         echo "version=$(cat ${{ github.workspace }}/vcf2tfa-release/version.txt)" >> "$GITHUB_OUTPUT"
       id: version
 
-
-    - name: release
-      uses: actions/create-release@v1
-      id: create_release
-      with:
-        draft: true
-        prerelease: false
-        release_name: v${{ steps.version.outputs.version }}
-        tag_name: v${{ steps.version.outputs.version }}
-        body_path: CHANGELOG.md
-        commitish: ${{ github.sha }}
+    # Crea el release i puja els artifacts de manera nativa en un sol pas
+    - name: Create Release and Upload Assets
       env:
         GITHUB_TOKEN: ${{ github.token }}
-
-    - name: upload linux artifact
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ github.workspace }}/vcf2tfa-release/vcf2tfa-${{ steps.version.outputs.version }}-Linux.tar.gz
-        # asset_path: ${{ steps.strings.outputs.build-output-dir }}/*.Linux.tar.gz
-        asset_name: vcf2tfa-v${{ steps.version.outputs.version }}-Linux.tar.gz
-        asset_content_type: application/gzip
-    - name: upload macos artifact
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ github.workspace }}/gVCF2tFasta-release/gVCF2tFasta-${{ steps.version.outputs.version }}-Darwin.tar.gz
-        asset_name: gVCF2tFasta-v${{ steps.version.outputs.version }}-Darwin.tar.gz
-        asset_content_type: application/gzip
+      run: |
+        VERSION="v${{ steps.version.outputs.version }}"
+        
+        gh release create "$VERSION" \
+          --target "${{ github.sha }}" \
+          --title "$VERSION" \
+          --notes-file CHANGELOG.md \
+          --draft \
+          "${{ github.workspace }}/vcf2tfa-release/vcf2tfa-${{ steps.version.outputs.version }}-Linux.tar.gz#vcf2tfa-${{ steps.version.outputs.version }}-Linux.tar.gz" \
+          "${{ github.workspace }}/gVCF2tFasta-release/gVCF2tFasta-${{ steps.version.outputs.version }}-Darwin.tar.gz#gVCF2tFasta-${{ steps.version.outputs.version }}-Darwin.tar.gz"
